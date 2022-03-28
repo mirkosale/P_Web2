@@ -18,7 +18,7 @@ date_default_timezone_set('Europe/Zurich');
 
 include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
-include_once 'controller/CustomerController.php';
+include_once 'controller/ReceipeController.php';
 
 
 class MainController {
@@ -29,7 +29,7 @@ class MainController {
     public function dispatch() {
 
         if (!isset($_GET['controller'])) {
-            $_GET['controller'] = 'customer';
+            $_GET['controller'] = 'receipe';
             $_GET['action'] = 'list';
         }
 
@@ -50,8 +50,8 @@ class MainController {
             case 'home':
                 $link = new HomeController();
                 break;
-            case 'customer':
-                $link = new CustomerController();
+            case 'receipe':
+                $link = new ReceipeController();
                 break;
             default:
                 $link = new HomeController();
