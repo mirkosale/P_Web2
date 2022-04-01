@@ -18,8 +18,12 @@ date_default_timezone_set('Europe/Zurich');
 
 include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
+<<<<<<< HEAD
 include_once 'controller/CustomerController.php';
 include_once 'model/Database.php';
+=======
+include_once 'controller/ReceipeController.php';
+>>>>>>> c4382299da6a3b5cd959fda7e9f2ccab81263a8a
 
 
 class MainController {
@@ -30,8 +34,8 @@ class MainController {
     public function dispatch() {
 
         if (!isset($_GET['controller'])) {
-            $_GET['controller'] = 'customer';
-            $_GET['action'] = 'list';
+            $_GET['controller'] = 'home';
+            $_GET['action'] = 'index';
         }
 
 
@@ -51,8 +55,8 @@ class MainController {
             case 'home':
                 $link = new HomeController();
                 break;
-            case 'customer':
-                $link = new CustomerController();
+            case 'receipe':
+                $link = new ReceipeController();
                 break;
             default:
                 $link = new HomeController();
@@ -72,7 +76,6 @@ class MainController {
             $content = $currentPage->display();
 
             include(dirname(__FILE__) . '/view/head.html');
-            include(dirname(__FILE__) . '/view/header.html');
             include(dirname(__FILE__) . '/view/menu.php');
             echo $content;
             include(dirname(__FILE__) . '/view/footer.html');
