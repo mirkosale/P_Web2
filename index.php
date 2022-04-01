@@ -18,12 +18,7 @@ date_default_timezone_set('Europe/Zurich');
 
 include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
-<<<<<<< HEAD
-include_once 'controller/CustomerController.php';
-include_once 'model/Database.php';
-=======
 include_once 'controller/ReceipeController.php';
->>>>>>> c4382299da6a3b5cd959fda7e9f2ccab81263a8a
 
 
 class MainController {

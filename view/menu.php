@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-<nav>
-    <ul class="nav nav-justified">
-        <li><a href="index.php?controller=home&action=index">Accueil</a></li>
-        <li><a href="index.php?controller=home&action=connexion">Connexion</a></li>
-        <li><a href="index.php?controller=customer&action=list">Liste des clients</a></li>
-        <!-- Ajouter le lien pour visualiser la liste des factures -->
-        <li><a href="index.php?controller=invoice&action=list">Liste des factures</a></li>
-        <li><a href="index.php?controller=home&action=contact">Contact</a></li>
-    </ul>
-</nav>
-</div>
-=======
 <div class="hero_area">
     <div class="bg-box">
         <img src='./resources/bootstrap/images/hero-bg.jpg' alt="">
@@ -24,7 +11,6 @@
                         Feane
                     </span>
                 </a>
->>>>>>> c4382299da6a3b5cd959fda7e9f2ccab81263a8a
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class=""> </span>
