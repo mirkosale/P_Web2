@@ -1,24 +1,60 @@
-<div class="container">
 
-	<h2>Contact</h2>
-	<!-- Three columns of text below the carousel -->
-	<div class="row">
-		<div class="col-lg-5 col-md-6 col-sm-8 col-xs-12">
-			<form method="post" action="?controller=home&action=check">
-				<div class="form-group">
-					<label for="firstName">Prénom</label>
-					<input type="text" name="firstName" class="form-control" id="firstName" />
-				</div>
-				<div class="form-group">
-					<label for="lastName">Nom</label>
-					<input type="text" name="lastName" class="form-control" id="lastName" />
-				</div>
-				<div class="form-group">
-					<label for="answer">Question, remarque</label>
-					<textarea id="answer" class="form-control" name="answer"></textarea>
-				</div>
-				<button type="submit" class="btn btn-default" name="submitButton">Envoyer le formulaire</button>
-			</form>
-		</div>
-	</div>
-
+<body class="sub_page">
+<section class="book_section layout_padding">
+  <div class="container">
+    <div class="heading_container">
+      <h2>
+        Book A Table
+      </h2>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form_container">
+          <form action="">
+            <div>
+              <input type="text" class="form-control" placeholder="Your Name" />
+            </div>
+            <div>
+              <input type="text" class="form-control" placeholder="Phone Number" />
+            </div>
+            <div>
+              <input type="email" class="form-control" placeholder="Your Email" />
+            </div>
+            <div>
+              <select class="form-control nice-select wide">
+                <option value="" disabled selected>
+                  How many persons?
+                </option>
+                <option value="">
+                  2
+                </option>
+                <option value="">
+                  3
+                </option>
+                <option value="">
+                  4
+                </option>
+                <option value="">
+                  5
+                </option>
+              </select>
+            </div>
+            <div>
+              <input type="date" class="form-control">
+            </div>
+            <div class="btn_box">
+              <button>
+                Book Now
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="map_container ">
+          <div id="googleMap"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

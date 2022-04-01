@@ -29,8 +29,8 @@ class MainController {
     public function dispatch() {
 
         if (!isset($_GET['controller'])) {
-            $_GET['controller'] = 'receipe';
-            $_GET['action'] = 'list';
+            $_GET['controller'] = 'home';
+            $_GET['action'] = 'index';
         }
 
 
@@ -71,7 +71,6 @@ class MainController {
             $content = $currentPage->display();
 
             include(dirname(__FILE__) . '/view/head.html');
-            include(dirname(__FILE__) . '/view/header.html');
             include(dirname(__FILE__) . '/view/menu.php');
             echo $content;
             include(dirname(__FILE__) . '/view/footer.html');
