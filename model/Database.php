@@ -36,7 +36,7 @@ Description: les données sont traitées et affichées directement dans la page 
         return $req;
     }
 
-    /**
+        /**
      * permet de préparer, de binder et d’exécuter une requête (select avec where ou insert, update et delete)
      */
     private function queryPrepareExecute($query, $binds){
@@ -256,7 +256,8 @@ Description: les données sont traitées et affichées directement dans la page 
     }
 
     /*
-     * methode permettant de récupèrer l'ID d'une session en fonction d'un idUser ; Retourne null si pas de résultats ; sinon retourne l'idSession
+     * methode permettant de r
+     * cupèrer l'ID d'une session en fonction d'un idUser ; Retourne null si pas de résultats ; sinon retourne l'idSession
      */
     private function getIdSessionByUserId($idUser)
     {

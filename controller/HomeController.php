@@ -1,19 +1,23 @@
 <?php
+
 /**
  * ETML
  * Auteur : Cindy Hardegger
  * Date: 22.01.2019
  * Controler pour gérer les pages classiques
  */
+include_once 'model/Database.php';
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
     /**
      * Dispatch current action
      *
      * @return mixed
      */
-    public function display() {
+    public function display()
+    {
 
         $action = $_GET['action'] . "Action";
 
@@ -25,7 +29,8 @@ class HomeController extends Controller {
      *
      * @return string
      */
-    private function indexAction() {
+    private function indexAction()
+    {
 
         $view = file_get_contents('view/page/home/index.php');
 
@@ -41,7 +46,8 @@ class HomeController extends Controller {
      *
      * @return string
      */
-    private function contactAction() {
+    private function contactAction()
+    {
 
         $view = file_get_contents('view/page/home/contact.php');
 
@@ -53,12 +59,13 @@ class HomeController extends Controller {
         return $content;
     }
 
-        /**
+    /**
      * Check Form action
      *
      * @return string
      */
-    private function checkAction() {
+    private function checkAction()
+    {
 
         $lastName = htmlspecialchars($_POST['lastName']);
         $firstName = htmlspecialchars($_POST['firstName']);
@@ -71,5 +78,38 @@ class HomeController extends Controller {
         $content = ob_get_clean();
 
         return $content;
+    }
+
+    private function connexionAction()
+    {
+        $view = file_get_contents('view/page/home/connexion.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
+
+        /**
+     * Check Form submit
+     *
+     * @return string
+     */
+    private function checkSubmitAction()
+    {
+        $database = new Database();
+        $response = $database->getOneUser($_POST['user'], $_POST['password']);
+        
+        // Si la connexion n'est pas faux
+        if ($response != false) {
+            //Ajout la session dans la bd
+            $idSession = $database->addSession($response[0]['idUser']);
+        
+            // Création cookie de connexion
+            setcookie('idSession', $idSession, time() + 30 * 24 * 60 * 60);
+        }
+        // Redirection
+        header('Location: index.php');
     }
 }
