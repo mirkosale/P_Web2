@@ -1,3 +1,4 @@
+<body class="sub_page">
 <div class="container">
     <form action="index.php?controller=home&action=checkSubmit" method="post">
         <label for="user"> </label>

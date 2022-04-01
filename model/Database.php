@@ -7,7 +7,9 @@ Description: les données sont traitées et affichées directement dans la page 
  De ce fait, nous allons créer une classe afin de regrouper les méthodes nécessaires à nos requêtes.
 -->
 <?php
- class Database {
+
+
+class Database {
     // Variable de classe
     private $connector;
    
@@ -15,11 +17,11 @@ Description: les données sont traitées et affichées directement dans la page 
      *  methode permettant de se connecter a la base de donnée avec PDO
      */
     public function __construct(){
-        $pass = '.Etml-';
-        $user = 'dbUser_pt41kyp';
+        require('config.php');
+        
         try
         {
-        $this->connector = new PDO('mysql:host=localhost;dbname=db_nickname_pt41kyp;charset=utf8' , $user, $pass);
+        $this->connector = new PDO("mysql:host=$DB_SERVER;dbname=$DB_NAME;charset=utf8" , $DB_USER, $DB_PASSWORD);
         }
         catch (PDOException $e)
         {
