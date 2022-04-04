@@ -23,15 +23,15 @@ class UserController extends Controller {
         return call_user_func(array($this, $action));
     }
 
-    private function connexionAction()
+    private function connectionAction()
     {
-        if (isset($_SESSION['useLogin']))
+        if (!isset($_SESSION['useLogin']))
         {
-            $view = file_get_contents('view/page/user/loginForm.php');
+            $view = file_get_contents('view/page/user/login.php');
         }
         else
         {
-            $view = file_get_contents('view/page/user/logoutForm.php');
+            $view = file_get_contents('view/page/user/logout.php');
         }
         ob_start();
         eval('?>' . $view);
@@ -47,23 +47,46 @@ class UserController extends Controller {
      */
     private function loginAction()
     {
+        $username = htmlspecialchars($_POST['user']);
+        $password = htmlspecialchars($_POST['password']);
+
         $database = new Database();
-        $response = $database->getOneUser($_POST['user'], $_POST['password']);
+        $users = $database->getAllUsers();
         
-        // Si la connexion n'est pas faux
-        if ($response != false) {
-            //Ajout la session dans la bd
-            $idSession = $database->addSession($response[0]['idUser']);
-        
-            // Création cookie de connexion
-            setcookie('idSession', $idSession, time() + 30 * 24 * 60 * 60);
+        foreach($users as $user)
+        {
+            if ($user['useLogin'] == $username && password_verify($password, $user['usePassword']))
+            {
+                //Ajout la session dans la bd
+                $_SESSION['useLogin'] = $user['useLogin'];
+                $_SESSION['useAdministrator'] = $user['useAdministrator'];
+
+                // Redirection
+                header('Location: index.php');
+                die;
+            }
         }
-        // Redirection
-        header('Location: index.php');
+
+        header('Location: index.php?controller=user&action=badLogin');
+
+
     }
 
+    private function badLoginAction()
+    {
+        $view = file_get_contents('view/page/user/badLogin.php');
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
     private function logoutAction()
     {
+        session_destroy();
+
+        header('Location: index.php');
 
     }
 }

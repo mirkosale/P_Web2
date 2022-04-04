@@ -97,7 +97,7 @@ class Database {
         $bindTeacher = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
-        $reqRecipe = $this->queryPrepareExecute($queryOneTeacher,$bindTeacher);
+        $reqRecipe = $this->queryPrepareExecute($queryOneRecipe ,$bindTeacher);
         $returnRecipe=$this->formatData($reqRecipe);
         $this -> unsetData($reqRecipe);
         return $returnRecipe;
@@ -184,28 +184,25 @@ class Database {
         return $this->formatData($req);
     }
 
-    /**
-     * methode permettant de récupérer un utilisateur
-     */
-    public function getOneUser($username,$password)
+    public function getAllUsers()
     {
         //récupère un utilisateur de la BD
         //avoir la requête sql
         //appeler la méthode pour executer la requête
-        $query = 'SELECT * FROM t_user WHERE useLogin = :username AND usePassword = :password';
-        $binds = [
-            ["name" => "username", "value" => $username, "type" => PDO::PARAM_STR],
-            ["name" => "password", "value" => $password, "type" => PDO::PARAM_STR]
-        ];
-        $req = $this->queryPrepareExecute($query, $binds);
+        $query = 'SELECT * FROM t_user';
 
-        // Retour les sections sous forme de tableau associatif
-        return $this->formatData($req);
+        $req = $this->querySimpleExecute($query);
 
+        $result = $this->formatData($req);
+
+        var_dump($req);
+        var_dump($result);
+
+        return $result;   
     }
 
     /**
-     * methode permettant de récupérer tout les utilisateurs
+     * methode permettant de récupérer un utilisateur selon son ID
      */
     public function getUser($idUser){
         //récupère la liste de tous les utilisateur de la BD
@@ -219,25 +216,6 @@ class Database {
 
         // Retour les sections sous forme de tableau associatif
         return $this->formatData($req);
-
-    }
-    /** 
-     * methode permettant d'ajoute une session dans la base de données
-     */
-    public function addSession($idUser)
-    {
-        //insert une session a la BD
-        //avoir la requête sql
-        //appeler la méthode pour executer la requête
-        $query = "INSERT INTO t_session (idSession, fkUser) VALUES (NULL, :idUser)";
-        $binds =  [
-            ["name" => 'idUser', 'value' => $idUser, 'type' => PDO::PARAM_STR]
-        ];
-
-        $this->queryPrepareExecute($query, $binds);
-
-        // Retourne l'id de la session crée
-        return $this->getIdSessionByUserId($idUser);
     }
 
     /*
