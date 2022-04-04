@@ -106,21 +106,21 @@ class Database {
     /**
      * methode permettant d'ajouter un enseignant
      */
-    public function InsertRecipe($teacherData)
+    public function InsertRecipe($recipeData)
     {
         // insert les informations
         // avoir la requête sql
         // appeler la méthode pour executer la requête
-        $query = "INSERT INTO t_teacher (idTeacher, teaFirstname, teaName, teaGender, teaNickname, teaOrigine, fkSection) 
+        $query = "INSERT INTO t_recette (idRecette, recName, fkTypeDish, recListOfItems,recPreparation, recImage) 
                   VALUES (NULL, :firstName, :name, :genre, :nickName, :origin, :section)";
 
         $binds = [
-            ["name" => 'name', 'value' => $teacherData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $teacherData['firstName'], 'type' => PDO::PARAM_STR],
-            ["name" => 'genre', 'value' => $teacherData['genre'], 'type' => PDO::PARAM_STR],
-            ["name" => 'nickName', 'value' => $teacherData['nickName'], 'type' => PDO::PARAM_STR],
-            ["name" => 'origin', 'value' => $teacherData['origin'], 'type' => PDO::PARAM_STR],
-            ["name" => 'section', 'value' => $teacherData['section'], 'type' => PDO::PARAM_INT]
+            ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
+            ["name" => 'firstName', 'value' => $recipeData['firstName'], 'type' => PDO::PARAM_STR],
+            ["name" => 'genre', 'value' => $recipeData['genre'], 'type' => PDO::PARAM_STR],
+            ["name" => 'nickName', 'value' => $recipeData['nickName'], 'type' => PDO::PARAM_STR],
+            ["name" => 'origin', 'value' => $recipeData['origin'], 'type' => PDO::PARAM_STR],
+            ["name" => 'section', 'value' => $recipeData['section'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
@@ -129,7 +129,7 @@ class Database {
      /**
      * methode permettant de modifier un enseignant
      */
-    public function modifyRecipe($teacherData)
+    public function modifyRecipe($recipeData)
     {
         //modifie les informations du teacher
         //avoir la requête sql
@@ -138,13 +138,13 @@ class Database {
                      teaOrigine = :origin, fkSection = :section WHERE t_teacher.idTeacher = :id";
 
         $binds = [
-            ["name" => 'name', 'value' => $teacherData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $teacherData['firstName'], 'type' => PDO::PARAM_STR],
-             ["name" => 'genre', 'value' => $teacherData['genre'], 'type' => PDO::PARAM_STR],
-             ["name" => 'nickName', 'value' => $teacherData['nickName'], 'type' => PDO::PARAM_STR],
-             ["name" => 'origin', 'value' => $teacherData['origin'], 'type' => PDO::PARAM_STR],
-             ["name" => 'section', 'value' => $teacherData['section'], 'type' => PDO::PARAM_INT],
-             ["name" => 'id', 'value' => $teacherData['id'], 'type' => PDO::PARAM_INT]
+            ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
+            ["name" => 'firstName', 'value' => $recipeData['firstName'], 'type' => PDO::PARAM_STR],
+             ["name" => 'genre', 'value' => $recipeData['genre'], 'type' => PDO::PARAM_STR],
+             ["name" => 'nickName', 'value' => $recipeData['nickName'], 'type' => PDO::PARAM_STR],
+             ["name" => 'origin', 'value' => $recipeData['origin'], 'type' => PDO::PARAM_STR],
+             ["name" => 'section', 'value' => $recipeData['section'], 'type' => PDO::PARAM_INT],
+             ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
@@ -153,7 +153,7 @@ class Database {
     /**
      * methode permettant de delete un enseignant
      */
-    public function deleteRecipe($idTeacher)
+    public function deleteRecipe($idRecette)
     {
         //supprime l'enseignant
         //avoir la requête sql 
@@ -163,7 +163,7 @@ class Database {
 
         //avoir la requête sql pour le delete.
         $binds = [
-            ["name" => "idTeacher", "value" => $idTeacher, "type" => PDO::PARAM_INT]
+            ["name" => "idTeacher", "value" => $idRecette, "type" => PDO::PARAM_INT]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
 
@@ -173,7 +173,7 @@ class Database {
     /**
      * methode permettant de récupérer les sections
      */
-    public function getSections()
+    public function getTypes()
     {
         //récupère la liste de toutes les section de la BD
         //appeler la méthode pour executer la requête 
