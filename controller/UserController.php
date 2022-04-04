@@ -47,8 +47,11 @@ class UserController extends Controller {
      */
     private function loginAction()
     {
+        $username = htmlspecialchars($_POST['user']);
+        $password = htmlspecialchars($_POST['password']);
+
         $database = new Database();
-        $response = $database->getOneUser($_POST['user'], $_POST['password']);
+        $response = $database->getOneUser($username, $password);
         
         // Si la connexion n'est pas faux
         if ($response != false) {

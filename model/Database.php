@@ -97,7 +97,7 @@ class Database {
         $bindTeacher = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
-        $reqRecipe = $this->queryPrepareExecute($queryOneTeacher,$bindTeacher);
+        $reqRecipe = $this->queryPrepareExecute($queryOneRecipe ,$bindTeacher);
         $returnRecipe=$this->formatData($reqRecipe);
         $this -> unsetData($reqRecipe);
         return $returnRecipe;
