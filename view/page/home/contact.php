@@ -1,4 +1,3 @@
-
 <body class="sub_page">
 <section class="book_section layout_padding">
   <div class="container">
