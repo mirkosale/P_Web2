@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * ETML
  * Auteur :  Cindy Hardegger
@@ -19,6 +19,7 @@ date_default_timezone_set('Europe/Zurich');
 include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
 include_once 'controller/ReceipeController.php';
+include_once 'controller/UserController.php';
 
 
 class MainController {
@@ -52,6 +53,9 @@ class MainController {
                 break;
             case 'receipe':
                 $link = new ReceipeController();
+                break;
+            case 'user':
+                $link = new UserController();
                 break;
             default:
                 $link = new HomeController();
