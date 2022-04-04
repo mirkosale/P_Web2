@@ -69,57 +69,58 @@ class Database {
     /**
      * methode permettant de récupèrer tout les enseignants
      */
-    public function getAllTeachers(){
+    public function getAllRecipe(){
         //récupère la liste de tous les enseignants de la BD
         //avoir la requête sql
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
         //retour tous les enseignants
-        $queryTeachers = "SELECT * FROM t_teacher ";
-        $reqTeachers = $this->querySimpleExecute($queryTeachers);
+        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recettes";
+        $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
-        $returnTeachers=$this->formatData($reqTeachers);
-        $this -> unsetData($reqTeachers);
-        return $returnTeachers;
+        $returnRecipe=$this->formatData($reqRecipe);
+        $this -> unsetData($reqRecipe);
+        return $returnRecipe;
     }
 
     /**
      * methode permettant de récupèrer un enseignant
      */
-    public function getOneTeacher($id){
+    public function getOneRecipe($id){
         // récupère la liste des informations pour 1 enseignant b 
         // avoir la requête sql pour 1 enseignant (utilisation de l'id)
         // appeler la méthode pour executer la requête
         // appeler la méthode pour avoir le résultat sous forme de tableau
         // retour l'enseignant
-        $queryOneTeacher = "SELECT * FROM t_teacher INNER JOIN t_section ON t_section.idSection = t_teacher.fkSection WHERE idTeacher=:varId";
+        $queryOneRecipe
+         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recettes INNER JOIN t_typedish ON t_recettes.fkTypeDish = t_typedish.idTypeDish WHERE idRecette=:varId";
         $bindTeacher = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
-        $reqTeachers = $this->queryPrepareExecute($queryOneTeacher,$bindTeacher);
-        $returnTeachers=$this->formatData($reqTeachers);
-        $this -> unsetData($reqTeachers);
-        return $returnTeachers;
+        $reqRecipe = $this->queryPrepareExecute($queryOneRecipe ,$bindTeacher);
+        $returnRecipe=$this->formatData($reqRecipe);
+        $this -> unsetData($reqRecipe);
+        return $returnRecipe;
     }
 
     /**
      * methode permettant d'ajouter un enseignant
      */
-    public function InsertTeacher($teacherData)
+    public function InsertRecipe($recipeData)
     {
         // insert les informations
         // avoir la requête sql
         // appeler la méthode pour executer la requête
-        $query = "INSERT INTO t_teacher (idTeacher, teaFirstname, teaName, teaGender, teaNickname, teaOrigine, fkSection) 
+        $query = "INSERT INTO t_recette (idRecette, recName, fkTypeDish, recListOfItems,recPreparation, recImage) 
                   VALUES (NULL, :firstName, :name, :genre, :nickName, :origin, :section)";
 
         $binds = [
-            ["name" => 'name', 'value' => $teacherData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $teacherData['firstName'], 'type' => PDO::PARAM_STR],
-            ["name" => 'genre', 'value' => $teacherData['genre'], 'type' => PDO::PARAM_STR],
-            ["name" => 'nickName', 'value' => $teacherData['nickName'], 'type' => PDO::PARAM_STR],
-            ["name" => 'origin', 'value' => $teacherData['origin'], 'type' => PDO::PARAM_STR],
-            ["name" => 'section', 'value' => $teacherData['section'], 'type' => PDO::PARAM_INT]
+            ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
+            ["name" => 'firstName', 'value' => $recipeData['firstName'], 'type' => PDO::PARAM_STR],
+            ["name" => 'genre', 'value' => $recipeData['genre'], 'type' => PDO::PARAM_STR],
+            ["name" => 'nickName', 'value' => $recipeData['nickName'], 'type' => PDO::PARAM_STR],
+            ["name" => 'origin', 'value' => $recipeData['origin'], 'type' => PDO::PARAM_STR],
+            ["name" => 'section', 'value' => $recipeData['section'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
@@ -128,7 +129,7 @@ class Database {
      /**
      * methode permettant de modifier un enseignant
      */
-    public function modifyTeacher($teacherData)
+    public function modifyRecipe($recipeData)
     {
         //modifie les informations du teacher
         //avoir la requête sql
@@ -137,13 +138,13 @@ class Database {
                      teaOrigine = :origin, fkSection = :section WHERE t_teacher.idTeacher = :id";
 
         $binds = [
-            ["name" => 'name', 'value' => $teacherData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $teacherData['firstName'], 'type' => PDO::PARAM_STR],
-             ["name" => 'genre', 'value' => $teacherData['genre'], 'type' => PDO::PARAM_STR],
-             ["name" => 'nickName', 'value' => $teacherData['nickName'], 'type' => PDO::PARAM_STR],
-             ["name" => 'origin', 'value' => $teacherData['origin'], 'type' => PDO::PARAM_STR],
-             ["name" => 'section', 'value' => $teacherData['section'], 'type' => PDO::PARAM_INT],
-             ["name" => 'id', 'value' => $teacherData['id'], 'type' => PDO::PARAM_INT]
+            ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
+            ["name" => 'firstName', 'value' => $recipeData['firstName'], 'type' => PDO::PARAM_STR],
+             ["name" => 'genre', 'value' => $recipeData['genre'], 'type' => PDO::PARAM_STR],
+             ["name" => 'nickName', 'value' => $recipeData['nickName'], 'type' => PDO::PARAM_STR],
+             ["name" => 'origin', 'value' => $recipeData['origin'], 'type' => PDO::PARAM_STR],
+             ["name" => 'section', 'value' => $recipeData['section'], 'type' => PDO::PARAM_INT],
+             ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
@@ -152,7 +153,7 @@ class Database {
     /**
      * methode permettant de delete un enseignant
      */
-    public function deleteTeacher($idTeacher)
+    public function deleteRecipe($idRecette)
     {
         //supprime l'enseignant
         //avoir la requête sql 
@@ -162,7 +163,7 @@ class Database {
 
         //avoir la requête sql pour le delete.
         $binds = [
-            ["name" => "idTeacher", "value" => $idTeacher, "type" => PDO::PARAM_INT]
+            ["name" => "idTeacher", "value" => $idRecette, "type" => PDO::PARAM_INT]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
 
@@ -172,7 +173,7 @@ class Database {
     /**
      * methode permettant de récupérer les sections
      */
-    public function getSections()
+    public function getTypes()
     {
         //récupère la liste de toutes les section de la BD
         //appeler la méthode pour executer la requête 
@@ -183,28 +184,25 @@ class Database {
         return $this->formatData($req);
     }
 
-    /**
-     * methode permettant de récupérer un utilisateur
-     */
-    public function getOneUser($username,$password)
+    public function getAllUsers()
     {
         //récupère un utilisateur de la BD
         //avoir la requête sql
         //appeler la méthode pour executer la requête
-        $query = 'SELECT * FROM t_user WHERE useLogin = :username AND usePassword = :password';
-        $binds = [
-            ["name" => "username", "value" => $username, "type" => PDO::PARAM_STR],
-            ["name" => "password", "value" => $password, "type" => PDO::PARAM_STR]
-        ];
-        $req = $this->queryPrepareExecute($query, $binds);
+        $query = 'SELECT * FROM t_user';
 
-        // Retour les sections sous forme de tableau associatif
-        return $this->formatData($req);
+        $req = $this->querySimpleExecute($query);
 
+        $result = $this->formatData($req);
+
+        var_dump($req);
+        var_dump($result);
+
+        return $result;   
     }
 
     /**
-     * methode permettant de récupérer tout les utilisateurs
+     * methode permettant de récupérer un utilisateur selon son ID
      */
     public function getUser($idUser){
         //récupère la liste de tous les utilisateur de la BD
@@ -218,25 +216,6 @@ class Database {
 
         // Retour les sections sous forme de tableau associatif
         return $this->formatData($req);
-
-    }
-    /** 
-     * methode permettant d'ajoute une session dans la base de données
-     */
-    public function addSession($idUser)
-    {
-        //insert une session a la BD
-        //avoir la requête sql
-        //appeler la méthode pour executer la requête
-        $query = "INSERT INTO t_session (idSession, fkUser) VALUES (NULL, :idUser)";
-        $binds =  [
-            ["name" => 'idUser', 'value' => $idUser, 'type' => PDO::PARAM_STR]
-        ];
-
-        $this->queryPrepareExecute($query, $binds);
-
-        // Retourne l'id de la session crée
-        return $this->getIdSessionByUserId($idUser);
     }
 
     /*
