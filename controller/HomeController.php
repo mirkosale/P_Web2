@@ -96,7 +96,7 @@ class HomeController extends Controller
      *
      * @return string
      */
-    private function checkSubmitAction()
+    private function loginAction()
     {
         $database = new Database();
         $response = $database->getOneUser($_POST['user'], $_POST['password']);
