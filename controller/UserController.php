@@ -25,7 +25,7 @@ class UserController extends Controller {
 
     private function connexionAction()
     {
-        if (isset($_SESSION['useLogin']))
+        if (!isset($_SESSION['useLogin']))
         {
             $view = file_get_contents('view/page/user/loginForm.php');
         }

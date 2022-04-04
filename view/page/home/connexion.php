@@ -3,7 +3,7 @@
         <div class="form_container">
             <div class="container">
                 <div class="heading_container">
-                    <form action="index.php?controller=home&action=login" method="post">
+                    <form action="index.php?controller=user&action=login" method="post">
                         <h2>Connexion</h2>
                 </div>
                 <label for="user"></label>

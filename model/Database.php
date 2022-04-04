@@ -271,5 +271,20 @@ class Database {
 
         return !$session ? null : $session[0];
     }
+
+    /**
+     * Méthode permettant d'avoir tous les types de plats
+     */
+    public function getAllTypedish()
+    {
+        $query = "SELECT typName FROM t_typedish";
+
+        $req = $this->querySimpleExecute($query);
+        $session = $this->formatData($req);
+
+        $this->unsetData($req);
+
+        return $session;
+    }
  }
 ?>
