@@ -23,11 +23,11 @@
                         if ($_GET['controller'] == 'home' && $_GET['action'] == 'index') {
                         ?>
                             <li class="nav-item active">
-                                <a class="nav-link" href="?controller=home&action=index">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="?controller=home&action=index">Accueil <span class="sr-only">(current)</span></a>
                             </li>
                         <?php } else { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="?controller=home&action=index">Home</a>
+                                <a class="nav-link" href="?controller=home&action=index">Accueil</a>
                             </li>
                         <?php } ?>
                         <?php
@@ -55,7 +55,7 @@
 
                     </ul>
                     <div class="user_option">
-                        <a href="?controller=user&action=connexion" class="user_link">
+                        <a href="?controller=user&action=connection" class="user_link">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         <a class="cart_link" href="#">
