@@ -69,43 +69,44 @@ class Database {
     /**
      * methode permettant de récupèrer tout les enseignants
      */
-    public function getAllTeachers(){
+    public function getAllRecipe(){
         //récupère la liste de tous les enseignants de la BD
         //avoir la requête sql
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
         //retour tous les enseignants
-        $queryTeachers = "SELECT * FROM t_teacher ";
-        $reqTeachers = $this->querySimpleExecute($queryTeachers);
+        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recettes";
+        $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
-        $returnTeachers=$this->formatData($reqTeachers);
-        $this -> unsetData($reqTeachers);
-        return $returnTeachers;
+        $returnRecipe=$this->formatData($reqRecipe);
+        $this -> unsetData($reqRecipe);
+        return $returnRecipe;
     }
 
     /**
      * methode permettant de récupèrer un enseignant
      */
-    public function getOneTeacher($id){
+    public function getOneRecipe($id){
         // récupère la liste des informations pour 1 enseignant b 
         // avoir la requête sql pour 1 enseignant (utilisation de l'id)
         // appeler la méthode pour executer la requête
         // appeler la méthode pour avoir le résultat sous forme de tableau
         // retour l'enseignant
-        $queryOneTeacher = "SELECT * FROM t_teacher INNER JOIN t_section ON t_section.idSection = t_teacher.fkSection WHERE idTeacher=:varId";
+        $queryOneRecipe
+         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recettes INNER JOIN t_typedish ON t_recettes.fkTypeDish = t_typedish.idTypeDish WHERE idRecette=:varId";
         $bindTeacher = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
-        $reqTeachers = $this->queryPrepareExecute($queryOneTeacher,$bindTeacher);
-        $returnTeachers=$this->formatData($reqTeachers);
-        $this -> unsetData($reqTeachers);
-        return $returnTeachers;
+        $reqRecipe = $this->queryPrepareExecute($queryOneTeacher,$bindTeacher);
+        $returnRecipe=$this->formatData($reqRecipe);
+        $this -> unsetData($reqRecipe);
+        return $returnRecipe;
     }
 
     /**
      * methode permettant d'ajouter un enseignant
      */
-    public function InsertTeacher($teacherData)
+    public function InsertRecipe($teacherData)
     {
         // insert les informations
         // avoir la requête sql
@@ -128,7 +129,7 @@ class Database {
      /**
      * methode permettant de modifier un enseignant
      */
-    public function modifyTeacher($teacherData)
+    public function modifyRecipe($teacherData)
     {
         //modifie les informations du teacher
         //avoir la requête sql
@@ -152,7 +153,7 @@ class Database {
     /**
      * methode permettant de delete un enseignant
      */
-    public function deleteTeacher($idTeacher)
+    public function deleteRecipe($idTeacher)
     {
         //supprime l'enseignant
         //avoir la requête sql 
