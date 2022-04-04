@@ -60,6 +60,7 @@ class ReceipeController extends Controller {
         $receipe = $receipeRepository->findOne($_GET['id']);
 
         $view = file_get_contents('view/page/customer/detail.php');
+        $view = file_get_contents('view/page/customer/detail.php');
 
         ob_start();
         eval('?>' . $view);

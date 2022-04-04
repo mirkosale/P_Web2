@@ -183,24 +183,6 @@ class Database {
         // Retour les sections sous forme de tableau associatif
         return $this->formatData($req);
     }
-    
-    /**
-     * methode permettant de récupérer une sections
-     */
-    public function getOneSections()
-    {
-        //récupère la liste de toutes les section de la BD
-        //avoir la requête sql
-        //appeler la méthode pour executer la requête
-        $query = 'SELECT * FROM t_section';
-        $binds = [
-            ["name" => "idSection", "value" => $idSection, "type" => PDO::PARAM_INT]
-        ];
-        $req = $this->queryPrepareExecute($query);
-
-        // Retour les sections sous forme de tableau associatif
-        return $this->formatData($req);
-    }
 
     /**
      * methode permettant de récupérer un utilisateur
@@ -289,20 +271,6 @@ class Database {
         $session = $this->formatData($req);
 
         return !$session ? null : $session[0];
-    }
-
-    /**
-    * methode permettant de supprimer une session avec l'id donné
-    */ 
-    public function deleteSession($idSession)
-    {
-        return !$session ? null : $session[0];
-        $query = 'DELETE FROM t_session WHERE idSession = :idSession';
-        $binds = [
-            ["name" => "idSession", "value" => $idSession, "type" => PDO::PARAM_INT]
-        ];
-        $req = $this->queryPrepareExecute($query, $binds);
-        return $this->formatData($req);
     }
  }
 ?>

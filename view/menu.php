@@ -8,7 +8,7 @@
             <nav class="navbar navbar-expand-lg custom_nav-container ">
                 <a class="navbar-brand" href="?controller=home&action=index">
                     <span>
-                        Feane
+                        Recettes
                     </span>
                 </a>
 
@@ -55,7 +55,7 @@
 
                     </ul>
                     <div class="user_option">
-                        <a href="?controller=home&action=connexion" class="user_link">
+                        <a href="?controller=user&action=connexion" class="user_link">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         <a class="cart_link" href="#">
