@@ -112,15 +112,14 @@ class Database {
         // avoir la requête sql
         // appeler la méthode pour executer la requête
         $query = "INSERT INTO t_recette (idRecette, recName, fkTypeDish, recListOfItems,recPreparation, recImage) 
-                  VALUES (NULL, :firstName, :name, :genre, :nickName, :origin, :section)";
+                  VALUES (NULL, :name, :itemList, :preparation, :image ,:typedish)";
 
         $binds = [
             ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $recipeData['firstName'], 'type' => PDO::PARAM_STR],
-            ["name" => 'genre', 'value' => $recipeData['genre'], 'type' => PDO::PARAM_STR],
-            ["name" => 'nickName', 'value' => $recipeData['nickName'], 'type' => PDO::PARAM_STR],
-            ["name" => 'origin', 'value' => $recipeData['origin'], 'type' => PDO::PARAM_STR],
-            ["name" => 'section', 'value' => $recipeData['section'], 'type' => PDO::PARAM_INT]
+            ["name" => 'firstName', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
+            ["name" => 'nickName', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
+            ["name" => 'origin', 'value' => $recipeData['image'], 'type' => PDO::PARAM_STR],
+            ["name" => 'section', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
@@ -134,16 +133,15 @@ class Database {
         //modifie les informations du teacher
         //avoir la requête sql
         // appeler la méthode pour executer la requête.
-        $query = "UPDATE t_teacher SET teaFirstname = :firstName, teaName = :name, teaGender = :genre, teaNickname = :nickName,
-                     teaOrigine = :origin, fkSection = :section WHERE t_teacher.idTeacher = :id";
+        $query = "UPDATE t_recette SET recName =  :name, recListOfItem = :itemList, recPreparation = :preparation,
+                     recImage = :image, fkTypeDish = :typedish WHERE t_recette.idRecette = :id";
 
         $binds = [
             ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $recipeData['firstName'], 'type' => PDO::PARAM_STR],
-             ["name" => 'genre', 'value' => $recipeData['genre'], 'type' => PDO::PARAM_STR],
-             ["name" => 'nickName', 'value' => $recipeData['nickName'], 'type' => PDO::PARAM_STR],
-             ["name" => 'origin', 'value' => $recipeData['origin'], 'type' => PDO::PARAM_STR],
-             ["name" => 'section', 'value' => $recipeData['section'], 'type' => PDO::PARAM_INT],
+            ["name" => 'firstName', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
+            ["name" => 'nickName', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
+            ["name" => 'origin', 'value' => $recipeData['image'], 'type' => PDO::PARAM_STR],
+            ["name" => 'section', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT],
              ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];
 
@@ -159,11 +157,11 @@ class Database {
         //avoir la requête sql 
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau.
-        $query = 'DELETE FROM t_teacher WHERE idTeacher = :idTeacher';
+        $query = 'DELETE FROM t_recette WHERE idRecette = :idRecette';
 
         //avoir la requête sql pour le delete.
         $binds = [
-            ["name" => "idTeacher", "value" => $idRecette, "type" => PDO::PARAM_INT]
+            ["name" => "idRecette", "value" => $idRecette, "type" => PDO::PARAM_INT]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
 
