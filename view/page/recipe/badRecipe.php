@@ -6,7 +6,7 @@
                 <div class="col-md-6">
                     <p>Cette recette n'existe pas.</p>
 
-                    <a href="?controller=receipe&action=list">Retour en arrière.</a>
+                    <a href="?controller=recipe&action=list">Retour en arrière.</a>
                 </div>
             </div>
         </div>

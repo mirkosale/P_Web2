@@ -6,7 +6,7 @@
  * Controler pour gérer les recettes
  */
 
-class ReceipeController extends Controller {
+class RecipeController extends Controller {
 
     /**
      * Permet de choisir l'action à effectuer
@@ -30,10 +30,10 @@ class ReceipeController extends Controller {
 
         // Instancie le modèle et va chercher les informations
         $db = new Database();
-        $receipes = $db->getAllRecipe();
+        $recipes = $db->getAllRecipe();
 
         // Charge le fichier pour la vue
-        $view = file_get_contents('view/page/receipe/list.php');
+        $view = file_get_contents('view/page/recipe/list.php');
 
 
         // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
@@ -55,9 +55,9 @@ class ReceipeController extends Controller {
     private function detailAction() {
 
         $db = new Database();
-        $receipe = $db->getOneRecipe($_GET['id']);;
+        $recipe = $db->getOneRecipe($_GET['id']);;
 
-        $view = file_get_contents('view/page/receipe/detail.php');
+        $view = file_get_contents('view/page/recipe/detail.php');
 
         ob_start();
         eval('?>' . $view);
@@ -83,7 +83,7 @@ class ReceipeController extends Controller {
 
         if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id']))
         {
-            $view = file_get_contents('view/page/receipe/badReceipe.php');
+            $view = file_get_contents('view/page/recipe/badRecipe.php');
         }
 
         if (isset($view))

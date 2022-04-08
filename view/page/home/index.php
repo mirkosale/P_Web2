@@ -51,11 +51,11 @@
           <div class="box">
             <div>
             <div class="img-box">
-              <img src="<?php $latestReceipe[0]['recImage'] ?>" alt="">
+              <img src="<?php $latestRecipe[0]['recImage'] ?>" alt="">
               </div>
               <div class="detail-box">
                 <h4>
-                  <?php echo $latestReceipe[0]['recName']; ?>
+                  <?php echo $latestRecipe[0]['recName']; ?>
                 </h4>
                 <p>
 
@@ -64,7 +64,7 @@
                   <h6>
                     Voir en détail
                   </h6>
-                  <?php echo '<a href="?controller=receipe&action=detail&id=' . $latestReceipe[0]['idRecette'] . '">';?>
+                  <?php echo '<a href="?controller=recipe&action=detail&id=' . $latestRecipe[0]['idRecette'] . '">';?>
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                       <g>
                         <g>
@@ -97,7 +97,7 @@
         
     </div>
     <div class="btn-box">
-      <a href="?controller=receipe&action=list">
+      <a href="?controller=recipe&action=list">
         Voir plus
       </a>
     </div>

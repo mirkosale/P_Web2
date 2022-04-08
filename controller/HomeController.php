@@ -32,7 +32,7 @@ class HomeController extends Controller
     private function indexAction()
     {
         $db = new Database();
-        $latestReceipe = $db->getLatestRecipe();
+        $latestRecipe = $db->getLatestRecipe();
 
         $view = file_get_contents('view/page/home/index.php');
 
@@ -61,7 +61,7 @@ class HomeController extends Controller
     }
 
     
-    private function checkReceipeAction($modifyOrAdd)
+    private function checkRecipeAction($modifyOrAdd)
     {
         
     }
