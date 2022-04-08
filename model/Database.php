@@ -67,33 +67,46 @@ class Database {
     }
 
     /**
-     * methode permettant de récupèrer tout les enseignants
+     * methode permettant de récupèrer tout les recettes
      */
     public function getAllRecipe(){
-        //récupère la liste de tous les enseignants de la BD
+        //récupère la liste de tous les recettes de la BD
         //avoir la requête sql
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
-        //retour tous les enseignants
-        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recettes";
+        //retour tous les recettes
+        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recette";
         $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
         $returnRecipe=$this->formatData($reqRecipe);
         $this -> unsetData($reqRecipe);
         return $returnRecipe;
     }
-
+    
+    public function getLatestRecipe(){
+        //récupère la liste de tous les recettes de la BD
+        //avoir la requête sql
+        //appeler la méthode pour executer la requête
+        //appeler la méthode pour avoir le résultat sous forme de tableau
+        //retour tous les recettes
+        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recette ORDER BY idRecette desc limit 1";
+        $reqRecipe = $this->querySimpleExecute($queryRecipe);
+         
+        $returnRecipe=$this->formatData($reqRecipe);
+        $this -> unsetData($reqRecipe);
+        return $returnRecipe;
+    }
     /**
-     * methode permettant de récupèrer un enseignant
+     * methode permettant de récupèrer un recette
      */
     public function getOneRecipe($id){
-        // récupère la liste des informations pour 1 enseignant b 
-        // avoir la requête sql pour 1 enseignant (utilisation de l'id)
+        // récupère la liste des informations pour 1 recette b 
+        // avoir la requête sql pour 1 recette (utilisation de l'id)
         // appeler la méthode pour executer la requête
         // appeler la méthode pour avoir le résultat sous forme de tableau
-        // retour l'enseignant
+        // retour l'recette
         $queryOneRecipe
-         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recettes INNER JOIN t_typedish ON t_recettes.fkTypeDish = t_typedish.idTypeDish WHERE idRecette=:varId";
+         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recette INNER JOIN t_typedish ON t_recette.fkTypeDish = t_typedish.idTypeDish WHERE idRecette=:varId";
         $bindTeacher = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
@@ -104,7 +117,7 @@ class Database {
     }
 
     /**
-     * methode permettant d'ajouter un enseignant
+     * methode permettant d'ajouter un recette
      */
     public function InsertRecipe($recipeData)
     {
@@ -126,7 +139,7 @@ class Database {
     }
 
      /**
-     * methode permettant de modifier un enseignant
+     * methode permettant de modifier un recette
      */
     public function modifyRecipe($recipeData)
     {
@@ -149,11 +162,11 @@ class Database {
     }
 
     /**
-     * methode permettant de delete un enseignant
+     * methode permettant de delete un recette
      */
     public function deleteRecipe($idRecette)
     {
-        //supprime l'enseignant
+        //supprime l'recette
         //avoir la requête sql 
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau.
@@ -175,7 +188,7 @@ class Database {
     {
         //récupère la liste de toutes les section de la BD
         //appeler la méthode pour executer la requête 
-        $query = 'SELECT * FROM t_section';
+        $query = 'SELECT * FROM t_typedish';
         $req = $this->querySimpleExecute($query);
 
         // Retour les sections sous forme de tableau associatif
@@ -255,7 +268,7 @@ class Database {
     public function getAllTypedish()
     {
         $query = "SELECT typName FROM t_typedish";
-
+00
         $req = $this->querySimpleExecute($query);
         $session = $this->formatData($req);
 
