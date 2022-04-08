@@ -260,6 +260,7 @@ select {
   word-wrap: normal;
   width: 100%;
   margin-bottom: 20px;
+  padding: 0.375rem 1.5rem;
 }
 
 button,

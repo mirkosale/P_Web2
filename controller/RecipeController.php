@@ -7,7 +7,6 @@
  */
 
 class RecipeController extends Controller {
-
     /**
      * Permet de choisir l'action à effectuer
      *
@@ -116,12 +115,67 @@ class RecipeController extends Controller {
     
         $typedish = $database->getAllTypedish();
 
-        $view = file_get_contents('view/page/home/contact.php');
+        $view = file_get_contents('view/page/recipe/addRecipe.php');
 
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
 
         return $content;
+    }
+
+    /**
+     * Vérifie que les champs ont bien été entrés correctement pour l'ajout d'une recette
+     */
+    private function checkAddAction()
+    {
+        $errors = array();
+
+        $database = new Database();  
+        
+        $name = htmlspecialchars($_POST["name"]);
+        $itemList = htmlspecialchars($_POST["itemList"]);
+        $preparation = htmlspecialchars($_POST["preparation"]);
+
+        /**
+         * Vérification que l'utilisateur ait bien entré le nom de la recette
+         */
+        if (!isset($name)) {
+            $errors[] = "Vous devez choisir le nom de votre recette";
+        }
+        
+        /**
+         * Vérification que l'utilisateur ait bien entré la list des ingrédients
+         */
+        if (!isset($itemList)) {
+            $errors[] = "Vous devez entrer une liste d'ingrédients";
+        } 
+        
+        /**
+         * Vérification que l'utilisateur ait bien entré la préparation de la recette
+         */
+        if (!isset($preparation)) {
+            $errors[] = "Vous devez entrer la préparation de la recette";
+        }
+        
+        /**
+         * Vérification de si l'utilisateur a mal rempli ses informations et écriture de la liste de ces dernières.
+         * S'il a bien rempli les informations, redirection à la page d'acceuil.
+         */
+        if (empty($errors)) {
+            $addRecipe = $database->InsertRecipe($name);
+            header("Location: .\\index.php");
+            die();
+        } else {
+        
+            /**
+             * Écriture de toutes les erreurs que l'utilisateur a provoquées.
+             */
+            foreach ($errors as $error) {
+                echo '<li>';
+                echo $error;
+                echo '</li>';
+            }
+        }        
     }
 }

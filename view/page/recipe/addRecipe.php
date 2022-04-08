@@ -3,14 +3,14 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Book A Table
+          Ajouter une recette
         </h2>
         <p style="color:red">*Informations obligatoires</p>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="?controller=recipe&action=checkContact">
+            <form action="?controller=recipe&action=checkAdd">
               <div class="was-validated">
                 <label for="name"><a style="color:red">*</a>Nom de la recette</label>
                 <input type="text" class="form-control" id="name" name="name" />
