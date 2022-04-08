@@ -8,7 +8,6 @@ Description: les données sont traitées et affichées directement dans la page 
 -->
 <?php
 
-
 class Database {
     // Variable de classe
     private $connector;
@@ -154,8 +153,8 @@ class Database {
             ["name" => 'itemList', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
             ["name" => 'preparation', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
             ["name" => 'image', 'value' => $recipeData['image'], 'type' => PDO::PARAM_LOB],
-            ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT]
-             ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
+            ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT],
+            ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
@@ -265,7 +264,7 @@ class Database {
     public function getAllTypedish()
     {
         $query = "SELECT typName FROM t_typedish";
-00
+
         $req = $this->querySimpleExecute($query);
         $session = $this->formatData($req);
 
@@ -280,4 +279,5 @@ class Database {
         
     }
  }
+
 ?>

@@ -18,7 +18,7 @@ date_default_timezone_set('Europe/Zurich');
 
 include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
-include_once 'controller/ReceipeController.php';
+include_once 'controller/RecipeController.php';
 include_once 'controller/UserController.php';
 
 
@@ -51,8 +51,8 @@ class MainController {
             case 'home':
                 $link = new HomeController();
                 break;
-            case 'receipe':
-                $link = new ReceipeController();
+            case 'recipe':
+                $link = new RecipeController();
                 break;
             case 'user':
                 $link = new UserController();

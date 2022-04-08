@@ -2,7 +2,7 @@
 
 	<h2>
 		<?php
-			echo $customer['conLastName'] . ' ' . $customer['conFirstName'];
+			echo "<h2>" . $recipe[0]["recName"] . "</h2>";
 		?>
 	</h2>
 	<!-- Three columns of text below the carousel -->

@@ -5,6 +5,7 @@
  * Date: 22.01.2019
  * Controler pour gérer les pages classiques
  */
+
 include_once 'model/Database.php';
 
 class HomeController extends Controller
@@ -30,6 +31,8 @@ class HomeController extends Controller
      */
     private function indexAction()
     {
+        $db = new Database();
+        $latestRecipe = $db->getLatestRecipe();
 
         $view = file_get_contents('view/page/home/index.php');
 
@@ -45,8 +48,12 @@ class HomeController extends Controller
      *
      * @return string
      */
-    private function contactAction()
+    private function addRecipeAction()
     {
+   
+        $database = new Database();
+    
+        $typedish = $database->getAllTypedish();
 
         $view = file_get_contents('view/page/home/contact.php');
 
@@ -58,7 +65,7 @@ class HomeController extends Controller
     }
 
     
-    private function checkReceipeAction($modifyOrAdd)
+    private function checkRecipeAction($modifyOrAdd)
     {
         
     }

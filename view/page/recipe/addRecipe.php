@@ -3,37 +3,45 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Book A Table
+          Ajouter une recette
         </h2>
+        <p style="color:red">*Informations obligatoires</p>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="?controller=recipe&action=checkContact">
+            <form action="?controller=recipe&action=checkAdd">
               <div class="was-validated">
                 <label for="name"><a style="color:red">*</a>Nom de la recette</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" />
+                <input type="text" class="form-control" id="name" name="name" />
               </div>
               <div>
-                <label for="typedish"><a style="color:red">*</a>Type de recette</label>
-                <input type="text" class="form-control" id="typedish" name="typedish" />
+              <label for="typedish"><a style="color:red">*</a>Type de plat</label>
+              <br>
+                <select name="typedish" id="typedish">
+                  <?php
+                  foreach ($typedish as $typedishName) {
+                    echo '<option value=' . $typedishName["idTypeDish"] . '>' . $typedishName["typName"] . '</option>';
+                  }
+                  ?>
+                </select>
               </div>
               <div>
                 <label for="itemList"><a style="color:red">*</a>Liste des ingrédients</label>
-                <textarea id="itemList" name="itemList"  rows="5"></textarea>
+                <textarea id="itemList" name="itemList" rows="5"></textarea>
               </div>
               <div>
                 <label for="preparation"><a style="color:red">*</a>Préparation</label>
                 <textarea id="preparation" name="preparation" rows="10"></textarea>
               </div>
               <div>
-                <label for="downloadFile"><a style="color:red">*</a>Image</label>
+                <label for="image"><a style="color:red">*</a>Image</label>
                 <br>
-                <input type="file" name="downloadFile" id="downloadFile" />
+                <input type="file" name="image" id="image" />
               </div>
               <div class="btn_box">
                 <button>
-                  Book Now
+                  Ajouter la recette
                 </button>
               </div>
             </form>
