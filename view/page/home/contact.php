@@ -15,20 +15,21 @@
                 <input type="text" class="form-control" id="firstname" name="firstname" />
               </div>
               <div>
-                <label for="name"><a style="color:red">*</a>Name</label>
-                <input type="text" class="form-control" placeholder="Phone Number" />
+                <label for="typedish"><a style="color:red">*</a>Type de recette</label>
+                <input type="text" class="form-control" id="typedish" name="typedish" />
               </div>
               <div>
-                <label for="name"><a style="color:red">*</a>Your firstname</label>
-                <input type="email" class="form-control" placeholder="Your Email" />
+                <label for="itemList"><a style="color:red">*</a>Liste des ingrédients</label>
+                <textarea id="itemList" name="itemList"  rows="5"></textarea>
               </div>
               <div>
-                <label for="name"><a style="color:red">*</a>Your firstname</label>
-                <input type="date" class="form-control">
+                <label for="preparation"><a style="color:red">*</a>Préparation</label>
+                <textarea id="preparation" name="preparation" rows="10"></textarea>
               </div>
               <div>
-                <label for="name"><a style="color:red">*</a>Your firstname</label>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <label for="downloadFile"><a style="color:red">*</a>Image</label>
+                <br>
+                <input type="file" name="downloadFile" id="downloadFile" />
               </div>
               <div class="btn_box">
                 <button>

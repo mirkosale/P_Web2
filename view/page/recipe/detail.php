@@ -2,7 +2,7 @@
 
 	<h2>
 		<?php
-			echo "<h2>" . $receipe[0]["recName"] . "</h2>";
+			echo "<h2>" . $recipe[0]["recName"] . "</h2>";
 		?>
 	</h2>
 	<!-- Three columns of text below the carousel -->

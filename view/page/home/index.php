@@ -51,7 +51,7 @@
           <div class="box">
             <div>
             <div class="img-box">
-              <img src="<?php $latestRecipe[0]['recImage'] ?>" alt="">
+            <?php echo '<img src="' . $latestRecipe[0]['recImage']. '" alt="Image de : ' . $latestRecipe[0]['recName'] .  '">';?>
               </div>
               <div class="detail-box">
                 <h4>
