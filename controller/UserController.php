@@ -6,8 +6,6 @@
  * Controler pour gérer les recettes
  */
 
-include_once 'model/UserRepository.php';
-
 class UserController extends Controller {
 
     /**
@@ -68,8 +66,6 @@ class UserController extends Controller {
         }
 
         header('Location: index.php?controller=user&action=badLogin');
-
-
     }
 
     private function badLoginAction()
@@ -87,6 +83,5 @@ class UserController extends Controller {
         session_destroy();
 
         header('Location: index.php');
-
     }
 }

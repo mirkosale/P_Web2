@@ -6,8 +6,6 @@
  * Controler pour gérer les recettes
  */
 
-include_once 'model/ReceipeRepository.php';
-
 class ReceipeController extends Controller {
 
     /**
@@ -31,8 +29,8 @@ class ReceipeController extends Controller {
     private function listAction() {
 
         // Instancie le modèle et va chercher les informations
-        $receipeRepository = new ReceipeRepository();
-        $receipes = $receipeRepository->findAll();
+        $db = new Database();
+        $receipes = $db->getAllRecipe();
 
         // Charge le fichier pour la vue
         $view = file_get_contents('view/page/receipe/list.php');
@@ -56,17 +54,53 @@ class ReceipeController extends Controller {
      */
     private function detailAction() {
 
-        $receipeRepository = new ReceipeRepository();
-        $receipe = $receipeRepository->findOne($_GET['id']);
+        $db = new Database();
+        $receipes = $db->getOneRecipe($_GET['id']);;
 
-        $view = file_get_contents('view/page/customer/detail.php');
-        $view = file_get_contents('view/page/customer/detail.php');
+        $view = file_get_contents('view/page/receipe/detail.php');
 
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
 
         return $content;
+    }
 
+    /**
+     * Supprime une recette de la base de données
+     */
+    private function deleteAction()
+    {
+        if (!isset($_SESSION['useLogin']))
+        {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1)
+        {
+            $view = file_get_contents('view/page/user/noRights.php');
+        }
+
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id']))
+        {
+            $view = file_get_contents('view/page/receipe/badReceipe.php');
+        }
+
+        if (isset($view))
+        {
+            ob_start();
+            eval('?>' . $view);
+            $content = ob_get_clean();
+    
+            return $content;
+        }
+        else
+        {
+            $db = new Database();
+            $db->deleteRecipe($_GET['id']);
+
+            header('Location: index.php');
+            die;
+        }
     }
 }
