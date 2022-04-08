@@ -34,7 +34,6 @@ class Database {
      * permet de préparer et d’exécuter une requête de type simple (sans where)
      */
     private function querySimpleExecute($query){
-        var_dump($query);
         $req = $this -> connector->query($query);
         return $req;
     }

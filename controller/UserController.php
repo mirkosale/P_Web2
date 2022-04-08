@@ -65,19 +65,15 @@ class UserController extends Controller {
             }
         }
 
-        header('Location: index.php?controller=user&action=badLogin');
-    }
-
-    private function badLoginAction()
-    {
         $view = file_get_contents('view/page/user/badLogin.php');
 
         ob_start();
         eval('?>' . $view);
-        $content = ob_get_clean();
+        $content = ob_get_clean();    
 
         return $content;
     }
+
     private function logoutAction()
     {
         session_destroy();
