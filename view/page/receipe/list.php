@@ -706,8 +706,8 @@
         </div>
       </div>
       <div class="btn-box">
-        <a href="">
-          View More
+        <a href="index.php?controller=recipe&action=addRecipe">
+          Ajouter une recette
         </a>
       </div>
     </div>

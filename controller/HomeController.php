@@ -45,8 +45,12 @@ class HomeController extends Controller
      *
      * @return string
      */
-    private function contactAction()
+    private function addRecipeAction()
     {
+   
+        $database = new Database();
+    
+        $typedish = $database->getAllTypedish();
 
         $view = file_get_contents('view/page/home/contact.php');
 
