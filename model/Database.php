@@ -206,9 +206,6 @@ class Database {
 
         $result = $this->formatData($req);
 
-        var_dump($req);
-        var_dump($result);
-
         return $result;   
     }
 
