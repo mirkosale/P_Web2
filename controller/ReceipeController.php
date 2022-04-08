@@ -55,7 +55,7 @@ class ReceipeController extends Controller {
     private function detailAction() {
 
         $db = new Database();
-        $receipes = $db->getOneRecipe($_GET['id']);;
+        $receipe = $db->getOneRecipe($_GET['id']);;
 
         $view = file_get_contents('view/page/receipe/detail.php');
 

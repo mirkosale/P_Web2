@@ -5,6 +5,7 @@
  * Date: 22.01.2019
  * Controler pour gérer les pages classiques
  */
+
 include_once 'model/Database.php';
 
 class HomeController extends Controller
@@ -30,6 +31,8 @@ class HomeController extends Controller
      */
     private function indexAction()
     {
+        $db = new Database();
+        $latestReceipe = $db->getLatestRecipe();
 
         $view = file_get_contents('view/page/home/index.php');
 
