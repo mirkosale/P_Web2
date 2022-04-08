@@ -273,5 +273,11 @@ class Database {
 
         return $session;
     }
+
+    public function SearchRecipe()
+    {
+
+        
+    }
  }
 ?>
