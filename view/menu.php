@@ -31,14 +31,14 @@
                             </li>
                         <?php } ?>
                         <?php
-                        if ($_GET['controller'] == 'receipe' && $_GET['action'] == 'list') {
+                        if ($_GET['controller'] == 'recipe' && $_GET['action'] == 'list') {
                         ?>
                             <li class="nav-item active">
-                                <a class="nav-link" href="?controller=receipe&action=list">Recettes <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="?controller=recipe&action=list">Recettes <span class="sr-only">(current)</span></a>
                             </li>
                         <?php } else { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="?controller=receipe&action=list">Recettes</a>
+                                <a class="nav-link" href="?controller=recipe&action=list">Recettes</a>
                             </li>
                         <?php } ?>
                         <?php

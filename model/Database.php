@@ -8,7 +8,6 @@ Description: les données sont traitées et affichées directement dans la page 
 -->
 <?php
 
-
 class Database {
     // Variable de classe
     private $connector;
@@ -264,7 +263,7 @@ class Database {
      */
     public function getAllTypedish()
     {
-        $query = "SELECT idTypeDish, typName FROM t_typedish";
+        $query = "SELECT typName FROM t_typedish";
 
         $req = $this->querySimpleExecute($query);
         $session = $this->formatData($req);
