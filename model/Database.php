@@ -116,10 +116,10 @@ class Database {
 
         $binds = [
             ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
-            ["name" => 'nickName', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
-            ["name" => 'origin', 'value' => $recipeData['image'], 'type' => PDO::PARAM_STR],
-            ["name" => 'section', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT]
+            ["name" => 'itemList', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
+            ["name" => 'preparation', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
+            ["name" => 'image', 'value' => $recipeData['image'], 'type' => PDO::PARAM_LOB],
+            ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
@@ -138,10 +138,10 @@ class Database {
 
         $binds = [
             ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
-            ["name" => 'firstName', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
-            ["name" => 'nickName', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
-            ["name" => 'origin', 'value' => $recipeData['image'], 'type' => PDO::PARAM_STR],
-            ["name" => 'section', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT],
+            ["name" => 'itemList', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
+            ["name" => 'preparation', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
+            ["name" => 'image', 'value' => $recipeData['image'], 'type' => PDO::PARAM_LOB],
+            ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT]
              ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];
 
