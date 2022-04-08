@@ -38,30 +38,28 @@
 
 <!-- food section -->
 
-<section class="food_section layout_padding-bottom">
-  <div class="container">
-    <div class="heading_container heading_center">
-      <h2>
-        Dernière recette
-      </h2>
-    </div>
+<section class="food_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Dernière recette
+        </h2>
+      </div>
 
 
     <div class="filters-content">
-      <div class="row grid">
           <div class="box">
             <div>
-              <div class="img-box">
-                <img src="<?php $latestReceipe[0]['recImage'] ?>" alt="">
+            <div class="img-box">
+              <img src="<?php $latestReceipe[0]['recImage'] ?>" alt="">
               </div>
               <div class="detail-box">
-                <h5>
-                  <?php
-                  echo $latestReceipe[0]['recName']; ?>
-                </h5>
+                <h4>
+                  <?php echo $latestReceipe[0]['recName']; ?>
+                </h4>
                 <p>
-                  Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
-                </p>
+
+              </p>
                 <div class="options">
                   <h6>
                     Voir en détail
@@ -107,65 +105,3 @@
 </section>
 
 <!-- end food section -->
-
-<!-- book section -->
-<section class="book_section layout_padding">
-  <div class="container">
-    <div class="heading_container">
-      <h2>
-        Book A Table
-      </h2>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form_container">
-          <form action="">
-            <div>
-              <input type="text" class="form-control" placeholder="Your Name" />
-            </div>
-            <div>
-              <input type="text" class="form-control" placeholder="Phone Number" />
-            </div>
-            <div>
-              <input type="email" class="form-control" placeholder="Your Email" />
-            </div>
-            <div>
-              <select class="form-control nice-select wide">
-                <option value="" disabled selected>
-                  How many persons?
-                </option>
-                <option value="">
-                  2
-                </option>
-                <option value="">
-                  3
-                </option>
-                <option value="">
-                  4
-                </option>
-                <option value="">
-                  5
-                </option>
-              </select>
-            </div>
-            <div>
-              <input type="date" class="form-control">
-            </div>
-            <div class="btn_box">
-              <button>
-                Book Now
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="map_container ">
-          <div id="googleMap"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- end book section -->
-
