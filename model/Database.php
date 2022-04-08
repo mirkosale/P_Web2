@@ -75,7 +75,7 @@ class Database {
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
         //retour tous les enseignants
-        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recettes";
+        $queryRecipe = "SELECT idRecette, recName, recListOfItems, recPreparation, recImage  FROM t_recette";
         $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
         $returnRecipe=$this->formatData($reqRecipe);
@@ -93,7 +93,7 @@ class Database {
         // appeler la méthode pour avoir le résultat sous forme de tableau
         // retour l'enseignant
         $queryOneRecipe
-         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recettes INNER JOIN t_typedish ON t_recettes.fkTypeDish = t_typedish.idTypeDish WHERE idRecette=:varId";
+         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recette INNER JOIN t_typedish ON t_recette.fkTypeDish = t_typedish.idTypeDish WHERE idRecette=:varId";
         $bindTeacher = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
@@ -141,8 +141,8 @@ class Database {
             ["name" => 'itemList', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
             ["name" => 'preparation', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
             ["name" => 'image', 'value' => $recipeData['image'], 'type' => PDO::PARAM_LOB],
-            ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT]
-             ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
+            ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT],
+            ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];
 
         $this->queryPrepareExecute($query, $binds);
