@@ -138,6 +138,7 @@ class Database {
      */
     public function InsertRecipe($recipeData)
     {
+        var_dump($recipeData);
         // insert les informations
         // avoir la requête sql
         // appeler la méthode pour executer la requête

@@ -210,7 +210,7 @@ class RecipeController extends Controller
             $recipeData["name"] = $name;
             $recipeData["itemList"] = $itemList;
             $recipeData["preparation"] = $preparation;
-            $recipeData["image"] = $_FILES["image"];
+            $recipeData["image"] = $_FILES["image"]["name"];
             $recipeData["typedish"] = $typedish;
             $addRecipe = $database->InsertRecipe($recipeData);
             $source = $_FILES["image"]["tmp_name"];
