@@ -45,6 +45,7 @@ class Database {
         foreach($binds as $key => $value){
             $req->bindValue($value['name'], $value["value"], $value["type"]);
         }
+        var_dump($req);
         $req->execute();
 
         return $req;
@@ -137,11 +138,12 @@ class Database {
      */
     public function InsertRecipe($recipeData)
     {
+        var_dump($recipeData);
         // insert les informations
         // avoir la requête sql
         // appeler la méthode pour executer la requête
-        $query = "INSERT INTO t_recipe (idRecipe, recName, fkTypeDish, recListOfItems,recPreparation, recImage) 
-                  VALUES (NULL, :name, :itemList, :preparation, :image ,:typedish)";
+        $query = "INSERT INTO t_recipe (recName, fkTypeDish, recListOfItems, recPreparation, recImage) 
+                  VALUES (:name, :typedish, :itemList, :preparation, :image)";
 
         $binds = [
             ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
@@ -292,8 +294,7 @@ class Database {
 
     public function SearchRecipe()
     {
-
-        
+        $query="";
     }
  }
 

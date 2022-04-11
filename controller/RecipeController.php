@@ -30,6 +30,7 @@ class RecipeController extends Controller
      */
     private function listAction()
     {
+
         // Instancie le modèle et va chercher les informations
         $db = new Database();
         $dishTypes = $db->getAllTypedish();
@@ -144,14 +145,17 @@ class RecipeController extends Controller
      */
     private function checkAddAction()
     {
+
+
         $errors = array();
+        $recipeData = array();
 
         $database = new Database();
 
         $name = htmlspecialchars($_POST["name"]);
         $itemList = htmlspecialchars($_POST["itemList"]);
         $preparation = htmlspecialchars($_POST["preparation"]);
-
+        $typedish = $_POST["typedish"];
         /**
          * Vérification que l'utilisateur ait bien entré le nom de la recette
          */
@@ -174,12 +178,37 @@ class RecipeController extends Controller
         }
 
         /**
+         * Vérification que l'utilisateur ait bien entré une image ainsi que le bon format et pas trop lourde
+         */
+        if (!empty($_FILES["image"])) {
+            if ($_FILES["image"]["type"] == "image/jpeg"
+                || $_FILES["image"]["type"] == "image/png"
+                || $_FILES["image"]["type"] == "image/jpg"
+            ) {
+                if ($_FILES["image"]["error"] == 1) {
+                    $errors[] = "La taille est trop élévée, taille max 2MO";
+                }
+            } else {
+                $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
+            }
+        } else {
+            $errors[] = "Vous devez insérrez une image !";
+        }
+
+        /**
          * Vérification de si l'utilisateur a mal rempli ses informations et écriture de la liste de ces dernières.
-         * S'il a bien rempli les informations, redirection à la page d'acceuil.
+         * S'il a bien rempli les informations, ajout des informations dans la BDD et redirection à la page d'acceuil.
          */
         if (empty($errors)) {
-            $addRecipe = $database->InsertRecipe($name);
-            header("Location: .\\index.php");
+            $recipeData["name"] = $name;
+            $recipeData["itemList"] = $itemList;
+            $recipeData["preparation"] = $preparation;
+            $recipeData["image"] = $_FILES["image"]["name"];
+            $recipeData["typedish"] = $typedish;
+            $addRecipe = $database->InsertRecipe($recipeData);
+            $source = $_FILES["image"]["tmp_name"];
+            $destination = "images/" . date("YmdHis") . $_FILES["image"]["name"];
+            move_uploaded_file($source, $destination);
             die();
         } else {
 
