@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ETML
  * Auteur : Cindy Hardegger
@@ -6,13 +7,15 @@
  * Controler pour gérer les recettes
  */
 
-class RecipeController extends Controller {
+class RecipeController extends Controller
+{
     /**
      * Permet de choisir l'action à effectuer
      *
      * @return mixed
      */
-    public function display() {
+    public function display()
+    {
 
         $action = $_GET['action'] . "Action";
 
@@ -25,36 +28,29 @@ class RecipeController extends Controller {
      *
      * @return string
      */
-    private function listAction() {
-
+    private function listAction()
+    {
         // Instancie le modèle et va chercher les informations
         $db = new Database();
+        $dishTypes = $db->getAllTypedish();
 
-        if (isset($_GET['sort']))
+        if (!isset($_GET['sort']) || $_GET['sort'] == 'all') 
+        {
+            $recipes = $db->getAllRecipe();
+        } 
+        else
         {
             $sort = trim(htmlspecialchars($_GET['sort']));
 
-            switch ($sort)
+            $recipes = $db->getAllRecipeSort($sort);
+
+            if (!isset($recipes))
             {
-                case "entry": 
-                {
-
-                }
-
-
-                default: 
-                {
-                    $view = file_get_contents('view/page/recipe/badSort.php');
-                }
+                $view = file_get_contents('view/page/recipe/badSort.php');
             }
         }
-        else
-        {
-            $recipes = $db->getAllRecipe();
-        }
 
-        if (!isset($view))
-        {
+        if (!isset($view)) {
             // Charge le fichier pour la vue
             $view = file_get_contents('view/page/recipe/list.php');
         }
@@ -75,7 +71,8 @@ class RecipeController extends Controller {
      *
      * @return string
      */
-    private function detailAction() {
+    private function detailAction()
+    {
 
         $db = new Database();
         $recipe = $db->getOneRecipe($_GET['id']);;
@@ -94,31 +91,25 @@ class RecipeController extends Controller {
      */
     private function deleteAction()
     {
-        if (!isset($_SESSION['useLogin']))
-        {
+        if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
 
-        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1)
-        {
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
             $view = file_get_contents('view/page/user/noRights.php');
         }
 
-        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id']))
-        {
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id'])) {
             $view = file_get_contents('view/page/recipe/badRecipe.php');
         }
 
-        if (isset($view))
-        {
+        if (isset($view)) {
             ob_start();
             eval('?>' . $view);
             $content = ob_get_clean();
-    
+
             return $content;
-        }
-        else
-        {
+        } else {
             $db = new Database();
             $db->deleteRecipe($_GET['id']);
 
@@ -134,9 +125,9 @@ class RecipeController extends Controller {
      */
     private function addRecipeAction()
     {
-   
+
         $database = new Database();
-    
+
         $typedish = $database->getAllTypedish();
 
         $view = file_get_contents('view/page/recipe/addRecipe.php');
@@ -155,8 +146,8 @@ class RecipeController extends Controller {
     {
         $errors = array();
 
-        $database = new Database();  
-        
+        $database = new Database();
+
         $name = htmlspecialchars($_POST["name"]);
         $itemList = htmlspecialchars($_POST["itemList"]);
         $preparation = htmlspecialchars($_POST["preparation"]);
@@ -167,21 +158,21 @@ class RecipeController extends Controller {
         if (!isset($name)) {
             $errors[] = "Vous devez choisir le nom de votre recette";
         }
-        
+
         /**
          * Vérification que l'utilisateur ait bien entré la list des ingrédients
          */
         if (!isset($itemList)) {
             $errors[] = "Vous devez entrer une liste d'ingrédients";
-        } 
-        
+        }
+
         /**
          * Vérification que l'utilisateur ait bien entré la préparation de la recette
          */
         if (!isset($preparation)) {
             $errors[] = "Vous devez entrer la préparation de la recette";
         }
-        
+
         /**
          * Vérification de si l'utilisateur a mal rempli ses informations et écriture de la liste de ces dernières.
          * S'il a bien rempli les informations, redirection à la page d'acceuil.
@@ -191,7 +182,7 @@ class RecipeController extends Controller {
             header("Location: .\\index.php");
             die();
         } else {
-        
+
             /**
              * Écriture de toutes les erreurs que l'utilisateur a provoquées.
              */
@@ -200,6 +191,6 @@ class RecipeController extends Controller {
                 echo $error;
                 echo '</li>';
             }
-        }        
+        }
     }
 }

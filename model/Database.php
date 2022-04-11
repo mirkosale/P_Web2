@@ -74,7 +74,7 @@ class Database {
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
         //retour tous les recettes
-        $queryRecipe = "SELECT idRecipe, recName,recListOfItems,recPreparation,recImage  FROM t_recipe";
+        $queryRecipe = "SELECT *  FROM t_recipe";
         $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
         $returnRecipe=$this->formatData($reqRecipe);
@@ -83,15 +83,15 @@ class Database {
     }
 
     public function getAllRecipeSort($id){
-        //récupère la liste de tous les recettes de la BD
+        //récupère la liste de tous les recettes de la BD où le type de plat correspond à celui demandé
         //avoir la requête sql
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
         //retour tous les recettes
         $queryOneRecipe
-         = "SELECT recName,recListOfItems,recPreparation,recImage,typName INNER JOIN t_typedish ON t_recipe.fkTypeDish = t_typedish.idTypeDish WHERE typName =:varId";
+         = "SELECT * FROM t_recipe WHERE fkTypeDish = :varId";
         $bindReceipe = array(
-            array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_STR)
+            array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
         $reqRecipe = $this->queryPrepareExecute($queryOneRecipe ,$bindReceipe);
         $returnRecipe=$this->formatData($reqRecipe);
@@ -280,7 +280,7 @@ class Database {
      */
     public function getAllTypedish()
     {
-        $query = "SELECT typName FROM t_typedish";
+        $query = "SELECT * FROM t_typedish";
 
         $req = $this->querySimpleExecute($query);
         $session = $this->formatData($req);
