@@ -207,8 +207,9 @@ class RecipeController extends Controller
             $recipeData["typedish"] = $typedish;
             $addRecipe = $database->InsertRecipe($recipeData);
             $source = $_FILES["image"]["tmp_name"];
-            $destination = "images/" . date("YmdHis") . $_FILES["image"]["name"];
+            $destination = "resources/image/" . date("YmdHis") . $_FILES["image"]["name"];
             move_uploaded_file($source, $destination);
+            header('Location: index.php');
             die();
         } else {
 
