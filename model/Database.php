@@ -82,6 +82,23 @@ class Database {
         $this -> unsetData($reqRecipe);
         return $returnRecipe;
     }
+
+    public function getAllRecipeSort($id){
+        //récupère la liste de tous les recettes de la BD
+        //avoir la requête sql
+        //appeler la méthode pour executer la requête
+        //appeler la méthode pour avoir le résultat sous forme de tableau
+        //retour tous les recettes
+        $queryOneRecipe
+         = "SELECT recName,recListOfItems,recPreparation,recImage,typName INNER JOIN t_typedish ON t_recipe.fkTypeDish = t_typedish.idTypeDish WHERE typName =:varId";
+        $bindReceipe = array(
+            array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_STR)
+        );
+        $reqRecipe = $this->queryPrepareExecute($queryOneRecipe ,$bindReceipe);
+        $returnRecipe=$this->formatData($reqRecipe);
+        $this -> unsetData($reqRecipe);
+        return $returnRecipe;
+    }
     
     public function getLatestRecipe(){
         //récupère la liste de tous les recettes de la BD
@@ -107,10 +124,10 @@ class Database {
         // retour l'recette
         $queryOneRecipe
          = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recipe INNER JOIN t_typedish ON t_recipe.fkTypeDish = t_typedish.idTypeDish WHERE idRecipe=:varId";
-        $bindTeacher = array(
+        $bindReceipe = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
-        $reqRecipe = $this->queryPrepareExecute($queryOneRecipe ,$bindTeacher);
+        $reqRecipe = $this->queryPrepareExecute($queryOneRecipe ,$bindReceipe);
         $returnRecipe=$this->formatData($reqRecipe);
         $this -> unsetData($reqRecipe);
         return $returnRecipe;
