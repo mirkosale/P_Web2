@@ -7,7 +7,7 @@
      */
 
     $DB_SERVER = "localhost";
-    $DB_NAME = "db_recettes";
-    $DB_USER = "dbUser_recette";
+    $DB_NAME = "db_recipe";
+    $DB_USER = "dbUser_recipe";
     $DB_PASSWORD = ".Etml-";
 ?>

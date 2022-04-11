@@ -74,7 +74,7 @@ class Database {
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
         //retour tous les recettes
-        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recette";
+        $queryRecipe = "SELECT idRecipe, recName,recListOfItems,recPreparation,recImage  FROM t_recipe";
         $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
         $returnRecipe=$this->formatData($reqRecipe);
@@ -88,7 +88,7 @@ class Database {
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau
         //retour tous les recettes
-        $queryRecipe = "SELECT idRecette, recName,recListOfItems,recPreparation,recImage  FROM t_recette ORDER BY idRecette desc limit 1";
+        $queryRecipe = "SELECT idRecipe, recName,recListOfItems,recPreparation,recImage  FROM t_recipe ORDER BY idRecipe desc limit 1";
         $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
         $returnRecipe=$this->formatData($reqRecipe);
@@ -105,7 +105,7 @@ class Database {
         // appeler la méthode pour avoir le résultat sous forme de tableau
         // retour l'recette
         $queryOneRecipe
-         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recette INNER JOIN t_typedish ON t_recette.fkTypeDish = t_typedish.idTypeDish WHERE idRecette=:varId";
+         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recipe INNER JOIN t_typedish ON t_recipe.fkTypeDish = t_typedish.idTypeDish WHERE idRecipe=:varId";
         $bindTeacher = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
@@ -123,7 +123,7 @@ class Database {
         // insert les informations
         // avoir la requête sql
         // appeler la méthode pour executer la requête
-        $query = "INSERT INTO t_recette (idRecette, recName, fkTypeDish, recListOfItems,recPreparation, recImage) 
+        $query = "INSERT INTO t_recipe (idRecipe, recName, fkTypeDish, recListOfItems,recPreparation, recImage) 
                   VALUES (NULL, :name, :itemList, :preparation, :image ,:typedish)";
 
         $binds = [
@@ -145,8 +145,8 @@ class Database {
         //modifie les informations du teacher
         //avoir la requête sql
         // appeler la méthode pour executer la requête.
-        $query = "UPDATE t_recette SET recName =  :name, recListOfItem = :itemList, recPreparation = :preparation,
-                     recImage = :image, fkTypeDish = :typedish WHERE t_recette.idRecette = :id";
+        $query = "UPDATE t_recipe SET recName =  :name, recListOfItem = :itemList, recPreparation = :preparation,
+                     recImage = :image, fkTypeDish = :typedish WHERE t_recipe.idRecipe = :id";
 
         $binds = [
             ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
@@ -163,17 +163,17 @@ class Database {
     /**
      * methode permettant de delete un recette
      */
-    public function deleteRecipe($idRecette)
+    public function deleteRecipe($idRecipe)
     {
         //supprime l'recette
         //avoir la requête sql 
         //appeler la méthode pour executer la requête
         //appeler la méthode pour avoir le résultat sous forme de tableau.
-        $query = 'DELETE FROM t_recette WHERE idRecette = :idRecette';
+        $query = 'DELETE FROM t_recipe WHERE idRecipe = :idRecipe';
 
         //avoir la requête sql pour le delete.
         $binds = [
-            ["name" => "idRecette", "value" => $idRecette, "type" => PDO::PARAM_INT]
+            ["name" => "idRecipe", "value" => $idRecipe, "type" => PDO::PARAM_INT]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
 
