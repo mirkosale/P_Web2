@@ -29,11 +29,35 @@ class RecipeController extends Controller {
 
         // Instancie le modèle et va chercher les informations
         $db = new Database();
-        $recipes = $db->getAllRecipe();
 
-        // Charge le fichier pour la vue
-        $view = file_get_contents('view/page/recipe/list.php');
+        if (isset($_GET['sort']))
+        {
+            $sort = trim(htmlspecialchars($_GET['sort']));
 
+            switch ($sort)
+            {
+                case "entry": 
+                {
+
+                }
+
+
+                default: 
+                {
+                    $view = file_get_contents('view/page/recipe/badSort.php');
+                }
+            }
+        }
+        else
+        {
+            $recipes = $db->getAllRecipe();
+        }
+
+        if (!isset($view))
+        {
+            // Charge le fichier pour la vue
+            $view = file_get_contents('view/page/recipe/list.php');
+        }
 
         // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
         // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
