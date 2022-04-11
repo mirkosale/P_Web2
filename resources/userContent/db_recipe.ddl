@@ -19,14 +19,10 @@ use db_recipe;
 -- Tables Section
 -- _____________ 
 
-drop table if exists t_note;
-drop table if exists t_recipe;
-drop table if exists t_user;
-
 create table t_note (
      idNote int auto_increment not null,
      notStars int(1) not null,
-     fkrecipe int not null,
+     fkRecipe int not null,
      constraint ID_t_note_ID primary key (idNote)
 	 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -36,7 +32,6 @@ create table t_recipe (
      recListOfItems varchar(32767) not null,
      recPreparation varchar(32767) not null,
      recImage blob not null,
-     fkNote int default null,
      fkTypeDish int not null,
      constraint ID_t_recipe_ID primary key (idRecipe)
 	 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -44,7 +39,6 @@ create table t_recipe (
 create table t_typedish (
      idTypeDish  int auto_increment not null,
      typName varchar(30) not null,
-     fkrecipe int not null,
      constraint ID_t_typedish_ID primary key (idTypeDish)
 	 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -59,13 +53,13 @@ create table t_user (
 -- Constraints Section
 -- ___________________ 
 
-alter table t_recipe add constraint REF_t_rec_t_not_FK
-     foreign key (fkNote)
-     references t_note(idNote);
+alter table t_note add constraint REF_t_not_t_rec_FK
+     foreign key (fkRecipe)
+     references t_recipe (idRecipe);
 
 alter table t_recipe add constraint REF_t_rec_t_typ_FK
      foreign key (fkTypeDish)
-     references t_typedish(idTypeDish);
+     references t_typedish (idTypeDish);
 
 -- Index Section
 -- _____________ 
@@ -73,11 +67,11 @@ alter table t_recipe add constraint REF_t_rec_t_typ_FK
 create unique index ID_t_note_IND
      on t_note (idNote);
 
+create index REF_t_not_t_rec_IND
+     on t_note (fkRecipe);
+
 create unique index ID_t_recipe_IND
      on t_recipe (idRecipe);
-
-create index REF_t_rec_t_not_IND
-     on t_recipe (fkNote);
 
 create index REF_t_rec_t_typ_IND
      on t_recipe (fkTypeDish);
