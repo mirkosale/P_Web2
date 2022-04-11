@@ -275,7 +275,7 @@ class Database {
 
     public function SearchRecipe()
     {
-
+        $query="";
         
     }
  }
