@@ -45,7 +45,6 @@ class Database {
         foreach($binds as $key => $value){
             $req->bindValue($value['name'], $value["value"], $value["type"]);
         }
-        var_dump($req);
         $req->execute();
 
         return $req;
@@ -138,7 +137,6 @@ class Database {
      */
     public function InsertRecipe($recipeData)
     {
-        var_dump($recipeData);
         // insert les informations
         // avoir la requête sql
         // appeler la méthode pour executer la requête
