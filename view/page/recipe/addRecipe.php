@@ -10,8 +10,8 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="?controller=recipe&action=checkAdd">
-              <div class="was-validated">
+            <form action="index.php?controller=recipe&action=checkAdd" method="post" enctype="multipart/form-data">
+              <div>
                 <label for="name"><a style="color:red">*</a>Nom de la recette</label>
                 <input type="text" class="form-control" id="name" name="name" />
               </div>
@@ -35,15 +35,14 @@
                 <textarea id="preparation" name="preparation" rows="10"></textarea>
               </div>
               <div>
+                
                 <label for="image"><a style="color:red">*</a>Image</label>
                 <br>
                 <input type="file" name="image" id="image" />
               </div>
-              <div class="btn_box">
-                <button>
+                <button type="submit">
                   Ajouter la recette
                 </button>
-              </div>
             </form>
           </div>
         </div>
