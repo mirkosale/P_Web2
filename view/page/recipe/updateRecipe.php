@@ -13,22 +13,25 @@
                         <form action="index.php?controller=recipe&action=checkAdd" method="post"
                             enctype="multipart/form-data">
                             <?php
+                            foreach($recipes as $recipe)
+                            {
+
               echo '<div>';
-              echo '  <label for="name"><a style="color:red">*</a>Nom de la recette</label>';
-                <input type="text" class="form-control" id="name" name="name" />
-              </div>
-              <div>
-              <label for="typedish"><a style="color:red">*</a>Type de plat</label>
-              <br>
-                <select name="typedish" id="typedish">
-                  <?php
+              echo '<label for="name"><a style="color:red">*</a>Nom de la recette</label>';
+              echo '<input type="text" class="form-control" id="name" name="name" value="' . $recipe["recName"] . '" />';
+              echo '</div>' . '<div>';
+              echo '<label for="typedish"><a style="color:red">*</a>Type de plat</label>';
+              echo '<br>';
+              echo '<select name="typedish" id="typedish">';
                   foreach ($typedish as $typedishName) {
-                    echo '<option value=' . $typedishName["idTypeDish"] . '>' . $typedishName["typName"] . '</option>';
+                    if ($nameSection["secName"] == $teacher["secName"]) {
+                        echo '<option value=' . $typedishName["idTypeDish"] . 'selected>' . $typedishName["typName"] . '</option>';
+                    } else {
+                        echo '<option value=' . $typedishName["idTypeDish"] . '>' . $typedishName["typName"] . '</option>';
+                    }
                   }
-                  ?>
-                            </select>
-                    </div>
-                    <div>
+                echo '</select>';
+                echo '</div>' . '<div>';
                         <label for="itemList"><a style="color:red">*</a>Liste des ingrédients</label>
                         <textarea id="itemList" name="itemList" rows="5"></textarea>
                     </div>
@@ -42,18 +45,19 @@
                         <br>
                         <input type="file" name="image" id="image" />
                     </div>
+                }
                     <button type="submit">
                         Ajouter la recette
                     </button>
                     </form>
                     ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="map_container ">
+                        <div id="googleMap"></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="map_container ">
-                    <div id="googleMap"></div>
-                </div>
-            </div>
-        </div>
         </div>
     </section>
