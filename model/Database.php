@@ -8,7 +8,6 @@ Description: les données sont traitées et affichées directement dans la page 
 -->
 <?php
 
-
 class Database {
     // Variable de classe
     private $connector;
@@ -272,5 +271,12 @@ class Database {
 
         return $session;
     }
+
+    public function SearchRecipe()
+    {
+
+        
+    }
  }
+
 ?>

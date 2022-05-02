@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="?controller=receipe&action=checkContact">
+            <form action="?controller=recipe&action=checkContact">
               <div class="was-validated">
                 <label for="name"><a style="color:red">*</a>Nom de la recette</label>
                 <input type="text" class="form-control" id="firstname" name="firstname" />
