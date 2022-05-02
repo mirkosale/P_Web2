@@ -32,25 +32,20 @@
                   }
                 echo '</select>';
                 echo '</div>' . '<div>';
-                        <label for="itemList"><a style="color:red">*</a>Liste des ingrédients</label>
-                        <textarea id="itemList" name="itemList" rows="5"></textarea>
-                    </div>
-                    <div>
-                        <label for="preparation"><a style="color:red">*</a>Préparation</label>
-                        <textarea id="preparation" name="preparation" rows="10"></textarea>
-                    </div>
-                    <div>
-
-                        <label for="image"><a style="color:red">*</a>Image</label>
-                        <br>
-                        <input type="file" name="image" id="image" />
-                    </div>
+                echo '<label for="itemList"><a style="color:red">*</a>Liste des ingrédients</label>';
+                echo '<textarea id="itemList" name="itemList" rows="5">' . $recipe["recListOfItems"] . '</textarea>';
+                echo '</div>' . '<div>';
+                echo '<label for="preparation"><a style="color:red">*</a>Préparation</label>';
+                echo '<textarea id="preparation" name="preparation" rows="10">' . $recipe["recPreparation"] . '</textarea>';
+                echo '</div>' . '<div>';
+                echo '<label for="image"><a style="color:red">*</a>Image</label>' . '<br>';
+                echo '<input type="file" name="image" id="image" />' . '</div>';
                 }
+                ?>
                     <button type="submit">
                         Ajouter la recette
                     </button>
                     </form>
-                    ?>
                     </div>
                 </div>
                 <div class="col-md-6">
