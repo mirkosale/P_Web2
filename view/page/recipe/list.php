@@ -39,6 +39,7 @@
             foreach ($recipes as $recipe)
             {
           ?>
+<<<<<<< HEAD
                     <div class="col-sm-6 col-lg-4 all pizza">
                         <div class="box">
                             <div>
@@ -59,6 +60,25 @@
                                             <g>
                                                 <g>
                                                     <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+=======
+            <div class="col-sm-6 col-lg-4 all pizza">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                  <?php echo '<img src="./resources/images/' . $recipe['recImage'] . '" alt="Image de : ' . $recipe['recName'] . '">';?>
+                </div>
+                  <div class="detail-box">
+                  <?php echo '<h5>' . $recipe['recName'] . '</h5>'; ?>
+                    <div class="options">
+                      <h6>
+                        Voir en détail
+                      </h6>
+                      <?php echo '<a href="?controller=recipe&action=detail&id=' . $recipe['idRecipe'] . '">'; ?>
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                          <g>
+                            <g>
+                              <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+>>>>>>> 2675545297f462115348c34f55e0024321f862c5
                           c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
                                                 </g>
                                             </g>
