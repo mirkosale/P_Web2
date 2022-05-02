@@ -408,7 +408,7 @@ a:focus {
       height: 175px;
       margin-right: 15px;
       position: relative;
-      transition: all 1.5s;
+      transition: all .1.5s;
       border-radius: 100%;
       border: 5px solid $primary1;
       overflow: hidden;
@@ -458,14 +458,15 @@ a:focus {
       }
     }
   }
+
 }
+
 // end offer section
 
 
 // food section
 
 .food_section {
-
   .filters_menu {
     padding: 0;
     display: flex;
@@ -495,17 +496,6 @@ a:focus {
     border-radius: 15px;
     overflow: hidden;
     background: linear-gradient(to bottom, #f1f2f3 25px, $primary2 25px);
-
-    .img-box {
-      background: #f1f2f3;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 215px;
-      border-radius: 0 0 0 45px;
-      margin: -1px;
-      padding: 25px;
-
 
     }
 
@@ -553,7 +543,7 @@ a:focus {
         }
       }
     }
-  }
+  
 
   .btn-box {
     display: flex;
