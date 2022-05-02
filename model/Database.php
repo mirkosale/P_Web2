@@ -292,7 +292,7 @@ class Database {
 
     public function SearchRecipe()
     {
-        $query="";
+        $query="SELECT * FROM `t_recette` WHERE recName LIKE "%"";
     }
  }
 
