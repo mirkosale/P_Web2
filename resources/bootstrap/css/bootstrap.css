@@ -9766,6 +9766,16 @@ button.bg-dark:focus {
   text-align: center !important;
 }
 
+.text-topRight{
+  float: left;
+  width: 20%;
+}
+
+.text-topLeft{
+  float: left;
+  width: 80%;
+}
+
 @media (min-width: 576px) {
   .text-sm-left {
     text-align: left !important;

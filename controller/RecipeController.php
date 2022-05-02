@@ -203,11 +203,11 @@ class RecipeController extends Controller
             $recipeData["name"] = $name;
             $recipeData["itemList"] = $itemList;
             $recipeData["preparation"] = $preparation;
-            $recipeData["image"] = $_FILES["image"]["name"];
+            $recipeData["image"] = $_FILES["image"]["name"] . date("YmdHis");
             $recipeData["typedish"] = $typedish;
-            $addRecipe = $database->InsertRecipe($recipeData);
             $source = $_FILES["image"]["tmp_name"];
-            $destination = "resources/image/" . date("YmdHis") . $_FILES["image"]["name"];
+            $destination = "resources/image/" . $_FILES["image"]["name"] . date("YmdHis");
+            $addRecipe = $database->InsertRecipe($recipeData);
             move_uploaded_file($source, $destination);
             header('Location: index.php');
             die();
