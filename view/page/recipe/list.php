@@ -35,31 +35,7 @@
 
       <div class="filters-content">
         <div class="row grid">
-          <?php 
-            foreach ($recipes as $recipe)
-            {
-          ?>
-            <div class="col-sm-6 col-lg-4 all pizza">
-              <div class="box">
-                <div>
-                  <div class="img-box">
-                  <?php echo '<img src="./resources/images/' . $recipe['recImage'] . '" alt="Image de : ' . $recipe['recName'] . '">';?>
-                </div>
-                  <div class="detail-box">
-                  <?php echo '<h5>' . $recipe['recName'] . '</h5>'; ?>
-                    <div class="options">
-                      <h6>
-                        Voir en détail
-                      </h6>
-                      <?php echo '<a href="?controller=recipe&action=detail&id=' . $recipe['idRecipe'] . '">'; ?>
-                        <img src="./resources/images/detail.png" alt="Voir en détail">
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php } ?>
+          
         </div>
       </div>
       <div class="btn-box">
