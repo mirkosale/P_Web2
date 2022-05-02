@@ -43,13 +43,8 @@
               <div class="box">
                 <div>
                   <div class="img-box">
-<<<<<<< HEAD
                   <?php echo '<img src="./resources/images/' . $recipe['recImage'] . '" alt="Image de : ' . $recipe['recName'] . '">';?>
                 </div>
-=======
-                  <?php echo '<img src="resources/images/' . $recipe['recImage']. '" alt="Image de : ' . $recipe['recName'] . '">';?>
-                  </div>
->>>>>>> 2856a361fa8d11a673057fd776d07dae1e16e4f9
                   <div class="detail-box">
                   <?php echo '<h5>' . $recipe['recName'] . '</h5>'; ?>
                     <div class="options">
