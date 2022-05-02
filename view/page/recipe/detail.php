@@ -11,7 +11,8 @@
 			?>
 		</div>
 		<div class="img-box">
-			<?php echo '<img src="..\..\..\resources\images\ ' . $recipe[0]['recImage'] . '" alt="Image de : ' . $recipe[0]['recName'] . '">'; ?>
+			<?php echo '<img src="./resources/images/' . $recipe[0]['recImage'] . '" alt="Image de : ' . $recipe[0]['recName'] . '">'; 
+			?>
 		</div>
 		<!-- Three columns of text below the carousel -->
 		<div class="row">
