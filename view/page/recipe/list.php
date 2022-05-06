@@ -68,15 +68,15 @@
                         
                         <?php if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1) : ?>
                           <?php echo '<a href="?controller=recipe&action=updateRecipe&id=' . $recipe['idRecipe'] . '">'; ?>
-                          <img src="resources/images/edit.png" alt="Edit logo">
+                          <img src="resources/userContent/images/edit.png" alt="Edit logo">
                           </a>
                           <?php echo '<a href="?controller=recipe&action=delete&id=' . $recipe['idRecipe'] . '">'; ?>
-                          <img src="resources/images/delete.png" alt="delete logo">
+                          <img src="resources/userContent/images/delete.png" alt="delete logo">
                           </a>
                         <?php endif; ?>
 
                         <?php echo '<a href="?controller=recipe&action=detail&id=' . $recipe['idRecipe'] . '">'; ?>
-                        <img src="./resources/images/detail.png" alt="Voir en détail">
+                        <img src="./resources/userContent/images/detail.png" alt="Voir en détail">
                         </a>
                       <?php endif; ?>
                     </div>

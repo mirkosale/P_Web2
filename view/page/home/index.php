@@ -67,7 +67,7 @@
                   Voir en détail
                 </h6>
                 <?php echo '<a href="?controller=recipe&action=detail&id=' . $latestRecipe[0]['idRecipe'] . '">'; ?>
-                <img src="./resources/images/detail.png" alt="Voir en détail">
+                <img src="./resources/userContent/images/detail.png" alt="Voir en détail">
                 </a>
               </div>
             </div>
