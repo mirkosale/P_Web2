@@ -75,11 +75,17 @@ class RecipeController extends Controller
     private function detailAction()
     {
 
+        if (isset($_SESSION['useLogin']))
+        {
         $db = new Database();
         $recipe = $db->getOneRecipe($_GET['id']);;
 
         $view = file_get_contents('view/page/recipe/detail.php');
-
+        }
+        else
+        {
+            $view = file_get_contents('view/page/recipe/badLogin.php');
+        }
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -145,8 +151,6 @@ class RecipeController extends Controller
      */
     private function checkAddAction()
     {
-
-
         $errors = array();
         $recipeData = array();
 
@@ -206,7 +210,7 @@ class RecipeController extends Controller
             $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
             $recipeData["typedish"] = $typedish;
             $source = $_FILES["image"]["tmp_name"];
-            $destination = "resources/image/" . date("YmdHis") . $_FILES["image"]["name"];
+            $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
             $addRecipe = $database->InsertRecipe($recipeData);
             move_uploaded_file($source, $destination);
             header('Location: index.php');
