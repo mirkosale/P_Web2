@@ -74,18 +74,20 @@ class RecipeController extends Controller
      */
     private function detailAction()
     {
-
         if (!isset($_SESSION['useLogin']))
         {
-        $db = new Database();
-        $recipe = $db->getOneRecipe($_GET['id']);;
-
-        $view = file_get_contents('view/page/recipe/detail.php');
+            $view = file_get_contents('view/page/user/notLogged.php');
         }
-        else
+        if (isset($_SESSION['useLogin']) && !isset($_GET['id'])) {
+            $view = file_get_contents('view/page/recipe/badRecipe.php');
+        }
+        if (isset($_SESSION['useLogin']))
         {
-            $view = file_get_contents('view/page/recipe/badLogin.php');
+            $db = new Database();
+            $recipe = $db->getOneRecipe($_GET['id']);;
+            $view = file_get_contents('view/page/recipe/detail.php');
         }
+
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -132,17 +134,24 @@ class RecipeController extends Controller
      */
     private function addRecipeAction()
     {
-
-        $database = new Database();
-
-        $typedish = $database->getAllTypedish();
-
-        $view = file_get_contents('view/page/recipe/addRecipe.php');
+        if (isset($_SESSION['useLogin'])) {
+            $database = new Database();
+    
+            $typedish = $database->getAllTypedish();
+    
+            $view = file_get_contents('view/page/recipe/addRecipe.php');
+        }
+        if (!isset($_SESSION['useLogin'])) {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
+            $view = file_get_contents('view/page/user/noRights.php');
+        }
 
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
-
+        
         return $content;
     }
 
@@ -235,6 +244,15 @@ class RecipeController extends Controller
      */
     private function updateRecipeAction()
     {
+        if (!isset($_SESSION['useLogin'])) {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
+            $view = file_get_contents('view/page/user/noRights.php');
+        }
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id'])) {
+            $view = file_get_contents('view/page/recipe/badRecipe.php');
+        }
         // Instancie le modèle et va chercher les informations
         $db = new Database();
         $dishTypes = $db->getAllTypedish();
@@ -244,7 +262,6 @@ class RecipeController extends Controller
             // Charge le fichier pour la vue
             $view = file_get_contents('view/page/recipe/updateRecipe.php');
         }
-
         // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
         // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
         ob_start();
