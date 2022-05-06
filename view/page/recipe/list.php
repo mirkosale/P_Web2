@@ -30,10 +30,10 @@
         ?>
       </ul>
 
-            <div class="filters-content">
-                <div class="row grid">
-                <?php
-                foreach ($recipes as $recipe) {
+      <div class="filters-content">
+        <div class="row grid">
+          <?php
+          foreach ($recipes as $recipe) {
           ?>
             <div class="col-sm-6 col-lg-4 all pizza">
               <div class="box">
@@ -44,9 +44,24 @@
                   <div class="detail-box">
                     <?php echo '<h5>' . $recipe['recName'] . '</h5>'; ?>
                     <div class="options">
-                      <h6>
-                        Voir en détail
-                      </h6>
+                      <div class="stars">
+                        <?php {
+                          if (isset($recipe['note'])) {
+                            for ($x = 0; $x < 9; $x += 2) {
+                              if ($x == $recipe['note']) {
+                                echo '<div class="bi-star-half"></div>';
+                              } elseif ($x < $recipe['note']) {
+                                echo '<div class="bi-star-fill"></div>';
+                              } else {
+                                echo '<div class="bi-star"></div>';
+                              }
+                            }
+                          } else {
+                            echo 'Pas de notes';
+                          }
+                        }
+                        ?>
+                      </div>
                       <?php echo '<a href="?controller=recipe&action=updateRecipe&id=' . $recipe['idRecipe'] . '">'; ?>
                       <img src="resources/images/edit.png" alt="Edit logo">
                       </a>

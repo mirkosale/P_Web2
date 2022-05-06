@@ -30,7 +30,6 @@ class RecipeController extends Controller
      */
     private function listAction()
     {
-
         // Instancie le modèle et va chercher les informations
         $db = new Database();
         $dishTypes = $db->getAllTypedish();
@@ -51,7 +50,21 @@ class RecipeController extends Controller
             }
         }
 
+        /**
+         * Check si des recettes ont été enregistrées
+         */
         if (!isset($view)) {
+            for ($x = 0; $x < count($recipes); $x++)
+            {
+                $recipeNote = $db->getRecipeNoteAverage($recipes[$x]['idRecipe']);
+
+                if (isset($recipeNote[0]['AVG(notStars)']))
+                {
+                    $note = round($recipeNote[0]['AVG(notStars)']);
+                    $recipes[$x]['note'] = $note;
+                }
+            }
+
             // Charge le fichier pour la vue
             $view = file_get_contents('view/page/recipe/list.php');
         }
@@ -75,16 +88,16 @@ class RecipeController extends Controller
     private function detailAction()
     {
 
-        if (!isset($_SESSION['useLogin']))
+        if (isset($_SESSION['useLogin']))
         {
-        $db = new Database();
-        $recipe = $db->getOneRecipe($_GET['id']);;
+            $db = new Database();
+            $recipe = $db->getOneRecipe($_GET['id']);;
 
-        $view = file_get_contents('view/page/recipe/detail.php');
+            $view = file_get_contents('view/page/recipe/detail.php');
         }
         else
         {
-            $view = file_get_contents('view/page/recipe/badLogin.php');
+            $view = file_get_contents('view/page/user/notLogged.php');
         }
         ob_start();
         eval('?>' . $view);
@@ -171,7 +184,7 @@ class RecipeController extends Controller
          */
         elseif (strlen($name) > 30)
         {
-            $errors[] = "Le nom de votre recette est trop long (30 charactères max.)";   
+            $errors[] = "Le nom de votre recette est trop long (30 charactères maximum)";   
         }
 
         /**
