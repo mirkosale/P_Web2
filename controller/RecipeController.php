@@ -173,7 +173,15 @@ class RecipeController extends Controller
          * Vérification que l'utilisateur ait bien entré le nom de la recette
          */
         if (!isset($name)) {
-            $errors[] = "Vous devez choisir le nom de votre recette";
+            $errors[] = "Vous devez choisir le nom de votre recette";   
+        }
+        
+        /**
+         * Vérification que le nom de la recette ne soit pas trop long
+         */
+        elseif (strlen($name) > 30)
+        {
+            $errors[] = "Le nom de votre recette est trop long (30 charactères max.)";   
         }
 
         /**

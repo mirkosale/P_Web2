@@ -48,7 +48,7 @@ class HomeController extends Controller
      *
      * @return string
      */
-    private function addRecipeAction()
+    private function contactAction()
     {
    
         $database = new Database();
@@ -62,6 +62,7 @@ class HomeController extends Controller
         $content = ob_get_clean();
 
         return $content;
+
     }
 
     
