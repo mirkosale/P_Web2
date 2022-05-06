@@ -75,7 +75,7 @@ class RecipeController extends Controller
     private function detailAction()
     {
 
-        if (isset($_SESSION['useLogin']))
+        if (!isset($_SESSION['useLogin']))
         {
         $db = new Database();
         $recipe = $db->getOneRecipe($_GET['id']);;
