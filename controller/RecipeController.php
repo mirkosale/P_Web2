@@ -75,11 +75,17 @@ class RecipeController extends Controller
     private function detailAction()
     {
 
+        if (!isset($_SESSION['useLogin']))
+        {
         $db = new Database();
         $recipe = $db->getOneRecipe($_GET['id']);;
 
         $view = file_get_contents('view/page/recipe/detail.php');
-
+        }
+        else
+        {
+            $view = file_get_contents('view/page/recipe/badLogin.php');
+        }
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -145,8 +151,6 @@ class RecipeController extends Controller
      */
     private function checkAddAction()
     {
-
-
         $errors = array();
         $recipeData = array();
 
@@ -203,10 +207,10 @@ class RecipeController extends Controller
             $recipeData["name"] = $name;
             $recipeData["itemList"] = $itemList;
             $recipeData["preparation"] = $preparation;
-            $recipeData["image"] = $_FILES["image"]["name"] . date("YmdHis");
+            $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
             $recipeData["typedish"] = $typedish;
             $source = $_FILES["image"]["tmp_name"];
-            $destination = "resources/image/" . $_FILES["image"]["name"] . date("YmdHis");
+            $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
             $addRecipe = $database->InsertRecipe($recipeData);
             move_uploaded_file($source, $destination);
             header('Location: index.php');
@@ -222,5 +226,33 @@ class RecipeController extends Controller
                 echo '</li>';
             }
         }
+    }
+
+    /**
+     * Rechercher les données et les passe à la vue pour la modification d'informations
+     *
+     * @return string
+     */
+    private function updateRecipeAction()
+    {
+        // Instancie le modèle et va chercher les informations
+        $db = new Database();
+        $dishTypes = $db->getAllTypedish();
+        $recipes = $db->getOneRecipe($_GET['id']);
+
+        if (!isset($view)) {
+            // Charge le fichier pour la vue
+            $view = file_get_contents('view/page/recipe/updateRecipe.php');
+        }
+
+        // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
+        // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
+        ob_start();
+        // eval permet de prendre le fichier de vue et de le parcourir dans le but de remplacer les variables PHP par leur valeur (provenant du model)
+        eval('?>' . $view);
+        // ob_get_clean permet de reprendre la lecture qui avait été stoppée (dans le but d'afficher la vue)
+        $content = ob_get_clean();
+
+        return $content;
     }
 }
