@@ -23,6 +23,7 @@ create table t_note (
      idNote int auto_increment not null,
      notStars int(1) not null,
      fkRecipe int not null,
+     fkUser int not null,
      constraint ID_t_note_ID primary key (idNote)
 	 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -57,6 +58,10 @@ alter table t_note add constraint REF_t_not_t_rec_FK
      foreign key (fkRecipe)
      references t_recipe (idRecipe);
 
+alter table t_note add constraint REF_t_not_t_use_FK
+     foreign key (fkUser)
+     references t_user (idUser);
+
 alter table t_recipe add constraint REF_t_rec_t_typ_FK
      foreign key (fkTypeDish)
      references t_typedish (idTypeDish);
@@ -69,6 +74,9 @@ create unique index ID_t_note_IND
 
 create index REF_t_not_t_rec_IND
      on t_note (fkRecipe);
+
+create index REF_t_not_t_use_IND
+     on t_note (fkUser);
 
 create unique index ID_t_recipe_IND
      on t_recipe (idRecipe);
@@ -123,3 +131,21 @@ Mélanger farine, cacao en poudre et poudre à lever, incorporer à la masse. Re
 Préchauffer le four à 210°C.Poser les moules sur la plaque du four.Cuisson: env. 15 min dans la moitié inférieure du four. Les moelleux doivent être légèrement coulants à cœur. Retirer, démouler délicatement sur des assiettes, poudrer de cacao, servir aussitôt.","moelleux.jpg");
 INSERT INTO t_recipe (recName, fkTypeDish, recListOfItems, recPreparation, recImage) VALUES ("Pancakes","3","20g de beurre, 200g de farine, 2c.s de sucre brut moulu, 1sachet de sucre vanillé, 2c.c de poudre a lever, 0.25 c.c de el, 3dl de babeurre ou de lait, 1oeuf frais, 2c.s de sirop d'érable, beurre a rôtir","Faire fondre le beurre dans une petite casserole, laisser tiédir un peu.
 Mélanger dans un grand bol farine, sucre, sucre vanillé, poudre à lever et sel. Mélanger babeurre et œuf avec le beurre, ajouter à la farine, travailler en pâte lisse.Bien faire chauffer un peu de beurre à rôtir dans une poêle antiadhésive. Baisser le feu, déposer la pâte par portions dans la poêle de manière à obtenir des pancakes Ø env. 10 cm. Lorsque le dessous est cuit et se détache tout seul, tourner les pancakes, poursuivre la cuisson, garder en attente au chaud. Procéder de même avec le reste des pancakes, dresser et arroser d’un filet de sirop d’érable.","pancakes.jpg");
+
+-- Notes
+-- _____
+
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('3', '1', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '2', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('2', '3', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('9', '4', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('4', '5', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('3', '6', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('2', '7', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '1', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '2', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('8', '3', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('4', '4', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('3', '5', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('1', '6', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('0', '7', '2');

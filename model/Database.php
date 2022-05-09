@@ -55,6 +55,7 @@ class Database {
      */
     private function formatData($req){
         $result = $req->fetchALL(PDO::FETCH_ASSOC);
+        $this->unsetData($req);
         return $result;
     }
 
@@ -151,7 +152,8 @@ class Database {
             ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT]
         ];
 
-        $this->queryPrepareExecute($query, $binds);
+        $req = $this->queryPrepareExecute($query, $binds);
+        $this->unsetData($req);
     }
 
      /**
@@ -174,7 +176,8 @@ class Database {
             ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];
 
-        $this->queryPrepareExecute($query, $binds);
+        $req = $this->queryPrepareExecute($query, $binds);
+        $this->unsetData($req);
     }
 
     /**
@@ -193,8 +196,10 @@ class Database {
             ["name" => "idRecipe", "value" => $idRecipe, "type" => PDO::PARAM_INT]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
+        $result = $this->formatData($req);
+        $this->unsetData($req);
 
-        return $this->formatData($req);
+        return $result;
     }
 
     /**
@@ -243,8 +248,8 @@ class Database {
     }
 
     /*
-     * methode permettant de r
-     * cupèrer l'ID d'une session en fonction d'un idUser ; Retourne null si pas de résultats ; sinon retourne l'idSession
+     * methode permettant de rcupèrer l'ID d'une session en fonction 
+     * d'un idUser ; Retourne null si pas de résultats ; sinon retourne l'idSession
      */
     private function getIdSessionByUserId($idUser)
     {
@@ -288,13 +293,55 @@ class Database {
         return $note;
     }
 
-    public function addRecipeNote($starNB, $idRecipe)
+    public function getRecipeNoteOfUser($idRecipe, $userName)
     {
-        $query = "INSERT INTO t_note (notStars, fkRecipe) VALUES (:starNB, :idRecipe)";
+        $query = "SELECT * FROM t_note AS n INNER JOIN t_user AS u ON u.idUser = n.fkUser WHERE fkRecipe = :idRecipe AND u.useLogin = :userName";
         $binds = [
-            ["name" => 'idRecipe','value' => $starNB, 'type' => PDO::PARAM_INT],
-            ["name" => 'idRecipe','value' => $idRecipe, 'type' => PDO::PARAM_INT]
+            ["name" => 'idRecipe','value' => $idRecipe, 'type' => PDO::PARAM_INT],
+            ["name" => 'userName','value' => $userName, 'type' => PDO::PARAM_STR]
         ];
+
+        $req = $this->queryPrepareExecute($query, $binds);
+        $note = $this->formatData($req);
+
+        return $note;
+    }
+
+    public function addNote($starNB, $idRecipe, $idUser)
+    {
+        $query = "INSERT INTO t_note (notStars, fkRecipe, fkUser) VALUES (:starNB, :idRecipe, :idUser)";
+        $binds = [
+            ["name" => 'starNB','value' => $starNB, 'type' => PDO::PARAM_INT],
+            ["name" => 'idRecipe','value' => $idRecipe, 'type' => PDO::PARAM_INT],
+            ["name" => 'idUser','value' => $idUser, 'type' => PDO::PARAM_INT]
+        ];
+
+        
+        $req = $this->queryPrepareExecute($query, $binds);
+        $note = $this->formatData($req);
+        return $note;
+    }
+
+     /**
+     * methode permettant de delete une note
+     */
+    public function deleteNote($idNote)
+    {
+        //supprime l'recette
+        //avoir la requête sql 
+        //appeler la méthode pour executer la requête
+        //appeler la méthode pour avoir le résultat sous forme de tableau.
+        $query = 'DELETE FROM t_note WHERE idNote = :idNote';
+
+        //avoir la requête sql pour le delete.
+        $binds = [
+            ["name" => "idNote", "value" => $idNote, "type" => PDO::PARAM_INT]
+        ];
+        $req = $this->queryPrepareExecute($query, $binds);
+        $result = $this->formatData($req);
+        $this->unsetData($req);
+
+        return $result;
     }
 
 

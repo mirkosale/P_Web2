@@ -12,7 +12,6 @@ $debug = false;
 if ($debug) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
-
 }
 date_default_timezone_set('Europe/Zurich');
 
@@ -20,15 +19,17 @@ include_once 'controller/Controller.php';
 include_once 'controller/HomeController.php';
 include_once 'controller/RecipeController.php';
 include_once 'controller/UserController.php';
+include_once 'controller/NoteController.php';
 
 
-class MainController {
+class MainController
+{
 
     /**
      * Permet de sélectionner le bon contrôler et l'action
      */
-    public function dispatch() {
-
+    public function dispatch()
+    {
         if (!isset($_GET['controller'])) {
             $_GET['controller'] = 'home';
             $_GET['action'] = 'index';
@@ -45,9 +46,10 @@ class MainController {
      * @param string $page : page sélectionner
      * @return $link : instanciation d'un contrôleur
      */
-    protected function menuSelected ($page) {
+    protected function menuSelected($page)
+    {
 
-        switch($_GET['controller']){
+        switch ($_GET['controller']) {
             case 'home':
                 $link = new HomeController();
                 break;
@@ -56,6 +58,9 @@ class MainController {
                 break;
             case 'user':
                 $link = new UserController();
+                break;
+            case 'note':
+                $link = new NoteController();
                 break;
             default:
                 $link = new HomeController();
@@ -70,14 +75,15 @@ class MainController {
      *
      * @param $currentPage : page qui doit s'afficher
      */
-    protected function viewBuild($currentPage) {
+    protected function viewBuild($currentPage)
+    {
 
-            $content = $currentPage->display();
+        $content = $currentPage->display();
 
-            include(dirname(__FILE__) . '/view/head.html');
-            include(dirname(__FILE__) . '/view/menu.php');
-            echo $content;
-            include(dirname(__FILE__) . '/view/footer.html');
+        include(dirname(__FILE__) . '/view/head.html');
+        include(dirname(__FILE__) . '/view/menu.php');
+        echo $content;
+        include(dirname(__FILE__) . '/view/footer.html');
     }
 }
 

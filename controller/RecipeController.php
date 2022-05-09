@@ -91,13 +91,30 @@ class RecipeController extends Controller
         {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
+
         if (isset($_SESSION['useLogin']) && !isset($_GET['id'])) {
             $view = file_get_contents('view/page/recipe/badRecipe.php');
         }
-        if (isset($_SESSION['useLogin']))
+
+        if (isset($_SESSION['useLogin']) && isset($_GET['id']))
         {
             $db = new Database();
             $recipe = $db->getOneRecipe($_GET['id']);;
+            $note = $db->getRecipeNoteOfUser($_GET['id'], $_SESSION['useLogin']);
+
+            if (!isset($recipe[0]))
+            {
+                $view = file_get_contents('view/page/recipe/badRecipe.php');
+            }
+        }
+
+        if (isset($view)) {
+            ob_start();
+            eval('?>' . $view);
+            $content = ob_get_clean();
+
+            return $content;
+        } else {
             $view = file_get_contents('view/page/recipe/detail.php');
         }
 
@@ -106,16 +123,13 @@ class RecipeController extends Controller
         $content = ob_get_clean();
 
         return $content;
-    }
-
-    
+    }  
 
     /**
      * Supprime une recette de la base de données
      */
     private function deleteAction()
     {
-        
         if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
@@ -382,5 +396,5 @@ class RecipeController extends Controller
                 echo '</li>';
             }
         }
-    }
+    }      
 }
