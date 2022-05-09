@@ -290,9 +290,9 @@ class Database {
         return $session;
     }
 
-    public function SearchRecipe()
+    public function searchRecipe()
     {
-        $query="SELECT * FROM `t_recette` WHERE recName LIKE "%"";
+        $query="SELECT * FROM `t_recette` WHERE recName LIKE "%" ";
     }
  }
 

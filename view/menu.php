@@ -107,16 +107,19 @@
                                 <g>
                                 </g>
                                 <g>
+      
                                 </g>
                                 <g>
                                 </g>
                             </svg>
                         </a>
                         <form class="form-inline">
-                        <input type="text" class="searchbar" id="searchbar" name="searchbar" />
+                        <?php 
+                            echo"<input type='text' class='searchbar' id='searchbar' name='searchbar' />";
+                        ?>
                         </form>
                         <a href="" class="order_online">
-                            Order Online
+                            Chercher
                         </a>
                     </div>
                 </div>
