@@ -324,6 +324,7 @@ class RecipeController extends Controller
         $name = htmlspecialchars($_POST["name"]);
         $itemList = htmlspecialchars($_POST["itemList"]);
         $preparation = htmlspecialchars($_POST["preparation"]);
+        $id = $_POST["id"];
         $typedish = $_POST["typedish"];
         /**
          * Vérification que l'utilisateur ait bien entré le nom de la recette
@@ -356,7 +357,7 @@ class RecipeController extends Controller
             $recipeData["itemList"] = $itemList;
             $recipeData["preparation"] = $preparation;
             $recipeData["typedish"] = $typedish;
-
+            $recipeData["id"] = $id;
 
             /**
              * Vérification que l'utilisateur ait bien entré une image ainsi que le bon format et pas trop lourde
@@ -382,7 +383,7 @@ class RecipeController extends Controller
                     $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
                 }
             } else {
-                //$addRecipe = $database->modifyRecipeNoImage($recipeData);
+                $addRecipe = $database->modifyRecipeNoImage($recipeData);
                 header('Location: index.php');
             }
         }

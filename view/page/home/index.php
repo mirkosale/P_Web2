@@ -19,12 +19,10 @@
               </h2>
             </div>
             <p>
-              Dans ce site nous avons mis a disposition une liste de recette avec les informations nécessaire pour la création d'un plat
-
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
+              Dans ce site, nous avons mis à disposition une liste de recettes avec les informations nécessaires à la création d’un plat 
+              et pour simplifier la recherche de recettes, une barre de recherche est ajoutée sur le site.
+              Nous avons également mis à disposition un moyen de se connecter afin de voir les informations des recettes.
+              Puis pour finir il existe également un moyen de nous contacter en cas de problème ou si vous souhaitez donner des idées pour le site.
             </p>
           </div>
         </div>
