@@ -275,6 +275,29 @@ class Database {
         return !$session ? null : $session[0];
     }
 
+    public function getRecipeNoteAverage($idRecipe)
+    {
+        $query = "SELECT AVG(notStars) FROM t_note WHERE fkRecipe = :idRecipe";
+        $binds = [
+            ["name" => 'idRecipe','value' => $idRecipe, 'type' => PDO::PARAM_INT]
+        ];
+        
+        $req = $this->queryPrepareExecute($query, $binds);
+        $note = $this->formatData($req);
+
+        return $note;
+    }
+
+    public function addRecipeNote($starNB, $idRecipe)
+    {
+        $query = "INSERT INTO t_note (notStars, fkRecipe) VALUES (:starNB, :idRecipe)";
+        $binds = [
+            ["name" => 'idRecipe','value' => $starNB, 'type' => PDO::PARAM_INT],
+            ["name" => 'idRecipe','value' => $idRecipe, 'type' => PDO::PARAM_INT]
+        ];
+    }
+
+
     /**
      * Méthode permettant d'avoir tous les types de plats
      */

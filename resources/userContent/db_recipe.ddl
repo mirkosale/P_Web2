@@ -28,7 +28,7 @@ create table t_note (
 
 create table t_recipe (
      idRecipe int auto_increment not null,
-     recName varchar(50) not null,
+     recName varchar(30) not null,
      recListOfItems varchar(32767) not null,
      recPreparation varchar(32767) not null,
      recImage varchar(255) not null,

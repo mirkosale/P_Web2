@@ -30,7 +30,6 @@ class RecipeController extends Controller
      */
     private function listAction()
     {
-
         // Instancie le modèle et va chercher les informations
         $db = new Database();
         $dishTypes = $db->getAllTypedish();
@@ -51,7 +50,21 @@ class RecipeController extends Controller
             }
         }
 
+        /**
+         * Check si des recettes ont été enregistrées
+         */
         if (!isset($view)) {
+            for ($x = 0; $x < count($recipes); $x++)
+            {
+                $recipeNote = $db->getRecipeNoteAverage($recipes[$x]['idRecipe']);
+
+                if (isset($recipeNote[0]['AVG(notStars)']))
+                {
+                    $note = round($recipeNote[0]['AVG(notStars)']);
+                    $recipes[$x]['note'] = $note;
+                }
+            }
+
             // Charge le fichier pour la vue
             $view = file_get_contents('view/page/recipe/list.php');
         }
@@ -74,11 +87,19 @@ class RecipeController extends Controller
      */
     private function detailAction()
     {
-
-        $db = new Database();
-        $recipe = $db->getOneRecipe($_GET['id']);;
-
-        $view = file_get_contents('view/page/recipe/detail.php');
+        if (!isset($_SESSION['useLogin']))
+        {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+        if (isset($_SESSION['useLogin']) && !isset($_GET['id'])) {
+            $view = file_get_contents('view/page/recipe/badRecipe.php');
+        }
+        if (isset($_SESSION['useLogin']))
+        {
+            $db = new Database();
+            $recipe = $db->getOneRecipe($_GET['id']);;
+            $view = file_get_contents('view/page/recipe/detail.php');
+        }
 
         ob_start();
         eval('?>' . $view);
@@ -126,17 +147,24 @@ class RecipeController extends Controller
      */
     private function addRecipeAction()
     {
-
-        $database = new Database();
-
-        $typedish = $database->getAllTypedish();
-
-        $view = file_get_contents('view/page/recipe/addRecipe.php');
+        if (isset($_SESSION['useLogin'])) {
+            $database = new Database();
+    
+            $typedish = $database->getAllTypedish();
+    
+            $view = file_get_contents('view/page/recipe/addRecipe.php');
+        }
+        if (!isset($_SESSION['useLogin'])) {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
+            $view = file_get_contents('view/page/user/noRights.php');
+        }
 
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
-
+        
         return $content;
     }
 
@@ -145,8 +173,6 @@ class RecipeController extends Controller
      */
     private function checkAddAction()
     {
-
-
         $errors = array();
         $recipeData = array();
 
@@ -160,7 +186,15 @@ class RecipeController extends Controller
          * Vérification que l'utilisateur ait bien entré le nom de la recette
          */
         if (!isset($name)) {
-            $errors[] = "Vous devez choisir le nom de votre recette";
+            $errors[] = "Vous devez choisir le nom de votre recette";   
+        }
+        
+        /**
+         * Vérification que le nom de la recette ne soit pas trop long
+         */
+        elseif (strlen($name) > 30)
+        {
+            $errors[] = "Le nom de votre recette est trop long (30 charactères maximum)";   
         }
 
         /**
@@ -206,7 +240,7 @@ class RecipeController extends Controller
             $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
             $recipeData["typedish"] = $typedish;
             $source = $_FILES["image"]["tmp_name"];
-            $destination = "resources/image/" . date("YmdHis") . $_FILES["image"]["name"];
+            $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
             $addRecipe = $database->InsertRecipe($recipeData);
             move_uploaded_file($source, $destination);
             header('Location: index.php');
@@ -231,16 +265,24 @@ class RecipeController extends Controller
      */
     private function updateRecipeAction()
     {
+        if (!isset($_SESSION['useLogin'])) {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
+            $view = file_get_contents('view/page/user/noRights.php');
+        }
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id'])) {
+            $view = file_get_contents('view/page/recipe/badRecipe.php');
+        }
         // Instancie le modèle et va chercher les informations
-        $db = new Database();
-        $dishTypes = $db->getAllTypedish();
-        $recipes = $db->getOneRecipe($_GET['id']);
+        $database = new Database();
+        $dishTypes = $database->getAllTypedish();
+        $recipes = $database->getOneRecipe($_GET['id']);
 
         if (!isset($view)) {
             // Charge le fichier pour la vue
             $view = file_get_contents('view/page/recipe/updateRecipe.php');
         }
-
         // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
         // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
         ob_start();
@@ -250,5 +292,92 @@ class RecipeController extends Controller
         $content = ob_get_clean();
 
         return $content;
+    }
+
+     /**
+     * Check si la modifiation a bien était faite
+     */
+    private function checkUpdateRecipeAction()
+    {
+        // Instancie le modèle et va chercher les informations
+        $errors = array();
+        $recipeData = array();
+
+        $database = new Database();
+        $name = htmlspecialchars($_POST["name"]);
+        $itemList = htmlspecialchars($_POST["itemList"]);
+        $preparation = htmlspecialchars($_POST["preparation"]);
+        $typedish = $_POST["typedish"];
+        /**
+         * Vérification que l'utilisateur ait bien entré le nom de la recette
+         */
+        if (!isset($name)) {
+            $errors[] = "Vous devez choisir le nom de votre recette";
+        }
+
+        /**
+         * Vérification que l'utilisateur ait bien entré la list des ingrédients
+         */
+        if (!isset($itemList)) {
+            $errors[] = "Vous devez entrer une liste d'ingrédients";
+        }
+
+        /**
+         * Vérification que l'utilisateur ait bien entré la préparation de la recette
+         */
+        if (!isset($preparation)) {
+            $errors[] = "Vous devez entrer la préparation de la recette";
+        }
+
+        /**
+         * Vérification de si l'utilisateur a mal rempli ses informations et écriture de la liste de ces dernières.
+         * S'il a bien rempli les informations, ajout des informations dans la BDD et redirection à la page d'acceuil.
+         * Si l'utilisateur n'as pas entré d'image alors l'image reste la même
+         */
+        if(empty($errors)){
+            $recipeData["name"] = $name;
+            $recipeData["itemList"] = $itemList;
+            $recipeData["preparation"] = $preparation;
+            $recipeData["typedish"] = $typedish;
+
+
+            /**
+             * Vérification que l'utilisateur ait bien entré une image ainsi que le bon format et pas trop lourde
+             */
+            if (empty($_FILES["image"])) {
+                if ($_FILES["image"]["type"] == "image/jpeg"
+                    || $_FILES["image"]["type"] == "image/png"
+                    || $_FILES["image"]["type"] == "image/jpg"
+                ) {
+
+                    if ($_FILES["image"]["error"] == 1) {
+                        $errors[] = "La taille est trop élévée, taille max 2MO";
+                    }
+                    else{
+                        $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
+                        $source = $_FILES["image"]["tmp_name"];
+                        $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
+                        $addRecipe = $database->modifyRecipe($recipeData);
+                        move_uploaded_file($source, $destination);
+                        header('Location: index.php');
+                    }
+                } else {
+                    $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
+                }
+            } else {
+                $addRecipe = $database->modifyRecipeNoImage($recipeData);
+                header('Location: index.php');
+            }
+        }
+        else{
+             /**
+             * Écriture de toutes les erreurs que l'utilisateur a provoquées.
+             */
+            foreach ($errors as $error) {
+                echo '<li>';
+                echo $error;
+                echo '</li>';
+            }
+        }
     }
 }
