@@ -38,7 +38,7 @@ class UserController extends Controller {
         return $content;
     }
 
-        /**
+    /**
      * Check Form submit
      *
      * @return string
