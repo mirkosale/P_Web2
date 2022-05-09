@@ -6,7 +6,7 @@
  * Date: 22.01.2019
  * Controler pour gérer les recettes
  */
-
+ 
 class RecipeController extends Controller
 {
     /**
@@ -108,11 +108,14 @@ class RecipeController extends Controller
         return $content;
     }
 
+    
+
     /**
      * Supprime une recette de la base de données
      */
     private function deleteAction()
     {
+        
         if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
@@ -293,7 +296,7 @@ class RecipeController extends Controller
 
         return $content;
     }
-
+    
      /**
      * Check si la modifiation a bien était faite
      */
@@ -365,7 +368,7 @@ class RecipeController extends Controller
                     $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
                 }
             } else {
-                $addRecipe = $database->modifyRecipeNoImage($recipeData);
+                //$addRecipe = $database->modifyRecipeNoImage($recipeData);
                 header('Location: index.php');
             }
         }
