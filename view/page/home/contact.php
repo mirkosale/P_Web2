@@ -3,7 +3,7 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Book A Table
+          Contact 
         </h2>
       </div>
       <div class="row">
@@ -11,26 +11,25 @@
           <div class="form_container">
             <form action="?controller=recipe&action=checkContact">
               <div class="was-validated">
-                <label for="name"><a style="color:red">*</a>Nom de la recette</label>
+                <label for="name"><a style="color:red">*</a>Nom</label>
                 <input type="text" class="form-control" id="firstname" name="firstname" />
               </div>
               <div>
-                <label for="typedish"><a style="color:red">*</a>Type de recette</label>
-                <input type="text" class="form-control" id="typedish" name="typedish" />
+                <label for="typedish"><a style="color:red">*</a>Email</label>
+                <input type="email" class="form-control" id="typedish" name="typedish" />
               </div>
               <div>
-                <label for="itemList"><a style="color:red">*</a>Liste des ingrédients</label>
-                <textarea id="itemList" name="itemList"  rows="5"></textarea>
+                <label for="itemList"><a style="color:red">*</a>Adresse</label>
+                <textarea id="itemList" name="itemList"></textarea>
               </div>
               <div>
-                <label for="preparation"><a style="color:red">*</a>Préparation</label>
-                <textarea id="preparation" name="preparation" rows="10"></textarea>
+                <label for="itemList"><a style="color:red">*</a>Numero de téléphone</label>
+                <textarea id="itemList" name="itemList"></textarea>
               </div>
               <div>
-                <label for="downloadFile"><a style="color:red">*</a>Image</label>
-                <br>
-                <input type="file" name="downloadFile" id="downloadFile" />
-              </div>
+                <label for="preparation"><a style="color:red">*</a>message :</label>
+						    <textarea id="preparation" name="preparation" rows="10"></textarea>
+					    </div>
               <div class="btn_box">
                 <button>
                   Book Now
