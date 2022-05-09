@@ -29,6 +29,7 @@
 		//echo '<p>Note : ' . $recipe[0]["notStars"] . '</p>';
 		?>
 
+<?php var_dump($_SESSION);?>
 		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 				<a href="index.php?controller=recipe&action=list">Retour à la liste des Recettes</a>
