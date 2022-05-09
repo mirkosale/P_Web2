@@ -122,7 +122,7 @@ class Database {
         // appeler la méthode pour avoir le résultat sous forme de tableau
         // retour l'recette
         $queryOneRecipe
-         = "SELECT recName,recListOfItems,recPreparation,recImage,typName FROM t_recipe INNER JOIN t_typedish ON t_recipe.fkTypeDish = t_typedish.idTypeDish WHERE idRecipe=:varId";
+         = "SELECT * FROM t_recipe INNER JOIN t_typedish ON t_recipe.fkTypeDish = t_typedish.idTypeDish WHERE idRecipe=:varId";
         $bindReceipe = array(
             array("name" => "varId" , "value" => $id, "type"=> PDO::PARAM_INT)
         );
@@ -162,14 +162,35 @@ class Database {
         //modifie les informations du teacher
         //avoir la requête sql
         // appeler la méthode pour executer la requête.
-        $query = "UPDATE t_recipe SET recName =  :name, recListOfItem = :itemList, recPreparation = :preparation,
+        $query = "UPDATE t_recipe SET recName =  :name, recListOfItems = :itemList, recPreparation = :preparation,
                      recImage = :image, fkTypeDish = :typedish WHERE t_recipe.idRecipe = :id";
 
         $binds = [
             ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
             ["name" => 'itemList', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
             ["name" => 'preparation', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
-            ["name" => 'image', 'value' => $recipeData['image'], 'type' => PDO::PARAM_LOB],
+            ["name" => 'image', 'value' => $recipeData['image'], 'type' => PDO::PARAM_STR],
+            ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT],
+            ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
+        ];
+
+        $this->queryPrepareExecute($query, $binds);
+    }
+
+    /**
+     * methode permettant de modifier un recette si l'utilisateur ne change pas d'image
+     */
+    public function modifyRecipeNoImage($recipeData)
+    {
+        //modifie les informations du teacher
+        //avoir la requête sql
+        // appeler la méthode pour executer la requête.
+        $query = "UPDATE t_recipe SET recName =  :name, recListOfItems = :itemList, recPreparation = :preparation, fkTypeDish = :typedish WHERE t_recipe.idRecipe = :id";
+
+        $binds = [
+            ["name" => 'name', 'value' => $recipeData['name'], 'type' => PDO::PARAM_STR],
+            ["name" => 'itemList', 'value' => $recipeData['itemList'], 'type' => PDO::PARAM_STR],
+            ["name" => 'preparation', 'value' => $recipeData['preparation'], 'type' => PDO::PARAM_STR],
             ["name" => 'typedish', 'value' => $recipeData['typedish'], 'type' => PDO::PARAM_INT],
             ["name" => 'id', 'value' => $recipeData['id'], 'type' => PDO::PARAM_INT]
         ];

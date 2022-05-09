@@ -15,6 +15,7 @@
                             foreach($recipes as $recipe)
                             {
                             echo '<div>';
+                            echo '<input type="hidden" id="id" name="id" value="' . $recipe['idRecipe'] . '">';
                             echo '<label for="name"><a style="color:red">*</a>Nom de la recette</label>';
                             echo '<input type="text" class="form-control" id="name" name="name" value="' . $recipe["recName"] . '" />';
                             echo '</div>' . '<div>';
