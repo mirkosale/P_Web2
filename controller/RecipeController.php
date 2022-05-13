@@ -383,4 +383,11 @@ class RecipeController extends Controller
             }
         }
     }
+    private function searchRecipes(){
+        $database = new Database();
+        if(isset($_POST['searchSubmit'])){
+            $searchRecipe= $database->searchRecipe($_POST['searchbar']);
+        }
+
+    }
 }

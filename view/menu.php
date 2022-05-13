@@ -118,9 +118,7 @@
                             echo"<input type='search' class='searchbar' textdidchange= id='searchbar' name='searchbar' />";
                         ?>
                         </form>
-                        <a href="" class="order_online">
-                            Chercher
-                        </a>
+                        <input type="submit" name="searchSubmit" class="order_online" value="Chercher">
                     </div>
                 </div>
             </nav>
