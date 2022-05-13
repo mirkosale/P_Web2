@@ -58,12 +58,12 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         
-                        <form class="form-inline">
+                        <form action="?controller=recipe&action=search" class="form-inline" >
                         <?php 
                             echo"<input type='search' class='searchbar' textdidchange= id='searchbar' name='searchbar' />";
                         ?>
-                        </form>
                         <input type="submit" name="searchSubmit" class="order_online" value="Chercher">
+                        </form>
                     </div>
                 </div>
             </nav>
