@@ -108,13 +108,7 @@ class RecipeController extends Controller
             }
         }
 
-        if (isset($view)) {
-            ob_start();
-            eval('?>' . $view);
-            $content = ob_get_clean();
-
-            return $content;
-        } else {
+        if (!isset($view)) {
             $view = file_get_contents('view/page/recipe/detail.php');
         }
 
@@ -152,7 +146,7 @@ class RecipeController extends Controller
             $db = new Database();
             $db->deleteRecipe($_GET['id']);
 
-            header('Location: index.php');
+            header('Location: index.php?controller=recipe&action=list');
             die;
         }
     }
