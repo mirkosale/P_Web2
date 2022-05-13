@@ -1024,4 +1024,14 @@ a:focus {
 .footer_section .footer-info p a {
   color: inherit;
 }
+
+.w100 {
+  width: 90%;
+}
+
+.updateButton {
+  height: 44px;
+  width: 283px;
+}
+
 /*# sourceMappingURL=style.css.map */

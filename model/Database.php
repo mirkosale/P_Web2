@@ -416,9 +416,17 @@ class Database {
         return $session;
     }
 
-    public function searchRecipe()
+    public function searchRecipe($name)
     {
-        $query="SELECT * FROM `t_recette` WHERE recName LIKE "%" ";
+        $query="SELECT * FROM `t_recipe` WHERE recName LIKE %:name% ";
+        $binds = [
+            ["name" => 'name','value' => $recName, 'type' => PDO::PARAM_STR]
+        ];
+        
+        $req = $this->queryPrepareExecute($query, $binds);
+        $result = $this->formatData($req);
+
+        return $result;
     }
  }
 

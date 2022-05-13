@@ -325,6 +325,7 @@ class RecipeController extends Controller
         $itemList = htmlspecialchars($_POST["itemList"]);
         $preparation = htmlspecialchars($_POST["preparation"]);
         $id = $_POST["id"];
+        $imagePath = "resources/images/" . $_POST["imagePath"];
         $typedish = $_POST["typedish"];
         /**
          * Vérification que l'utilisateur ait bien entré le nom de la recette
@@ -362,7 +363,7 @@ class RecipeController extends Controller
             /**
              * Vérification que l'utilisateur ait bien entré une image ainsi que le bon format et pas trop lourde
              */
-            if (empty($_FILES["image"])) {
+            if (!empty($_FILES["image"])) {
                 if ($_FILES["image"]["type"] == "image/jpeg"
                     || $_FILES["image"]["type"] == "image/png"
                     || $_FILES["image"]["type"] == "image/jpg"
@@ -377,6 +378,7 @@ class RecipeController extends Controller
                         $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
                         $addRecipe = $database->modifyRecipe($recipeData);
                         move_uploaded_file($source, $destination);
+                        unlink($imagePath);
                         header('Location: index.php');
                     }
                 } else {
