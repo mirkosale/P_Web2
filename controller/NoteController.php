@@ -19,7 +19,7 @@ class NoteController extends Controller
 
         $action = $_GET['action'] . "Action";
 
-        // Appelle une méthode dans cette classe (ici, ce sera le nom + action (ex: listAction, detailAction, ...))
+        // Appelle une méthode dans cette classe (ici, ce sera le nom + action (ex: addAction, deleteAction, ...))
         return call_user_func(array($this, $action));
     }
 
@@ -28,8 +28,11 @@ class NoteController extends Controller
         if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
-        if (isset($_SESSION['useLogin']) && !isset($_GET['id']) || !isset($_GET['stars'])) {
+        if (isset($_SESSION['useLogin']) && !isset($_GET['id'])) {
             $view = file_get_contents('view/page/recipe/badRecipe.php');
+        }
+        if (isset($_SESSION['useLogin']) && isset($_GET['id']) && !isset($_POST['stars'])) {
+            $view = file_get_contents('view/page/note/noStars.php');
         }
         if (isset($view)) {
             ob_start();
@@ -58,8 +61,17 @@ class NoteController extends Controller
         }
 
         if (isset($_SESSION['useLogin']) && !isset($_GET['id'])) {
-            $view = file_get_contents('view/page/recipe/badRecipe.php');
+            $view = file_get_contents('view/page/recipe/badRecipe.php');            
         }
+
+        $db = new Database();
+            $loggedUserId = $db->getLoggedUserID($_SESSION['useLogin']);
+            $noteUserId = $db->getNoteUser($_GET['id']);
+
+            if ($loggedUserId[0]['idUser'] == $noteUserId[0]['fkUser'])
+            {
+                
+            }
 
         if (isset($view)) {
             ob_start();
@@ -68,10 +80,10 @@ class NoteController extends Controller
 
             return $content;
         } else {
-            $db = new Database();
-            $db->deleteNote($_GET['id']);
+            #$db->deleteNote($_GET['id']);
 
-            header('Location: index.php');
+            #header('Location: index.php');
+
             die;
         }
     }

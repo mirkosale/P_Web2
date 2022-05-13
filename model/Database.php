@@ -268,6 +268,28 @@ class Database {
         return $this->formatData($req);
     }
 
+    /**
+     * methode permettant de récupérer un utilisateur selon son ID
+     */
+    public function getLoggedUserID($userName){
+        //récupère la liste de tous les utilisateur de la BD
+        //avoir la requête sql
+        //appeler la méthode pour executer la requête
+        $query = 'SELECT idUser FROM t_user WHERE useLogin = :userName';
+        $binds = [
+            ["name" => "userName","value" => $userName, "type" => PDO::PARAM_INT]
+        ];
+        $req = $this->queryPrepareExecute($query, $binds);
+        
+        // Retour les sections sous forme de tableau associatif
+
+        $result = $this->formatData($req);
+
+        var_dump($result);
+        return $result;
+    }
+
+    
     /*
      * methode permettant de rcupèrer l'ID d'une session en fonction 
      * d'un idUser ; Retourne null si pas de résultats ; sinon retourne l'idSession
@@ -308,6 +330,19 @@ class Database {
             ["name" => 'idRecipe','value' => $idRecipe, 'type' => PDO::PARAM_INT]
         ];
         
+        $req = $this->queryPrepareExecute($query, $binds);
+        $note = $this->formatData($req);
+
+        return $note;
+    }
+
+    public function getNoteUser($idNote)
+    {
+        $query = "SELECT fkUser FROM t_note WHERE idNote = :idNote";
+        $binds = [
+            ["name" => 'idNote','value' => $idNote, 'type' => PDO::PARAM_INT]
+        ];
+
         $req = $this->queryPrepareExecute($query, $binds);
         $note = $this->formatData($req);
 
