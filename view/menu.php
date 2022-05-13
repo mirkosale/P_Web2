@@ -58,7 +58,7 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         
-                        <form action="?controller=recipe&action=search" class="form-inline" >
+                        <form action="?controller=recipe&action=search" class="form-inline" method="post">
                         <?php 
                             echo"<input type='search' class='searchbar' textdidchange= id='searchbar' name='searchbar' />";
                         ?>
