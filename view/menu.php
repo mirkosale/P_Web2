@@ -115,7 +115,7 @@
                         </a>
                         <form class="form-inline">
                         <?php 
-                            echo"<input type='text' class='searchbar' id='searchbar' name='searchbar' />";
+                            echo"<input type='search' class='searchbar' textdidchange= id='searchbar' name='searchbar' />";
                         ?>
                         </form>
                         <a href="" class="order_online">
