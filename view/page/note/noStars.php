@@ -4,9 +4,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>Cette recette n'existe pas.</p>
+                    <p>Vous devez choisir combien vous notez la recette.</p>
 
-                    <a href="?controller=recipe&action=list">Retour à la page de liste.</a>
+                    <a href="javascript:window.history.back();">Retour en arrière</a>
                 </div>
             </div>
         </div>

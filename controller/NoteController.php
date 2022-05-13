@@ -50,7 +50,7 @@ class NoteController extends Controller
         if (!isset($view)) {
             $idUser = $db->getLoggedUserID($_SESSION['useLogin']);
             $db->addNote($_POST['stars'], $_GET['id'], $idUser);
-            header('Location: index.php?controller=recipe&action=detail&id=' . $_GET['id']);
+            header('Location: ?controller=recipe&action=detail&id=' . $_GET['id']);
         }
         else
         {
@@ -81,8 +81,6 @@ class NoteController extends Controller
             $view = file_get_contents('view/page/note/badNote.php');            
         }
 
-        var_dump($loggedUserId);
-        var_dump($noteUserId);
         if ($loggedUserId[0]['idUser'] != $noteUserId[0]['fkUser'])
         {
             $view = file_get_contents('view/page/note/noRights.php');            
@@ -97,7 +95,7 @@ class NoteController extends Controller
         } else {
             $db->deleteNote($_GET['id']);
 
-            header('Location: index.php?action=list');
+            header('Location: ?controller=recipe&action=detail&id=' . $_GET['id']);
 
             die;
         }

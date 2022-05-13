@@ -21,29 +21,36 @@
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 				<div class="parafsd">
 					<?php
-						echo '<h3>Ingredients</h3> <p>' . $recipe[0]["recListOfItems"] . '</p>';
-						echo '<h3>Préparation</h3> <p>' . $recipe[0]["recPreparation"] . '</p>';
+					echo '<h3>Ingredients</h3> <p>' . $recipe[0]["recListOfItems"] . '</p>';
+					echo '<h3>Préparation</h3> <p>' . $recipe[0]["recPreparation"] . '</p>';
 					?>
 				</div>
 			</div>
 		</div>
 		<!-- Affichage de la note -->
 		<?php
-			if (isset($note[0]['notStars'])) {
-				echo '<p>Votre note actuelle : ' . $note[0]["notStars"] . '</p>';
-				echo '<a href="?controller=note&action=delete&id=' . $note[0]['idNote'] . '">Supprimer la note</a>';
-			} else {
-				echo "Attribuer une note";
-		?>
+		if (isset($note[0]['notStars'])) {
+			echo '<a href="?controller=note&action=delete&id=' . $note[0]['idNote'] . '">Supprimer la note</a>';
+		} else {
+			echo "Attribuer une note";?>
+			
+
 
 			<!-- https://www.foolishdeveloper.com/2022/01/5-star-rating-html-css.html -->
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form_container">
-						<?php echo '<form action="?controller=note&action=add&id=' . $recipe[0]['idRecipe'] . '">'; ?>
-							<div class="btn-box">
-								<button type="submit">Envoyer votre note</button>
-							</div>
+						<?php echo '<form action="?controller=note&action=add&id=' . $recipe[0]['idRecipe'] . '" method="post" enctype="multipart/form-data">'; ?>
+						<div class="star-rating">
+							<input type="radio" name="stars" value="1" id="star-1"><label for="star-1">☆</label>
+							<input type="radio" name="stars" value="3" id="star-2"><label for="star-2">☆</label>
+							<input type="radio" name="stars" value="5" id="star-3"><label for="star-3">☆</label>
+							<input type="radio" name="stars" value="7" id="star-4"><label for="star-4">☆</label>
+							<input type="radio" name="stars" value="9" id="star-5"><label for="star-5">☆</label>
+						</div>
+						<div class="btn-box">
+							<button type="submit" name="btnSubmit" id="btnSubmit">Envoyer votre note</button>
+						</div>
 						</form>
 					</div>
 				</div>
