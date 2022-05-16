@@ -69,7 +69,7 @@ class NoteController extends Controller
         }
 
         if (isset($_SESSION['useLogin']) && !isset($_GET['id'])) {
-            $view = file_get_contents('view/page/recipe/badRecipe.php');            
+            $view = file_get_contents('view/page/recipe/badNote.php');            
         }
 
         $db = new Database();

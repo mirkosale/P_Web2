@@ -369,10 +369,8 @@ class Database {
             ["name" => 'idUser','value' => $idUser, 'type' => PDO::PARAM_INT]
         ];
 
-        
         $req = $this->queryPrepareExecute($query, $binds);
-        $note = $this->formatData($req);
-        return $note;
+        $this -> unsetData($req);
     }
 
      /**
