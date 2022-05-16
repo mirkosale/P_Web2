@@ -37,8 +37,7 @@
 
     <!-- Responsive style -->
     <link href='./resources/bootstrap/css/responsive.css' rel="stylesheet" />
-    <?php
-        #https://github.com/sendinblue/APIv3-php-library
-        require_once('./resources/vendor/autoload.php');
-    ?>
+
+    <!--https://github.com/sendinblue/APIv3-php-library-->
+    <?php require_once('./resources/vendor/autoload.php'); ?>
 </head>
