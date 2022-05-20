@@ -30,7 +30,22 @@
 					echo "</ul>";
 					echo '<h3>Préparation</h3> <p>';
 					echo '<p>' . $recipe[0]["recPreparation"] . '</p>';
-					if (isset($note[0]['notStars'])) {
+					if (isset($note[0]['notStars'])) { 
+						echo '<h3>Votre note actuelle</h3>';
+						echo '<div class="star-rating">';
+						for ($x = 9; $x >= 1; $x-=2)
+						{
+							$star = Round($x / 2, 0); 
+						 	echo '<input type="radio" name="stars" value="' . $x .'" id="star-' . $star . '"><label for="star-' . $star . '" disabled>☆</label>';
+
+							// if ($x < $note[0]['notStars'])
+							// {
+							// 	echo '<input type="radio" name="stars" value="' . $x .'" id="star-' . $star . '"><label for="star-' . $star . '" disabled>☆</label>';
+							// }
+						}
+						echo '</div>';
+
+						echo 'votre note' . $note[0]['notStars'] ;
 						echo '<a href="?controller=note&action=delete&idRecipe=' . $recipe[0]['idRecipe'] .'&idNote=' . $note[0]['idNote'] . '">Supprimer la note</a>';
 					} else {
 						echo "<h3>Attribuer une note</h3>";
@@ -40,6 +55,7 @@
 								echo '<form action="?controller=note&action=add&id=' . $recipe[0]['idRecipe'] . '" method="post" enctype="multipart/form-data">';
 								echo '<input type="hidden" value="' . $recipe[0]['idRecipe'] . '" name="idRecipe" id="idRecipe">';
 							?>
+							
 							<div class="star-rating">
 								<input type="radio" name="stars" value="9" id="star-1"><label for="star-1">☆</label>
 								<input type="radio" name="stars" value="7" id="star-2"><label for="star-2">☆</label>
