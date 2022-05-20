@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ETML
  * Auteur : Cindy Hardegger
@@ -6,14 +7,16 @@
  * Controler pour gérer les recettes
  */
 
-class UserController extends Controller {
+class UserController extends Controller
+{
 
     /**
      * Permet de choisir l'action à effectuer
      *
      * @return mixed
      */
-    public function display() {
+    public function display()
+    {
 
         $action = $_GET['action'] . "Action";
 
@@ -23,12 +26,9 @@ class UserController extends Controller {
 
     private function connectionAction()
     {
-        if (!isset($_SESSION['useLogin']))
-        {
+        if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/login.php');
-        }
-        else
-        {
+        } else {
             $view = file_get_contents('view/page/user/logout.php');
         }
         ob_start();
@@ -45,31 +45,33 @@ class UserController extends Controller {
      */
     private function loginAction()
     {
-        $username = htmlspecialchars($_POST['user']);
-        $password = htmlspecialchars($_POST['password']);
+        if (isset($_POST['btnSubmit'])) {
+            $username = htmlspecialchars($_POST['user']);
+            $password = htmlspecialchars($_POST['password']);
 
-        $database = new Database();
-        $users = $database->getAllUsers();
-        
-        foreach($users as $user)
-        {
-            if ($user['useLogin'] == $username && password_verify($password, $user['usePassword']))
-            {
-                //Ajout la session dans la bd
-                $_SESSION['useLogin'] = $user['useLogin'];
-                $_SESSION['useAdministrator'] = $user['useAdministrator'];
+            $database = new Database();
+            $users = $database->getAllUsers();
 
-                // Redirection
-                header('Location: index.php');
-                die;
+            foreach ($users as $user) {
+                if ($user['useLogin'] == $username && password_verify($password, $user['usePassword'])) {
+                    //Ajout la session dans la bd
+                    $_SESSION['useLogin'] = $user['useLogin'];
+                    $_SESSION['useAdministrator'] = $user['useAdministrator'];
+
+                    // Redirection
+                    header('Location: index.php');
+                    die;
+                }
             }
-        }
 
-        $view = file_get_contents('view/page/user/badLogin.php');
+            $view = file_get_contents('view/page/user/badLogin.php');
+        } else {
+            $view = file_get_contents('view/page/user/noSubmit.php');
+        }
 
         ob_start();
         eval('?>' . $view);
-        $content = ob_get_clean();    
+        $content = ob_get_clean();
 
         return $content;
     }

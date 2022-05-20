@@ -177,8 +177,6 @@ class RecipeController extends Controller
     private function checkAddAction()
     {
         if (isset($_POST['btnSubmit'])) {
-
-
             $errors = array();
             $recipeData = array();
 
@@ -354,42 +352,42 @@ class RecipeController extends Controller
              * S'il a bien rempli les informations, ajout des informations dans la BDD et redirection à la page d'acceuil.
              * Si l'utilisateur n'as pas entré d'image alors l'image reste la même
              */
-            
 
-                /**
-                 * Vérification que l'utilisateur ait bien entré une image ainsi que le bon format et pas trop lourde
-                 */
-                if (!empty($_FILES["image"]['name'])) {
-                    if (
-                        $_FILES["image"]["type"] == "image/jpeg"
-                        || $_FILES["image"]["type"] == "image/png"
-                        || $_FILES["image"]["type"] == "image/jpg"
-                    ) {
-                        if ($_FILES["image"]["error"] == 1) {
-                            $errors[] = "La taille est trop élévée, taille max 2MO";
-                        } else {
-                            $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
-                            $source = $_FILES["image"]["tmp_name"];
-                            $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
-                            $addRecipe = $database->modifyRecipe($recipeData);
-                            move_uploaded_file($source, $destination);
-                            unlink($imagePath);
-                            header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
-                        }
+
+            /**
+             * Vérification que l'utilisateur ait bien entré une image ainsi que le bon format et pas trop lourde
+             */
+            if (!empty($_FILES["image"]['name'])) {
+                if (
+                    $_FILES["image"]["type"] == "image/jpeg"
+                    || $_FILES["image"]["type"] == "image/png"
+                    || $_FILES["image"]["type"] == "image/jpg"
+                ) {
+                    if ($_FILES["image"]["error"] == 1) {
+                        $errors[] = "La taille est trop élévée, taille max 2MO";
                     } else {
-                        $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
+                        $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
+                        $source = $_FILES["image"]["tmp_name"];
+                        $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
+                        $addRecipe = $database->modifyRecipe($recipeData);
+                        move_uploaded_file($source, $destination);
+                        unlink($imagePath);
+                        header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
                     }
                 } else {
-                    $addRecipe = $database->modifyRecipeNoImage($recipeData);
-                    header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
-                    die;
+                    $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
                 }
-                if (empty($errors)) {
-                    $recipeData["name"] = $name;
-                    $recipeData["itemList"] = $itemList;
-                    $recipeData["preparation"] = $preparation;
-                    $recipeData["typedish"] = $typedish;
-                    $recipeData["id"] = $id;
+            } else {
+                $addRecipe = $database->modifyRecipeNoImage($recipeData);
+                header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
+                die;
+            }
+            if (empty($errors)) {
+                $recipeData["name"] = $name;
+                $recipeData["itemList"] = $itemList;
+                $recipeData["preparation"] = $preparation;
+                $recipeData["typedish"] = $typedish;
+                $recipeData["id"] = $id;
             } else {
                 /**
                  * Écriture de toutes les erreurs que l'utilisateur a provoquées.
@@ -413,28 +411,31 @@ class RecipeController extends Controller
     }
     private function searchAction()
     {
-        $database = new Database();
         if (isset($_POST['searchSubmit'])) {
+            $database = new Database();
+
             $recipes = $database->searchRecipe($_POST['searchbar']);
-        }
-        $dishTypes = $database->getAllTypedish();
 
-        /**
-         * Check si des recettes ont été enregistrées
-         */
+            $dishTypes = $database->getAllTypedish();
 
-        for ($x = 0; $x < count($recipes); $x++) {
+            /**
+             * Check si des recettes ont été enregistrées
+             */
 
-            $recipeNote = $database->getRecipeNoteAverage($recipes[$x]['idRecipe']);
+            for ($x = 0; $x < count($recipes); $x++) {
 
-            if (isset($recipeNote[0]['AVG(notStars)'])) {
-                $note = round($recipeNote[0]['AVG(notStars)']);
-                $recipes[$x]['note'] = $note;
+                $recipeNote = $database->getRecipeNoteAverage($recipes[$x]['idRecipe']);
+
+                if (isset($recipeNote[0]['AVG(notStars)'])) {
+                    $note = round($recipeNote[0]['AVG(notStars)']);
+                    $recipes[$x]['note'] = $note;
+                }
             }
+            $view = file_get_contents('view/page/recipe/list.php');
+        } else {
+            $view = file_get_contents('view/page/recipe/noSubmitSearch.php');
         }
-
         // Charge le fichier pour la vue
-        $view = file_get_contents('view/page/recipe/list.php');
         // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
         // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
         ob_start();

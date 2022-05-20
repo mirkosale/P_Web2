@@ -4,9 +4,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>Vous devez passer par le formulaire pour modifier ou ajouter une recette</p>
+                    <p>Vous ne pouvez pas accéder à cette page sans avoir rempli le formulaire.</p>
 
-                    <a href="?controller=recipe&action=list">Retour à la page de liste.</a>
+                    <a href="index.php?controller=user&action=login">Aller au formulaire de connexion</a>
                 </div>
             </div>
         </div>
