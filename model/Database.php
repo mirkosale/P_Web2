@@ -277,16 +277,13 @@ class Database {
         //appeler la méthode pour executer la requête
         $query = 'SELECT idUser FROM t_user WHERE useLogin = :userName';
         $binds = [
-            ["name" => "userName","value" => $userName, "type" => PDO::PARAM_INT]
+            ["name" => "userName","value" => $userName, "type" => PDO::PARAM_STR]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
         
         // Retour les sections sous forme de tableau associatif
 
-        $result = $this->formatData($req);
-
-        var_dump($result);
-        return $result;
+        return $this->formatData($req);
     }
 
     
@@ -372,10 +369,8 @@ class Database {
             ["name" => 'idUser','value' => $idUser, 'type' => PDO::PARAM_INT]
         ];
 
-        
         $req = $this->queryPrepareExecute($query, $binds);
-        $note = $this->formatData($req);
-        return $note;
+        $this -> unsetData($req);
     }
 
      /**
@@ -416,11 +411,11 @@ class Database {
         return $session;
     }
 
-    public function searchRecipe($name)
+    public function searchRecipe($recName)
     {
-        $query="SELECT * FROM `t_recipe` WHERE recName LIKE %:name% ";
+        $query='SELECT * FROM t_recipe WHERE recName LIKE :search';
         $binds = [
-            ["name" => 'name','value' => $recName, 'type' => PDO::PARAM_STR]
+            ["name" => 'search','value' => "%$recName%", 'type' => PDO::PARAM_STR]
         ];
         
         $req = $this->queryPrepareExecute($query, $binds);

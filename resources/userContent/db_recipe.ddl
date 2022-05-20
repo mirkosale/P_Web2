@@ -56,11 +56,13 @@ create table t_user (
 
 alter table t_note add constraint REF_t_not_t_rec_FK
      foreign key (fkRecipe)
-     references t_recipe (idRecipe);
+     references t_recipe (idRecipe)
+     on delete cascade;
 
 alter table t_note add constraint REF_t_not_t_use_FK
      foreign key (fkUser)
-     references t_user (idUser);
+     references t_user (idUser)
+     on delete cascade;
 
 alter table t_recipe add constraint REF_t_rec_t_typ_FK
      foreign key (fkTypeDish)
