@@ -5,7 +5,7 @@
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
-          Our Menu
+          Liste des recettes
         </h2>
       </div>
 
@@ -16,7 +16,7 @@
         if (!isset($_GET['sort']) || $_GET['sort'] == 'all') {
           echo ' class="active"';
         }
-        echo '>All</li></a>';
+        echo '>Tout</li></a>';
 
         foreach ($dishTypes as $dishType) {
           echo '<a href="?controller=recipe&action=list&sort=' . $dishType['idTypeDish'] . '">';
