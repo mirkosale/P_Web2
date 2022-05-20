@@ -34,6 +34,7 @@ class RecipeController extends Controller
         $db = new Database();
         $dishTypes = $db->getAllTypedish();
 
+        //Check de si l'utilisateur a trié les recettes
         if (!isset($_GET['sort']) || $_GET['sort'] == 'all') 
         {
             $recipes = $db->getAllRecipe();
