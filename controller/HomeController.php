@@ -71,26 +71,43 @@ class HomeController extends Controller
         
     }
 
-    /**
-     * Check contact Form action
-     *
-     * @return string
+     /**
+     * Check si lutilisateur a bien rentré toutes les informations requises pour nous contacter
      */
     private function checkContactAction()
     {
-        $lastName = htmlspecialchars($_POST['lastName']);
-        $firstName = htmlspecialchars($_POST['firstName']);
-        $answer = htmlspecialchars($_POST['answer']);
+        //Instancie le modèle et va chercher les informations
+        $errors = array();
+        $recipeData = array();
 
-        $view = file_get_contents('view/page/home/resume.php');
+        $database = new Database();
+        $name = htmlspecialchars($_POST["name"]);
+        $email = htmlspecialchars($_POST["email"]);
+        $message = htmlspecialchars($_POST["message"]);
+        $imagePath = "resources/images/" . $_POST["imagePath"];
+        $typedish = $_POST["typedish"];
+        /**
+         * Vérification que l'utilisateur ait bien entré son nom
+         */
+        if (!isset($name)) {
+            $errors[] = "Vous devez entrer votre nom";
+        }
+
+        /**
+         * Vérification que l'utilisateur ait bien entré son email
+         */
+        if (!isset($email)) {
+            $errors[] = "Vous devez entrer votre email";
+        }
+
+        /**
+         * Vérification que l'utilisateur ait bien entré le message à passé
+         */
+        if (!isset($message)) {
+            $errors[] = "Vous devez entrer la préparation de la recette";
+        }
 
        
-
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
     }
 
 }

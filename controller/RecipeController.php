@@ -395,47 +395,7 @@ class RecipeController extends Controller
             }
         }
     }
-<<<<<<< HEAD
-
-     /**
-     * Check si lutilisateur a bien rentré toutes les informations requises pour nous contacter
-     */
-    private function checkContactAction()
-    {
-        //Instancie le modèle et va chercher les informations
-        $errors = array();
-        $recipeData = array();
-
-        $database = new Database();
-        $name = htmlspecialchars($_POST["name"]);
-        $email = htmlspecialchars($_POST["email"]);
-        $message = htmlspecialchars($_POST["message"]);
-        $imagePath = "resources/images/" . $_POST["imagePath"];
-        $typedish = $_POST["typedish"];
-        /**
-         * Vérification que l'utilisateur ait bien entré son nom
-         */
-        if (!isset($name)) {
-            $errors[] = "Vous devez entrer votre nom";
-        }
-
-        /**
-         * Vérification que l'utilisateur ait bien entré son email
-         */
-        if (!isset($email)) {
-            $errors[] = "Vous devez entrer votre email";
-        }
-
-        /**
-         * Vérification que l'utilisateur ait bien entré le message à passé
-         */
-        if (!isset($message)) {
-            $errors[] = "Vous devez entrer la préparation de la recette";
-        }
-
-       
-    }      
-=======
+      
     private function searchAction(){
         $database = new Database();
         if(isset($_POST['searchSubmit'])){
@@ -471,5 +431,4 @@ class RecipeController extends Controller
 
         return $content;
     }
->>>>>>> 1dd29539bdac61e62d8af1ff3a94183431659a4d
 }

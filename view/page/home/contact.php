@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form_container">
-                        <form action="?controller=recipe&action=checkContact">
+                        <form action="?controller=home&action=checkContact" method="post">
                             <div>
                                 <label for="name"><a style="color:red">*</a>Nom</label>
                                 <input type="text" class="form-control" id="name" name="name" />

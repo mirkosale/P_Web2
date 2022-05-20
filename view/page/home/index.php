@@ -47,33 +47,59 @@
       <div class="filters-content">
       <div class="row grid">
       <div class="col-sm-6 col-lg-4 all pizza"></div>
+
       <div class="col-sm-6 col-lg-4 all pizza">
-        <div class="box">
-          <div>
-            <div class="img-box">
-              <?php echo '<img src="./resources/images/' . $latestRecipe[0]['recImage'] . '" alt="Image de : ' . $latestRecipe[0]['recName'] .  '">'; ?>
-            </div>
-            <div class="detail-box">
-              <h4>
-                <?php echo $latestRecipe[0]['recName']; ?>
-              </h4>
-              <p>
-              </p>
-              <div class="options">
-                <h6>
-                  Voir en détail
-                </h6>
-                <?php echo '<a href="?controller=recipe&action=detail&id=' . $latestRecipe[0]['idRecipe'] . '">'; ?>
-                <img src="./resources/userContent/images/detail.png" alt="Voir en détail">
-                </a>
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <?php echo '<img src="./resources/images/' . $latestRecipe[0]['recImage'] . '" alt="Image de : ' . $latestRecipe[0]['recName'] . '">'; ?>
+                  </div>
+                  <div class="detail-box">
+                    <?php echo '<h5>' . $latestRecipe[0]['recName'] . '</h5>'; ?>
+                    <div class="options">
+                      <div class="stars">
+                        <?php {
+                          if (isset($latestRecipe[0]['note'])) {
+                            for ($x = 0; $x < 9; $x += 2) {
+                              if ($x == $latestRecipe[0]['note']) {
+                                echo '<div class="bi-star-half"></div>';
+                              } elseif ($x < $latestRecipe[0]['note']) {
+                                echo '<div class="bi-star-fill"></div>';
+                              } else {
+                                echo '<div class="bi-star"></div>';
+                              }
+                            }
+                          } else {
+                            echo 'Pas de notes';
+                          }
+                        }
+                        ?>
+                      </div>
+
+
+                      <?php if (isset($_SESSION['useLogin'])) : ?>
+                        
+                        <?php if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1) : ?>
+                          <?php echo '<a href="?controller=recipe&action=updateRecipe&id=' . $latestRecipe[0]['idRecipe'] . '">'; ?>
+                          <img src="resources/userContent/images/edit.png" alt="Edit logo">
+                          </a>
+                          <?php echo '<a href="#" onClick="confirmDeleteRecipe(' . $latestRecipe[0]['idRecipe'] . ')">'; ?>
+                          <img src="resources/userContent/images/delete.png" alt="delete logo">
+                          </a>
+                        <?php endif; ?>
+
+                        <?php echo '<a href="?controller=recipe&action=detail&id=' . $latestRecipe[0]['idRecipe'] . '">'; ?>
+                        <img src="./resources/userContent/images/detail.png" alt="Voir en détail">
+                        </a>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-4 all pizza"></div>
-
     </div>
+    <div class="col-sm-6 col-lg-4 all pizza"></div>
+
     <div class="btn-box">
       <a href="?controller=recipe&action=list">
         Voir plus
