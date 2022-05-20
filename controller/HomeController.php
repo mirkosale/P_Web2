@@ -75,11 +75,11 @@ class HomeController extends Controller
         $recipeData = array();
         
         $database = new Database();
-        $name = htmlspecialchars($_POST["name"]);
-        $email = htmlspecialchars($_POST["email"]);
-        $address = htmlspecialchars($_POST["address"]);
-        $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
-        $message = htmlspecialchars($_POST["message"]);
+        $name = trim(htmlspecialchars($_POST["name"]));
+        $email = trim(htmlspecialchars($_POST["email"]));
+        $address = trim(htmlspecialchars($_POST["address"]));
+        $phoneNumber = trim(htmlspecialchars($_POST["phoneNumber"]));
+        $message = trim(htmlspecialchars($_POST["message"]));
 
         if (!isset($name)|| empty($name)) {
             $errors[] = "Vous devez entrer un nom";
@@ -87,16 +87,9 @@ class HomeController extends Controller
         if (!isset($email) || empty($email)) {
             $errors[] = "Vous devez entrer un email";
         }
-        if (!isset($address) || empty($address)) {
-            $errors[] = "Vous devez entrer une adresse";
-        }
-        if (!isset($phoneNumber) || empty($phoneNumber)) {
-            $errors[] = "Vous devez entrer votre numéro de téléphone";
-            
-        }
-        elseif (!preg_match("/^[0-9+-]{5,}$/", $phoneNumber))
+        if (isset($phoneNumber) && !empty($phoneNumber) && !preg_match("/^[0-9+-]{5,}$/", $phoneNumber))
         {
-            $errors[] = "Vous devez entrer un numéro de téléphone avec uniquement des chiffres et des +, / et -";
+            $errors[] = "Vous devez entrer un numéro de téléphone qui fait au minimum 5 de longueur avec uniquement des chiffres et des +, / et -";
         }
         if (!isset($message) || empty($message)) {
             $errors[] = "Vous devez entrer un message";
