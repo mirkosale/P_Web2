@@ -66,47 +66,68 @@ class HomeController extends Controller
     }
 
     
-    private function checkRecipeAction($modifyOrAdd)
-    {
-        
-    }
-
-     /**
-     * Check si lutilisateur a bien rentré toutes les informations requises pour nous contacter
-     */
     private function checkContactAction()
     {
-        //Instancie le modèle et va chercher les informations
+        if (isset($_POST['btnSubmit']))
+{
+        // Instancie le modèle et va chercher les informations
         $errors = array();
         $recipeData = array();
-
+        
         $database = new Database();
         $name = htmlspecialchars($_POST["name"]);
         $email = htmlspecialchars($_POST["email"]);
+        $address = htmlspecialchars($_POST["address"]);
+        $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
         $message = htmlspecialchars($_POST["message"]);
-        $imagePath = "resources/images/" . $_POST["imagePath"];
-        $typedish = $_POST["typedish"];
-        /**
-         * Vérification que l'utilisateur ait bien entré son nom
-         */
-        if (!isset($name)) {
-            $errors[] = "Vous devez entrer votre nom";
+
+        if (!isset($name)|| empty($name)) {
+            $errors[] = "Vous devez entrer un nom";
+        }
+        if (!isset($email) || empty($email)) {
+            $errors[] = "Vous devez entrer un email";
+        }
+        if (!isset($address) || empty($address)) {
+            $errors[] = "Vous devez entrer une adresse";
+        }
+        if (!isset($phoneNumber) || empty($phoneNumber)) {
+            $errors[] = "Vous devez entrer votre numéro de téléphone";
+            
+        }
+        elseif (!preg_match("/^[0-9+-]{5,}$/", $phoneNumber))
+        {
+            $errors[] = "Vous devez entrer un numéro de téléphone avec uniquement des chiffres et des +, / et -";
+        }
+        if (!isset($message) || empty($message)) {
+            $errors[] = "Vous devez entrer un message";
         }
 
-        /**
-         * Vérification que l'utilisateur ait bien entré son email
-         */
-        if (!isset($email)) {
-            $errors[] = "Vous devez entrer votre email";
+        if(empty($errors)){
+            $recipeData["name"] = $name;
+            $recipeData["email"] = $email;
+            $recipeData["address"] = $address;
+            $recipeData["phoneNumber"] = $phoneNumber;
+            $recipeData["message"] = $message;
+
+            header('Location: index.php');
+        }
+        else{
+             /**
+             * Écriture de toutes les erreurs que l'utilisateur a provoquées.
+             */
+            foreach ($errors as $error) {
+                echo '<li>';
+                echo $error;
+                echo '</li>';
+            }
         }
 
-        /**
-         * Vérification que l'utilisateur ait bien entré le message à passé
-         */
-        if (!isset($message)) {
-            $errors[] = "Vous devez entrer la préparation de la recette";
-        }
 
+
+    }
+    else {
+
+    }
        
     }
 

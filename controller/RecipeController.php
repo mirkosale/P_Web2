@@ -193,10 +193,11 @@ class RecipeController extends Controller
         $itemList = htmlspecialchars($_POST["itemList"]);
         $preparation = htmlspecialchars($_POST["preparation"]);
         $typedish = $_POST["typedish"];
+        var_dump($name);
         /**
          * Vérification que l'utilisateur ait bien entré le nom de la recette
          */
-        if (!isset($name)) {
+        if (!isset($name) || empty($name)) {
             $errors[] = "Vous devez choisir le nom de votre recette";   
         }
         
@@ -211,14 +212,14 @@ class RecipeController extends Controller
         /**
          * Vérification que l'utilisateur ait bien entré la list des ingrédients
          */
-        if (!isset($itemList)) {
+        if (!isset($itemList)  || empty($itemList)) {
             $errors[] = "Vous devez entrer une liste d'ingrédients";
         }
 
         /**
          * Vérification que l'utilisateur ait bien entré la préparation de la recette
          */
-        if (!isset($preparation)) {
+        if (!isset($preparation)  || empty($preparation)) {
             $errors[] = "Vous devez entrer la préparation de la recette";
         }
 
@@ -324,21 +325,21 @@ class RecipeController extends Controller
         /**
          * Vérification que l'utilisateur ait bien entré le nom de la recette
          */
-        if (!isset($name)) {
+        if (!isset($name)  || empty($name)) {
             $errors[] = "Vous devez choisir le nom de votre recette";
         }
 
         /**
          * Vérification que l'utilisateur ait bien entré la list des ingrédients
          */
-        if (!isset($itemList)) {
+        if (!isset($itemList)  || empty($itemList)) {
             $errors[] = "Vous devez entrer une liste d'ingrédients";
         }
 
         /**
          * Vérification que l'utilisateur ait bien entré la préparation de la recette
          */
-        if (!isset($preparation)) {
+        if (!isset($preparation) || empty($preparation)) {
             $errors[] = "Vous devez entrer la préparation de la recette";
         }
 
@@ -395,7 +396,6 @@ class RecipeController extends Controller
             }
         }
     }
-      
     private function searchAction(){
         $database = new Database();
         if(isset($_POST['searchSubmit'])){
@@ -430,5 +430,6 @@ class RecipeController extends Controller
         $content = ob_get_clean();
 
         return $content;
+    
     }
 }
