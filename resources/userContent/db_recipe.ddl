@@ -137,17 +137,17 @@ Mélanger dans un grand bol farine, sucre, sucre vanillé, poudre à lever et se
 -- Notes
 -- _____
 
-INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('3', '1', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('1', '1', '1');
 INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '2', '1');
-INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('2', '3', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('5', '3', '1');
 INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('9', '4', '1');
-INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('4', '5', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('3', '5', '1');
 INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('3', '6', '1');
-INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('2', '7', '1');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '7', '1');
 INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '1', '2');
 INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '2', '2');
-INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('8', '3', '2');
-INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('4', '4', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('5', '3', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('7', '4', '2');
 INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('3', '5', '2');
 INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('1', '6', '2');
-INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('0', '7', '2');
+INSERT INTO `t_note` (`notStars`, `fkRecipe`, `fkUser`) VALUES ('5', '7', '2');

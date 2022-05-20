@@ -46,7 +46,7 @@
                             echo '<label for="image">Nouvelle image</label>' . '<br>';
                             echo '<input type="file" name="image" id="image">' . '</div>';
                         } ?>
-                        <button type="submit" class="updateButton">
+                        <button type="submit" name="btnSubmit" id="btnSubmit">
                             Modifier la recette
                         </button>
                         <br>

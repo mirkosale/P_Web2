@@ -40,7 +40,7 @@
                 <br>
                 <input type="file" name="image" id="image" />
               </div>
-                <button type="submit">
+                <button type="submit" name="btnSubmit" id="btnSubmit">
                   Ajouter la recette
                 </button>
             </form>
