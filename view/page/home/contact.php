@@ -9,26 +9,26 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="?controller=recipe&action=checkContact">
+            <form action="?controller=recipe&action=checkContact" method="post">
               <div class="was-validated">
-                <label for="name"><a style="color:red">*</a>Nom</label>
+                <label for="firstname"><a style="color:red">*</a>Nom</label>
                 <input type="text" class="form-control" id="firstname" name="firstname" />
               </div>
               <div>
-                <label for="typedish"><a style="color:red">*</a>Email</label>
-                <input type="email" class="form-control" id="typedish" name="typedish" />
+                <label for="email"><a style="color:red">*</a>Email</label>
+                <input type="email" class="form-control" id="typedish" name="email" />
               </div>
               <div>
-                <label for="itemList"><a style="color:red">*</a>Adresse</label>
-                <textarea id="itemList" name="itemList"></textarea>
+                <label for="address"><a style="color:red">*</a>Adresse</label>
+                <textarea id="itemList" name="address"></textarea>
               </div>
               <div>
-                <label for="itemList"><a style="color:red">*</a>Numero de téléphone</label>
-                <textarea id="itemList" name="itemList"></textarea>
+                <label for="phoneNumber"><a style="color:red">*</a>Numero de téléphone</label>
+                <textarea id="text" name="phoneNumber"></textarea>
               </div>
               <div>
-                <label for="preparation"><a style="color:red">*</a>message :</label>
-						    <textarea id="preparation" name="preparation" rows="10"></textarea>
+                <label for="message"><a style="color:red">*</a>Message :</label>
+						    <textarea id="preparation" name="message" rows="10"></textarea>
 					    </div>
               <div class="btn_box">
                 <button>

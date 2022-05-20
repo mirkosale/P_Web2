@@ -193,10 +193,11 @@ class RecipeController extends Controller
         $itemList = htmlspecialchars($_POST["itemList"]);
         $preparation = htmlspecialchars($_POST["preparation"]);
         $typedish = $_POST["typedish"];
+        var_dump($name);
         /**
          * Vérification que l'utilisateur ait bien entré le nom de la recette
          */
-        if (!isset($name)) {
+        if (!isset($name) || empty($name)) {
             $errors[] = "Vous devez choisir le nom de votre recette";   
         }
         
@@ -211,14 +212,14 @@ class RecipeController extends Controller
         /**
          * Vérification que l'utilisateur ait bien entré la list des ingrédients
          */
-        if (!isset($itemList)) {
+        if (!isset($itemList)  || empty($itemList)) {
             $errors[] = "Vous devez entrer une liste d'ingrédients";
         }
 
         /**
          * Vérification que l'utilisateur ait bien entré la préparation de la recette
          */
-        if (!isset($preparation)) {
+        if (!isset($preparation)  || empty($preparation)) {
             $errors[] = "Vous devez entrer la préparation de la recette";
         }
 
@@ -324,21 +325,21 @@ class RecipeController extends Controller
         /**
          * Vérification que l'utilisateur ait bien entré le nom de la recette
          */
-        if (!isset($name)) {
+        if (!isset($name)  || empty($name)) {
             $errors[] = "Vous devez choisir le nom de votre recette";
         }
 
         /**
          * Vérification que l'utilisateur ait bien entré la list des ingrédients
          */
-        if (!isset($itemList)) {
+        if (!isset($itemList)  || empty($itemList)) {
             $errors[] = "Vous devez entrer une liste d'ingrédients";
         }
 
         /**
          * Vérification que l'utilisateur ait bien entré la préparation de la recette
          */
-        if (!isset($preparation)) {
+        if (!isset($preparation) || empty($preparation)) {
             $errors[] = "Vous devez entrer la préparation de la recette";
         }
 
@@ -399,5 +400,55 @@ class RecipeController extends Controller
         if(isset($_POST['searchSubmit'])){
             $searchRecipe= $database->searchRecipe($_POST['searchbar']);
         }
+    }
+    private function checkContactAction()
+    {
+        // Instancie le modèle et va chercher les informations
+        $errors = array();
+        $recipeData = array();
+        
+        $database = new Database();
+        $firstname = htmlspecialchars($_POST["firstname"]);
+        $email = htmlspecialchars($_POST["email"]);
+        $address = htmlspecialchars($_POST["address"]);
+        $phoneNumber = htmlspecialchars($_POST["phoneNumber"]);
+        $message = htmlspecialchars($_POST["message"]);
+
+        if (isset($firstname)|| empty($firstname)) {
+            $errors[] = "Vous devez entrer un nom";
+        }
+        if (!isset($email) || empty($email)) {
+            $errors[] = "Vous devez entrer un email";
+        }
+        if (!isset($address) || empty($address)) {
+            $errors[] = "Vous devez entrer une adresse";
+        }
+        if (!isset($phoneNumber) || empty($phoneNumber)) {
+            $errors[] = "Vous devez entrer votre numéro de téléphone";
+        }
+        if (!isset($message) || empty($message)) {
+            $errors[] = "Vous devez entrer un message";
+        }
+
+        if(empty($errors)){
+            $recipeData["firstname"] = $firstname;
+            $recipeData["email"] = $email;
+            $recipeData["address"] = $address;
+            $recipeData["phoneNumber"] = $phoneNumber;
+            $recipeData["message"] = $message;
+        }
+        else{
+             /**
+             * Écriture de toutes les erreurs que l'utilisateur a provoquées.
+             */
+            foreach ($errors as $error) {
+                echo '<li>';
+                echo $error;
+                echo '</li>';
+            }
+        }
+
+
+
     }
 }
