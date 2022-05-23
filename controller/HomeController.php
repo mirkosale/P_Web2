@@ -30,9 +30,10 @@ class HomeController extends Controller
      */
     private function indexAction()
     {
-        #Récupére la dernière recette
+        #Récupère la dernière recette
         $db = new Database();
         $latestRecipe = $db->getLatestRecipe();
+        $latestRecipe[0]['note'] = $db->getRecipeNoteAverage($latestRecipe[0]['idRecipe'])[0]['AVG(notStars)'];
 
         $view = file_get_contents('view/page/home/index.php');
 
@@ -81,12 +82,15 @@ class HomeController extends Controller
             $phoneNumber = trim(htmlspecialchars($_POST["phoneNumber"]));
             $message = trim(htmlspecialchars($_POST["message"]));
 
+            #Check de si toutes les informations entrées ne sont pas vide
             if (!isset($name) || empty($name)) {
                 $errors[] = "Vous devez entrer un nom";
             }
             if (!isset($email) || empty($email)) {
                 $errors[] = "Vous devez entrer un email";
             }
+
+            #Check de si le numéro de téléphone contient uniquement des bons symboles et est au moins de 5 de long
             if (isset($phoneNumber) && !empty($phoneNumber) && !preg_match("/^[0-9+-]{5,}$/", $phoneNumber)) {
                 $errors[] = "Vous devez entrer un numéro de téléphone qui fait au minimum 5 de longueur avec uniquement des chiffres et des +, / et -";
             }
@@ -94,6 +98,7 @@ class HomeController extends Controller
                 $errors[] = "Vous devez entrer un message";
             }
 
+            #Retour à l'accueil si aucune erreur
             if (empty($errors)) {
                 $recipeData["name"] = $name;
                 $recipeData["email"] = $email;
@@ -103,12 +108,12 @@ class HomeController extends Controller
 
                 $view = file_get_contents('view/page/home/index.php');
             } else {
-                $view = file_get_contents('view/page/home/contactErrors.php');
+                $view = file_get_contents('view/page/home/errors.php');
             }
         } else {
             $view = file_get_contents('view/page/home/noSubmit.php');
         }
-        
+
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();

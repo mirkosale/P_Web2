@@ -46,13 +46,12 @@ class RecipeController extends Controller
             }
         }
 
-        /**
-         * Check si des recettes ont été enregistrées
-         */
+        #Check si des recettes ont été enregistrées
         if (!isset($view)) {
             for ($x = 0; $x < count($recipes); $x++) {
                 $recipeNote = $db->getRecipeNoteAverage($recipes[$x]['idRecipe']);
 
+                #Récupération de la note pour chacune des recettes
                 if (isset($recipeNote[0]['AVG(notStars)'])) {
                     $note = round($recipeNote[0]['AVG(notStars)']);
                     $recipes[$x]['note'] = $note;
@@ -81,14 +80,17 @@ class RecipeController extends Controller
      */
     private function detailAction()
     {
+        #Check si l'utilisateur est connecté
         if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
 
+        #Check si l'ID de la recette a été mis
         if (isset($_SESSION['useLogin']) && !isset($_GET['id'])) {
             $view = file_get_contents('view/page/recipe/badRecipe.php');
         }
 
+        #Check si la recette avec l'ID correspondant existe
         if (isset($_SESSION['useLogin']) && isset($_GET['id'])) {
             $db = new Database();
             $recipe = $db->getOneRecipe($_GET['id']);;
@@ -99,6 +101,7 @@ class RecipeController extends Controller
             }
         }
 
+        #Affichage de la page de détail si pas d'erreur
         if (!isset($view)) {
             $view = file_get_contents('view/page/recipe/detail.php');
         }
@@ -115,18 +118,22 @@ class RecipeController extends Controller
      */
     private function deleteAction()
     {
+        #Check de si l'utilisateur est connecté
         if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
 
+        #Check de si l'utilisateur a les droits suffisants pour supprimer une recette
         if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
             $view = file_get_contents('view/page/user/noRights.php');
         }
 
+        #Check de si l'ID de la recette a été mis
         if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id'])) {
             $view = file_get_contents('view/page/recipe/badRecipe.php');
         }
 
+        #Affichage de la page d'erreur
         if (isset($view)) {
             ob_start();
             eval('?>' . $view);
@@ -134,6 +141,7 @@ class RecipeController extends Controller
 
             return $content;
         } else {
+            #Suppression de la recette et retour à la page de lsite
             $db = new Database();
             $db->deleteRecipe($_GET['id']);
 
@@ -143,24 +151,28 @@ class RecipeController extends Controller
     }
 
     /**
-     * Display Contact Action
-     *
-     * @return string
+     * Affiche la page d'ajout d'une recette
      */
     private function addRecipeAction()
     {
-        if (isset($_SESSION['useLogin'])) {
+        #Check de si l'utilisateur est connecté
+        if (!isset($_SESSION['useLogin'])) {
+            $view = file_get_contents('view/page/user/notLogged.php');
+        }
+       
+        #Check de si l'utilisateur a les droits suffisants pour accéder à la page
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
+            $view = file_get_contents('view/page/user/noRights.php');
+        }
+
+        #Check de si une erreur a été trouvée
+        if (!isset($view))
+        {
             $database = new Database();
 
             $typedish = $database->getAllTypedish();
 
             $view = file_get_contents('view/page/recipe/addRecipe.php');
-        }
-        if (!isset($_SESSION['useLogin'])) {
-            $view = file_get_contents('view/page/user/notLogged.php');
-        }
-        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
-            $view = file_get_contents('view/page/user/noRights.php');
         }
 
         ob_start();
@@ -185,7 +197,7 @@ class RecipeController extends Controller
             $itemList = htmlspecialchars($_POST["itemList"]);
             $preparation = htmlspecialchars($_POST["preparation"]);
             $typedish = $_POST["typedish"];
-            var_dump($name);
+
             /**
              * Vérification que l'utilisateur ait bien entré le nom de la recette
              */
@@ -250,26 +262,19 @@ class RecipeController extends Controller
                 header('Location: index.php');
                 die();
             } else {
-
-                /**
-                 * Écriture de toutes les erreurs que l'utilisateur a provoquées.
-                 */
-                foreach ($errors as $error) {
-                    echo '<li>';
-                    echo $error;
-                    echo '</li>';
-                }
+                $view = file_get_contents('view/page/home/errors.php');
             }
         } else {
             $view = file_get_contents('view/page/recipe/noSubmit.php');
-            ob_start();
+        }
+
+        ob_start();
 
             eval('?>' . $view);
 
             $content = ob_get_clean();
 
             return $content;
-        }
     }
 
     /**

@@ -45,6 +45,7 @@ class UserController extends Controller
      */
     private function loginAction()
     {
+        //Check de si la page de check a été accédée via le formulaire
         if (isset($_POST['btnSubmit'])) {
             $username = htmlspecialchars($_POST['user']);
             $password = htmlspecialchars($_POST['password']);
@@ -59,22 +60,26 @@ class UserController extends Controller
                     $_SESSION['useLogin'] = $user['useLogin'];
                     $_SESSION['useAdministrator'] = $user['useAdministrator'];
 
-                    // Redirection
-                    $view = file_get_contents('view/page/home/index.php');
-                    die;
+                    //Redirection à la page d'accueil
+                    header('Location: index.php');
                 }
             }
 
-            $view = file_get_contents('view/page/user/badLogin.php');
+            //Check de si l'utilisateur a été correctement connecté ou non
+            if (!isset($_SESSION['useLogin'])) {
+                $view = file_get_contents('view/page/user/badLogin.php');
+            }
         } else {
             $view = file_get_contents('view/page/user/noSubmit.php');
         }
 
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
+        if (isset($view)) {
+            ob_start();
+            eval('?>' . $view);
+            $content = ob_get_clean();
 
-        return $content;
+            return $content;
+        }
     }
 
     /**

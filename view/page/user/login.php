@@ -9,6 +9,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form_container">
+                        <!-- Formulaire de connexion -->
                         <form action="index.php?controller=user&action=login" method="post">
                             <label for="user"></label>
                             <input type="text" name="user" class="form-control" placeholder="Login">
