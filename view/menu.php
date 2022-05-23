@@ -1,3 +1,9 @@
+<!--
+    Auteur : Pruthvin Kandasamy, Tim Froidevaux, Dylan Bontems, Mirko Sale
+    Date : 23.05.2022
+    Description : Page php permettant la navigation du site de recettes 
+-->
+
 <div class="hero_area">
     <div class="bg-box">
         <img src='./resources/bootstrap/images/hero-bg.jpg' alt="">
@@ -57,12 +63,12 @@
                         <a href="?controller=user&action=connection" class="user_link">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
-                        
+
                         <form action="?controller=recipe&action=search" class="form-inline" method="post">
-                        <?php 
-                            echo"<input type='search' class='searchbar' textdidchange= id='searchbar' name='searchbar' />";
-                        ?>
-                        <input type="submit" name="searchSubmit" class="order_online" value="Chercher">
+                            <?php
+                            echo "<input type='search' class='searchbar' textdidchange= id='searchbar' name='searchbar' />";
+                            ?>
+                            <input type="submit" name="searchSubmit" class="order_online" value="Chercher">
                         </form>
                     </div>
                 </div>

@@ -17,13 +17,15 @@ class UserController extends Controller
      */
     public function display()
     {
-
         $action = $_GET['action'] . "Action";
 
         // Appelle une méthode dans cette classe (ici, ce sera le nom + action (ex: listAction, detailAction, ...))
         return call_user_func(array($this, $action));
     }
 
+    /**
+     * Gère l'affichage de la page de connexion / déconnexion
+     */
     private function connectionAction()
     {
         if (!isset($_SESSION['useLogin'])) {
@@ -39,9 +41,7 @@ class UserController extends Controller
     }
 
     /**
-     * Check Form submit
-     *
-     * @return string
+     * Gère la connexion au site web
      */
     private function loginAction()
     {
@@ -52,14 +52,15 @@ class UserController extends Controller
             $database = new Database();
             $users = $database->getAllUsers();
 
+            //Check de si les informations entrées correspondent aux informations d'un utilisateur
             foreach ($users as $user) {
                 if ($user['useLogin'] == $username && password_verify($password, $user['usePassword'])) {
-                    //Ajout la session dans la bd
+                    //Création de la session
                     $_SESSION['useLogin'] = $user['useLogin'];
                     $_SESSION['useAdministrator'] = $user['useAdministrator'];
 
                     // Redirection
-                    header('Location: index.php');
+                    $view = file_get_contents('view/page/home/index.php');
                     die;
                 }
             }
@@ -76,6 +77,9 @@ class UserController extends Controller
         return $content;
     }
 
+    /**
+     * Gère la déconnexion au site
+     */
     private function logoutAction()
     {
         session_destroy();

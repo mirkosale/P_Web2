@@ -16,8 +16,8 @@
                 <input type="text" class="form-control" id="name" name="name" />
               </div>
               <div>
-              <label for="typedish"><a style="color:red">*</a>Type de plat</label>
-              <br>
+                <label for="typedish"><a style="color:red">*</a>Type de plat</label>
+                <br>
                 <select name="typedish" id="typedish">
                   <?php
                   foreach ($typedish as $typedishName) {
@@ -35,14 +35,13 @@
                 <textarea id="preparation" name="preparation" rows="10"></textarea>
               </div>
               <div>
-                
                 <label for="image"><a style="color:red">*</a>Image</label>
                 <br>
                 <input type="file" name="image" id="image" />
               </div>
-                <button type="submit" name="btnSubmit" id="btnSubmit">
-                  Ajouter la recette
-                </button>
+              <button type="submit" name="btnSubmit" id="btnSubmit">
+                Ajouter la recette
+              </button>
             </form>
           </div>
         </div>
@@ -54,3 +53,4 @@
       </div>
     </div>
   </section>
+</body>

@@ -11,7 +11,6 @@ include_once 'model/Database.php';
 
 class HomeController extends Controller
 {
-
     /**
      * Affiche la page correcte
      *
@@ -31,6 +30,7 @@ class HomeController extends Controller
      */
     private function indexAction()
     {
+        #Récupére la dernière recette
         $db = new Database();
         $latestRecipe = $db->getLatestRecipe();
 
@@ -51,8 +51,6 @@ class HomeController extends Controller
     private function contactAction()
     {
         $database = new Database();
-
-        $typedish = $database->getAllTypedish();
 
         $view = file_get_contents('view/page/home/contact.php');
 
@@ -103,25 +101,17 @@ class HomeController extends Controller
                 $recipeData["phoneNumber"] = $phoneNumber;
                 $recipeData["message"] = $message;
 
-                header('Location: index.php');
+                $view = file_get_contents('view/page/home/index.php');
             } else {
-                /**
-                 * Écriture de toutes les erreurs que l'utilisateur a provoquées.
-                 */
-                foreach ($errors as $error) {
-                    echo '<li>';
-                    echo $error;
-                    echo '</li>';
-                }
+                $view = file_get_contents('view/page/home/contactErrors.php');
             }
         } else {
             $view = file_get_contents('view/page/home/noSubmit.php');
-
-            ob_start();
-            eval('?>' . $view);
-            $content = ob_get_clean();
-
-            return $content;
         }
+        
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+        return $content;
     }
 }

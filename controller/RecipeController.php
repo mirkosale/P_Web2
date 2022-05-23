@@ -16,7 +16,6 @@ class RecipeController extends Controller
      */
     public function display()
     {
-
         $action = $_GET['action'] . "Action";
 
         // Appelle une méthode dans cette classe (ici, ce sera le nom + action (ex: listAction, detailAction, ...))

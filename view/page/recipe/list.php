@@ -62,23 +62,22 @@
                         }
                         ?>
                       </div>
+                      <?php if (isset($_SESSION['useLogin'])) { ?>
 
-
-                      <?php if (isset($_SESSION['useLogin'])) : ?>
-                        
-                        <?php if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1) : ?>
+                        <?php if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1) { ?>
                           <?php echo '<a href="?controller=recipe&action=updateRecipe&id=' . $recipe['idRecipe'] . '">'; ?>
                           <img src="resources/userContent/images/edit.png" alt="Edit logo">
                           </a>
                           <?php echo '<a href="#" onClick="confirmDeleteRecipe(' . $recipe['idRecipe'] . ')">'; ?>
                           <img src="resources/userContent/images/delete.png" alt="delete logo">
                           </a>
-                        <?php endif; ?>
-
+                        <?php
+                        }
+                        ?>
                         <?php echo '<a href="?controller=recipe&action=detail&id=' . $recipe['idRecipe'] . '">'; ?>
                         <img src="./resources/userContent/images/detail.png" alt="Voir en détail">
                         </a>
-                      <?php endif; ?>
+                      <?php } ?>
                     </div>
                   </div>
                 </div>
@@ -98,14 +97,9 @@
   </section>
 
   <script>
-      function confirmDeleteRecipe($id) {
-
-          if (window.confirm("Voulez-vous supprimer la recette avec l'identifiant n° " + $id + "?")) {
-
-              window.location.replace('index.php?controller=recipe&action=delete&id=' + $id);
-
-          }
+    function confirmDeleteRecipe($id) {
+      if (window.confirm("Voulez-vous supprimer la recette avec l'identifiant n° " + $id + "?")) {
+        window.location.replace('index.php?controller=recipe&action=delete&id=' + $id);
       }
+    }
   </script>
-
-  <!-- end food section -->

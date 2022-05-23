@@ -3,6 +3,12 @@
 <meta charset="utf-8" />
 
 <head>
+    <!--
+        Auteur : Pruthvin Kandasamy, Tim Froidevaux, Dylan Bontems, Mirko Sale
+        Date : 23.05.2022
+        Description : Page de head du site de recettes pour créer tous les liens et dépendances
+    -->
+
     <!-- Basic -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
