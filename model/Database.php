@@ -1,6 +1,6 @@
 <!--
 ETML 
-Author : Kandasamy Pruthvin
+Author : Kandasamy Pruthvin, Tim Froidevaux, Dylan Bontems, Mirko Sale
 Date   : 28.02.2022
 Description: les données sont traitées et affichées directement dans la page d’accueil.
  Mais, nous allons créer plusieurs pages avec des liaisons à la BD. A terme, nous ne voulons pas recopier toujours les mêmes instructions.
@@ -30,14 +30,15 @@ class Database {
     }
 
     /**
-     * permet de préparer et d’exécuter une requête de type simple (sans where)
+     * 
+         * Fonction permettant de gérer une requête MySQL simple (sans where)
      */
     private function querySimpleExecute($query){
         $req = $this -> connector->query($query);
         return $req;
     }
 
-        /**
+    /**
      * permet de préparer, de binder et d’exécuter une requête (select avec where ou insert, update et delete)
      */
     private function queryPrepareExecute($query, $binds){
@@ -51,7 +52,8 @@ class Database {
     }
 
     /**
-     * traiter les données pour les retourner par exemple en tableau associatif (avec PDO::FETCH_ASSOC)
+     * Traite les données pour les retourner par exemple en tableau associatif (avec PDO::FETCH_ASSOC)
+     * Supprime la lisaison de la requête avec la DB en supprimant la requête
      */
     private function formatData($req){
         $result = $req->fetchALL(PDO::FETCH_ASSOC);
@@ -67,19 +69,15 @@ class Database {
     }
 
     /**
-     * methode permettant de récupèrer tout les recettes
+     * Méthode permettant de récupèrer tout les recettes
      */
     public function getAllRecipe(){
-        //récupère la liste de tous les recettes de la BD
-        //avoir la requête sql
-        //appeler la méthode pour executer la requête
-        //appeler la méthode pour avoir le résultat sous forme de tableau
-        //retour tous les recettes
         $queryRecipe = "SELECT *  FROM t_recipe";
+
         $reqRecipe = $this->querySimpleExecute($queryRecipe);
          
         $returnRecipe=$this->formatData($reqRecipe);
-        $this -> unsetData($reqRecipe);
+
         return $returnRecipe;
     }
 
@@ -252,74 +250,34 @@ class Database {
     }
 
     /**
-     * methode permettant de récupérer un utilisateur selon son ID
+     * Méthode permettant de récupérer un utilisateur selon son ID
      */
     public function getUser($idUser){
-        //récupère la liste de tous les utilisateur de la BD
-        //avoir la requête sql
-        //appeler la méthode pour executer la requête
         $query = 'SELECT * FROM t_user WHERE idUser = :idUser';
         $binds = [
             ["name" => "idUser","value" => $idUser, "type" => PDO::PARAM_INT]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
 
-        // Retour les sections sous forme de tableau associatif
         return $this->formatData($req);
     }
 
     /**
-     * methode permettant de récupérer un utilisateur selon son ID
+     * Méthode permettant de récupérer les information d'un utilisateur selon son nom
      */
     public function getLoggedUserID($userName){
-        //récupère la liste de tous les utilisateur de la BD
-        //avoir la requête sql
-        //appeler la méthode pour executer la requête
         $query = 'SELECT idUser FROM t_user WHERE useLogin = :userName';
         $binds = [
             ["name" => "userName","value" => $userName, "type" => PDO::PARAM_STR]
         ];
         $req = $this->queryPrepareExecute($query, $binds);
         
-        // Retour les sections sous forme de tableau associatif
-
         return $this->formatData($req);
     }
 
-    
-    /*
-     * methode permettant de rcupèrer l'ID d'une session en fonction 
-     * d'un idUser ; Retourne null si pas de résultats ; sinon retourne l'idSession
-     */
-    private function getIdSessionByUserId($idUser)
-    {
-        $query = "SELECT idSession FROM t_session WHERE fkUser = :idUser";
-        $binds = [
-            ["name" => 'idUser', 'value' => $idUser, 'type' => PDO::PARAM_STR]
-        ];
-
-        $req = $this->queryPrepareExecute($query, $binds);
-        $result = $this->formatData($req);
-
-        return $result ? $result[0]['idSession'] : null;
-    }
-
     /**
-     * methode permettant de Récupèrer une session avec l'id donné et si elle existe retoune la session sinon null
+     * Méthode qui va regarder toutes les notes pour une recette et retourner la moyenne de toutes les notes
      */
-    public function getOneSession($idSession)
-    {
-        $query = "SELECT * FROM t_session WHERE idSession = :idSession";
-        $binds = [
-            ["name" => 'idSession','value' => $idSession, 'type' => PDO::PARAM_INT]
-        ];
-
-        $req = $this->queryPrepareExecute($query, $binds);
-        $session = $this->formatData($req);
-
-        return !$session ? null : $session[0];
-    }
-
     public function getRecipeNoteAverage($idRecipe)
     {
         $query = "SELECT AVG(notStars) FROM t_note WHERE fkRecipe = :idRecipe";
@@ -333,6 +291,9 @@ class Database {
         return $note;
     }
 
+    /**
+     * Méthode qui retourne l'utilisateur qui a entré la note de la recette
+     */
     public function getNoteUser($idNote)
     {
         $query = "SELECT fkUser FROM t_note WHERE idNote = :idNote";
@@ -346,6 +307,9 @@ class Database {
         return $note;
     }
 
+    /**
+     * Va regarder si une certaine note existe par un utilisateur sur une recette
+     */
     public function getRecipeNoteOfUser($idRecipe, $userName)
     {
         $query = "SELECT * FROM t_note AS n INNER JOIN t_user AS u ON u.idUser = n.fkUser WHERE fkRecipe = :idRecipe AND u.useLogin = :userName";
@@ -360,6 +324,9 @@ class Database {
         return $note;
     }
 
+    /**
+     * Methode permettant d'ajouter une note à une recette avec un certain nombre d'étoiles
+     */
     public function addNote($starNB, $idRecipe, $idUser)
     {
         $query = "INSERT INTO t_note (notStars, fkRecipe, fkUser) VALUES (:starNB, :idRecipe, :idUser)";
@@ -370,34 +337,27 @@ class Database {
         ];
 
         $req = $this->queryPrepareExecute($query, $binds);
-        $this -> unsetData($req);
+        $this->unsetData($req);
     }
 
      /**
-     * methode permettant de delete une note
+     * Méthode permettant de supprimer une note
      */
     public function deleteNote($idNote)
     {
-        //supprime l'recette
-        //avoir la requête sql 
-        //appeler la méthode pour executer la requête
-        //appeler la méthode pour avoir le résultat sous forme de tableau.
         $query = 'DELETE FROM t_note WHERE idNote = :idNote';
 
-        //avoir la requête sql pour le delete.
         $binds = [
             ["name" => "idNote", "value" => $idNote, "type" => PDO::PARAM_INT]
         ];
-        $req = $this->queryPrepareExecute($query, $binds);
-        $result = $this->formatData($req);
-        $this->unsetData($req);
 
-        return $result;
+        $req = $this->queryPrepareExecute($query, $binds);
+        $this->unsetData($req);
     }
 
 
     /**
-     * Méthode permettant d'avoir tous les types de plats
+     * Méthode permettant de retourner tous les types de plats
      */
     public function getAllTypedish()
     {
@@ -411,6 +371,9 @@ class Database {
         return $session;
     }
 
+    /**
+     * Méthode qui permet de faire une recherche dans la base de donnée depuis une barre de recherche
+     */
     public function searchRecipe($recName)
     {
         $query='SELECT * FROM t_recipe WHERE recName LIKE :search';
