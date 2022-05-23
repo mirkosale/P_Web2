@@ -46,7 +46,7 @@ class NoteController extends Controller
                 $view = file_get_contents('view/page/recipe/badRecipe.php');
             }
         }
-
+  
         if (!isset($view)) {
             $idUser = $db->getLoggedUserID($_SESSION['useLogin']);
 
