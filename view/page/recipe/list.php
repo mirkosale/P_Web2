@@ -9,7 +9,6 @@
         </h2>
       </div>
 
-
       <ul class="filters_menu">
         <?php
         echo '<a href ="?controller=recipe&action=list&sort=all"><li';
@@ -18,6 +17,7 @@
         }
         echo '>Tout</li></a>';
 
+        #Affichage de tous les types de plats et permet à l'utilisateur de trier avec ces boutons
         foreach ($dishTypes as $dishType) {
           echo '<a href="?controller=recipe&action=list&sort=' . $dishType['idTypeDish'] . '">';
           if (isset($_GET['sort']) && $_GET['sort'] == $dishType['idTypeDish']) {
@@ -33,7 +33,7 @@
       <div class="filters-content">
         <div class="row grid">
           <?php
-          foreach ($recipes as $recipe) {
+            foreach ($recipes as $recipe) {
           ?>
             <div class="col-sm-6 col-lg-4 all pizza">
               <div class="box">
@@ -45,7 +45,9 @@
                     <?php echo '<h5>' . $recipe['recName'] . '</h5>'; ?>
                     <div class="options">
                       <div class="stars">
-                        <?php {
+                        <?php 
+                        {
+                          #Affichage de la moyenne de toutes les notes pour une recette en étoiles
                           if (isset($recipe['note'])) {
                             for ($x = 0; $x < 9; $x += 2) {
                               if ($x == $recipe['note']) {
@@ -62,21 +64,20 @@
                         }
                         ?>
                       </div>
-                      <?php if (isset($_SESSION['useLogin'])) { ?>
-
-                        <?php if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1) { ?>
-                          <?php echo '<a href="?controller=recipe&action=updateRecipe&id=' . $recipe['idRecipe'] . '">'; ?>
-                          <img src="resources/userContent/images/edit.png" alt="Edit logo">
+                      <?php
+                        #Affichage des différents selon si l'utilisateur est connecté et s'il a les droits d'administrateur ou non 
+                        if (isset($_SESSION['useLogin'])) {
+                          if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1) { ?>
+                            <?php echo '<a href="?controller=recipe&action=updateRecipe&id=' . $recipe['idRecipe'] . '">'; ?>
+                            <img src="resources/userContent/images/edit.png" alt="Edit logo">
+                            </a>
+                            <?php echo '<a href="#" onClick="confirmDeleteRecipe(' . $recipe['idRecipe'] . ')">'; ?>
+                            <img src="resources/userContent/images/delete.png" alt="delete logo">
+                            </a>
+                          <?php }
+                          echo '<a href="?controller=recipe&action=detail&id=' . $recipe['idRecipe'] . '">'; ?>
+                          <img src="./resources/userContent/images/detail.png" alt="Voir en détail">
                           </a>
-                          <?php echo '<a href="#" onClick="confirmDeleteRecipe(' . $recipe['idRecipe'] . ')">'; ?>
-                          <img src="resources/userContent/images/delete.png" alt="delete logo">
-                          </a>
-                        <?php
-                        }
-                        ?>
-                        <?php echo '<a href="?controller=recipe&action=detail&id=' . $recipe['idRecipe'] . '">'; ?>
-                        <img src="./resources/userContent/images/detail.png" alt="Voir en détail">
-                        </a>
                       <?php } ?>
                     </div>
                   </div>
@@ -95,7 +96,7 @@
       <?php endif; ?>
     </div>
   </section>
-
+  <!-- Script de confirmation de suppression d'une recette en javascript -->
   <script>
     function confirmDeleteRecipe($id) {
       if (window.confirm("Voulez-vous supprimer la recette avec l'identifiant n° " + $id + "?")) {

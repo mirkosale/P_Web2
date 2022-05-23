@@ -59,6 +59,7 @@ class NoteController extends Controller
 
             $db->addNote($_POST['stars'], $_GET['id'], $idUser[0]['idUser']);
             header('Location: ?controller=recipe&action=detail&id=' . $_GET['id']);
+            die;
         } else {
             ob_start();
             eval('?>' . $view);
@@ -110,7 +111,6 @@ class NoteController extends Controller
             $db->deleteNote($_GET['idNote']);
 
             header('Location: ?controller=recipe&action=detail&id=' . $_GET['idRecipe']);
-
             die;
         }
     }

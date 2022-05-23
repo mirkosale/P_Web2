@@ -10,6 +10,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
+            <!-- Forumulaire d'ajout d'une recette -->
             <form action="index.php?controller=recipe&action=checkAdd" method="post" enctype="multipart/form-data">
               <div>
                 <label for="name"><a style="color:red">*</a>Nom de la recette</label>
@@ -20,6 +21,7 @@
                 <br>
                 <select name="typedish" id="typedish">
                   <?php
+                  #Liste de tous les types de plats
                   foreach ($typedish as $typedishName) {
                     echo '<option value=' . $typedishName["idTypeDish"] . '>' . $typedishName["typName"] . '</option>';
                   }

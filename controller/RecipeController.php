@@ -159,15 +159,14 @@ class RecipeController extends Controller
         if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
-       
+
         #Check de si l'utilisateur a les droits suffisants pour accéder à la page
         if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
             $view = file_get_contents('view/page/user/noRights.php');
         }
 
         #Check de si une erreur a été trouvée
-        if (!isset($view))
-        {
+        if (!isset($view)) {
             $database = new Database();
 
             $typedish = $database->getAllTypedish();
@@ -269,12 +268,9 @@ class RecipeController extends Controller
         }
 
         ob_start();
-
-            eval('?>' . $view);
-
-            $content = ob_get_clean();
-
-            return $content;
+        eval('?>' . $view);
+        $content = ob_get_clean();
+        return $content;
     }
 
     /**
@@ -284,42 +280,53 @@ class RecipeController extends Controller
      */
     private function updateRecipeAction()
     {
+        #Check si l'utilisateur est connecté
         if (!isset($_SESSION['useLogin'])) {
             $view = file_get_contents('view/page/user/notLogged.php');
         }
+
+        #Check si l'utilisateur a les droits suffisants
         if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] != 1) {
             $view = file_get_contents('view/page/user/noRights.php');
         }
+
+        #Check si l'ID de la recette à modifier a été correctment entré
         if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && !isset($_GET['id'])) {
             $view = file_get_contents('view/page/recipe/badRecipe.php');
         }
-        // Instancie le modèle et va chercher les informations
-        $database = new Database();
-        $dishTypes = $database->getAllTypedish();
-        $recipes = $database->getOneRecipe($_GET['id']);
 
-        if (!isset($view)) {
-            // Charge le fichier pour la vue
-            $view = file_get_contents('view/page/recipe/updateRecipe.php');
+        #Check si la recette qui a été trouvée existe bien
+        if (isset($_SESSION['useLogin']) && $_SESSION['useAdministrator'] == 1 && isset($_GET['id'])) { {
+                $database = new Database();
+                $recipes = $database->getOneRecipe($_GET['id']);
+
+                if (!isset($recipes[0]) || empty($recipes[0])) {
+                    $view = file_get_contents('view/page/recipe/badRecipe.php');
+                }
+            }
+
+            if (!isset($view)) {
+                $dishTypes = $database->getAllTypedish();
+                // Charge le fichier pour la vue
+                $view = file_get_contents('view/page/recipe/updateRecipe.php');
+            }
+            // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
+            // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
+            ob_start();
+            // eval permet de prendre le fichier de vue et de le parcourir dans le but de remplacer les variables PHP par leur valeur (provenant du model)
+            eval('?>' . $view);
+            // ob_get_clean permet de reprendre la lecture qui avait été stoppée (dans le but d'afficher la vue)
+            $content = ob_get_clean();
+
+            return $content;
         }
-        // Pour que la vue puisse afficher les bonnes données, il est obligatoire que les variables de la vue puisse contenir les valeurs des données
-        // ob_start est une méthode qui stoppe provisoirement le transfert des données (donc aucune donnée n'est envoyée).
-        ob_start();
-        // eval permet de prendre le fichier de vue et de le parcourir dans le but de remplacer les variables PHP par leur valeur (provenant du model)
-        eval('?>' . $view);
-        // ob_get_clean permet de reprendre la lecture qui avait été stoppée (dans le but d'afficher la vue)
-        $content = ob_get_clean();
-
-        return $content;
     }
-
     /**
      * Check si la modifiation a bien était faite
      */
     private function checkUpdateRecipeAction()
     {
         if (isset($_POST['btnSubmit'])) {
-            // Instancie le modèle et va chercher les informations
             $errors = array();
             $recipeData = array();
 
@@ -361,71 +368,87 @@ class RecipeController extends Controller
             /**
              * Vérification que l'utilisateur ait bien entré une image ainsi que le bon format et pas trop lourde
              */
-            if (!empty($_FILES["image"]['name'])) {
-                if (
-                    $_FILES["image"]["type"] == "image/jpeg"
-                    || $_FILES["image"]["type"] == "image/png"
-                    || $_FILES["image"]["type"] == "image/jpg"
-                ) {
-                    if ($_FILES["image"]["error"] == 1) {
-                        $errors[] = "La taille est trop élévée, taille max 2MO";
-                    } else {
-                        $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
-                        $source = $_FILES["image"]["tmp_name"];
-                        $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
-                        $addRecipe = $database->modifyRecipe($recipeData);
-                        move_uploaded_file($source, $destination);
-                        unlink($imagePath);
-                        header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
-                    }
-                } else {
-                    $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
-                }
-            } else {
-                $addRecipe = $database->modifyRecipeNoImage($recipeData);
-                header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
-                die;
-            }
+            
+
+            #Vérifie que les champs ont bien tous été fournis (sans l'image)
             if (empty($errors)) {
                 $recipeData["name"] = $name;
                 $recipeData["itemList"] = $itemList;
                 $recipeData["preparation"] = $preparation;
                 $recipeData["typedish"] = $typedish;
                 $recipeData["id"] = $id;
-            } else {
-                /**
-                 * Écriture de toutes les erreurs que l'utilisateur a provoquées.
-                 */
-                foreach ($errors as $error) {
-                    echo '<li>';
-                    echo $error;
-                    echo '</li>';
+
+                #Vérifications que l'image qui a (pas forcément) été ajoutée fasse bien en dessous de 2 MB et soit une image du bon format
+                if (!empty($_FILES["image"]['name'])) {
+
+                    #Check que l'image soit un PNG ou un JPG / JPEG
+                    if (
+                        $_FILES["image"]["type"] == "image/jpeg"
+                        || $_FILES["image"]["type"] == "image/png"
+                        || $_FILES["image"]["type"] == "image/jpg"
+                    ) 
+                    {  
+                        #Check que l'image fasse moins de 2MO
+                        if ($_FILES["image"]["error"] == 1) {
+                            $errors[] = "La taille est trop élévée, taille max 2MO";
+                        } else {
+                            #Changement du nom de l'image avec la date et l'heure
+                            $recipeData["image"] = date("YmdHis") . $_FILES["image"]["name"];
+
+                            #Déplacement de l'image dans le dossier d'images
+                            $source = $_FILES["image"]["tmp_name"];
+                            $destination = "resources/images/" . date("YmdHis") . $_FILES["image"]["name"];
+                            move_uploaded_file($source, $destination);
+
+                            #Modification des informations de l'image
+                            $addRecipe = $database->modifyRecipe($recipeData);
+
+                            unlink($imagePath);
+                        }
+                    } else {
+                        $errors[] = "Vous devez séléctionnez un fichier jpg ou png";
+                    }
+                    #Si pas d'image, modification sans image
+                } else {
+                    $addRecipe = $database->modifyRecipeNoImage($recipeData);
                 }
+            } 
+            
+            #S'il n'y a pas eu d'erreurs après l'ajout de l'image, refresh de la page de détail
+            if (empty($errors)){
+                header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
+                die;
+            } else {
+                #Affichage de toutes les erreurs
+                $view = file_get_contents('view/page/home/errors.php');
             }
         } else {
             $view = file_get_contents('view/page/recipe/noSubmit.php');
-            ob_start();
-
-            eval('?>' . $view);
-
-            $content = ob_get_clean();
-
-            return $content;
         }
+        
+        #Affichage de la bonne page
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+        return $content;
     }
+
+    /**
+     * Va gérer la recherche via les informations rentrées par l'utilisateur
+     */
     private function searchAction()
     {
+        #Check si l'utilisateur a recherché via la barre de recherche
         if (isset($_POST['searchSubmit'])) {
             $database = new Database();
 
-            $recipes = $database->searchRecipe($_POST['searchbar']);
+            $recipes = $database->searchRecipe(htmlspecialchars($_POST['searchbar']));
 
             $dishTypes = $database->getAllTypedish();
 
             /**
              * Check si des recettes ont été enregistrées
              */
-
             for ($x = 0; $x < count($recipes); $x++) {
 
                 $recipeNote = $database->getRecipeNoteAverage($recipes[$x]['idRecipe']);
