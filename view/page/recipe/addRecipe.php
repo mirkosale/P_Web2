@@ -10,16 +10,18 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
+            <!-- Forumulaire d'ajout d'une recette -->
             <form action="index.php?controller=recipe&action=checkAdd" method="post" enctype="multipart/form-data">
               <div>
                 <label for="name"><a style="color:red">*</a>Nom de la recette</label>
                 <input type="text" class="form-control" id="name" name="name" />
               </div>
               <div>
-              <label for="typedish"><a style="color:red">*</a>Type de plat</label>
-              <br>
+                <label for="typedish"><a style="color:red">*</a>Type de plat</label>
+                <br>
                 <select name="typedish" id="typedish">
                   <?php
+                  #Liste de tous les types de plats
                   foreach ($typedish as $typedishName) {
                     echo '<option value=' . $typedishName["idTypeDish"] . '>' . $typedishName["typName"] . '</option>';
                   }
@@ -35,14 +37,13 @@
                 <textarea id="preparation" name="preparation" rows="10"></textarea>
               </div>
               <div>
-                
                 <label for="image"><a style="color:red">*</a>Image</label>
                 <br>
                 <input type="file" name="image" id="image" />
               </div>
-                <button type="submit">
-                  Ajouter la recette
-                </button>
+              <button type="submit" name="btnSubmit" id="btnSubmit">
+                Ajouter la recette
+              </button>
             </form>
           </div>
         </div>
@@ -54,3 +55,4 @@
       </div>
     </div>
   </section>
+</body>

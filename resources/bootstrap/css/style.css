@@ -590,7 +590,8 @@ a:focus {
   fill: #ffffff;
 }
 
-.food_section .box .stars {
+.stars {
+  color: #FFD700;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -599,9 +600,46 @@ a:focus {
           justify-content: left; 
 }
 
-.food_section .box .stars div {
+.stars div {
   margin-right: 2px;
 }
+
+.star-rating {
+  width: 162px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: left;
+ }
+  
+  .star-rating > input{
+   display:none;
+  }
+  
+  .star-rating > label {
+  position: relative;
+  font-size: 40px;
+  color: #FFD700;
+  cursor: pointer;
+  }
+  
+  .star-rating > label::before{
+  content: "\2605";
+  position: absolute;
+  opacity: 0;
+  }
+  
+  .star-rating > label:hover:before,
+  .star-rating > label:hover ~ label:before {
+  opacity: 1 !important;
+  }
+  
+  .star-rating > input:checked ~ label:before{
+  opacity:1;
+  }
+  
+  .star-rating:hover > input:checked ~ label:before{ 
+  opacity: 0.4;
+   }
 
 
 .food_section .box:hover .img-box img {
@@ -1033,40 +1071,3 @@ a:focus {
   height: 44px;
   width: 283px;
 }
-
-.star-rating {
-  width: 162px;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: left;
- }
-  
-  .star-rating > input{
-   display:none;
-  }
-  
-  .star-rating > label {
-  position: relative;
-  font-size: 40px;
-  color: #FFD700;
-  cursor: pointer;
-  }
-  
-  .star-rating > label::before{
-  content: "\2605";
-  position: absolute;
-  opacity: 0;
-  }
-  
-  .star-rating > label:hover:before,
-  .star-rating > label:hover ~ label:before {
-  opacity: 1 !important;
-  }
-  
-  .star-rating > input:checked ~ label:before{
-  opacity:1;
-  }
-  
-  .star-rating:hover > input:checked ~ label:before{ 
-  opacity: 0.4;
-   }

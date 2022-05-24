@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form_container">
-                        <form action="?controller=recipe&action=checkContact">
+                        <form action="?controller=home&action=checkContact" method="post">
                             <div>
                                 <label for="name"><a style="color:red">*</a>Nom</label>
                                 <input type="text" class="form-control" id="name" name="name" />
@@ -21,7 +21,7 @@
                             </div>
                             <div>
                                 <label for="adress">Adresse</label>
-                                <textarea id="adress" name="adress"></textarea>
+                                <textarea id="address" name="address"></textarea>
                             </div>
                             <div>
                                 <label for="phoneNumber">Numero de téléphone</label>
@@ -32,7 +32,7 @@
                                 <textarea id="message" name="message" rows="10"></textarea>
                             </div>
                             <div class="btn_box">
-                                <button type="submit">
+                                <button type="submit" name="btnSubmit" id="btnSubmit">
                                     Envoyer
                                 </button>
                             </div>

@@ -10,15 +10,19 @@
                 <div class="col-md-6">
                     <div class="form_container">
                         <form action="index.php?controller=user&action=logout" method="post">
-                            <p>Vous êtes actuellement connecté. Votre nom est : <?php echo $_SESSION['useLogin'];?></p>
+                            <p>Vous êtes actuellement connecté. Votre nom est : <?php echo $_SESSION['useLogin']; ?></p>
+                            
                             <div class="btn_box">
                                 <button type="submit">Se déconnecter</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
     </section>
     </div>
+<<<<<<< HEAD
 </body>
+=======
+</body>
+>>>>>>> 4fdb30d97e96fc462cb686c2fe420cde4197dcd4
