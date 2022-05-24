@@ -44,34 +44,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Display Contact Action
-     *
-     * @return string
-     */
-    private function contactAction()
-    {
-   
-        $database = new Database();
-    
-        $typedish = $database->getAllTypedish();
-
-        $view = file_get_contents('view/page/home/contact.php');
-
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
-
-    }
-
-    
-    private function checkRecipeAction($modifyOrAdd)
-    {
-        
-    }
-
-    /**
      * Check contact Form action
      *
      * @return string

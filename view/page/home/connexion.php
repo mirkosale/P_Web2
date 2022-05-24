@@ -7,7 +7,7 @@
                         <h2>Connexion</h2>
                 </div>
                 <label for="user"></label>
-                <input type="text" id="user" name="user" class="form-control" placeholder="Login">
+                <input type="text" name="user" class="form-control" placeholder="Login">
                 <label for="password"></label>
                 <input type="password" name="password" class="form-control" placeholder="Mot de passe">
                 <div class="btn_box">
