@@ -6,7 +6,11 @@
                 <div class="col-md-6">
                     <p>Vous devez passer par la barre de recherche pour pouvoir obtenir des résultats.</p>
 
-                    <a href="?controller=recipe&action=list">Aller à la page de liste.</a>
+                    <div class="form_container">
+                        <div class="btn-box">
+                            <button><a href="?controller=recipe&action=list" style="color:white">Aller à la page de liste</a></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

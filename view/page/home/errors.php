@@ -9,9 +9,13 @@
                             foreach ($errors as $error) {
                                 echo '<li>' . $error . '</li>';
                             }
-                            echo '<a href="javascript:window.history.back();">Retour en arrière</a>';
                         ?>
                     </ul>
+                    <div class="form_container">
+                        <div class="btn-box">
+                            <button><a href="javascript:window.history.back();" style="color:white;">Retour en arrière</a></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -106,8 +106,10 @@ class RecipeController extends Controller
             $view = file_get_contents('view/page/recipe/detail.php');
         }
 
+
         ob_start();
         eval('?>' . $view);
+
         $content = ob_get_clean();
 
         return $content;
@@ -419,23 +421,8 @@ class RecipeController extends Controller
                 header('Location: index.php?controller=recipe&action=updateRecipe&id=' . $id);
                 die;
             } else {
-<<<<<<< HEAD
-                $addRecipe = $database->modifyRecipeNoImage($recipeData);
-                header('Location: index.php');
-            }
-        }
-        else{
-             /**
-             * Écriture de toutes les erreurs que l'utilisateur a provoquées.
-             */
-            foreach ($errors as $error) {
-                echo '<li>';
-                echo $error;
-                echo '</li>';
-=======
                 #Affichage de toutes les erreurs
                 $view = file_get_contents('view/page/home/errors.php');
->>>>>>> 4fdb30d97e96fc462cb686c2fe420cde4197dcd4
             }
         } else {
             $view = file_get_contents('view/page/recipe/noSubmit.php');
@@ -447,14 +434,6 @@ class RecipeController extends Controller
         $content = ob_get_clean();
         return $content;
     }
-<<<<<<< HEAD
-    private function searchAction(){
-        $database = new Database();
-        if(isset($_POST['searchSubmit'])){
-            $recipes= $database->searchRecipe($_POST['searchbar']);
-        }
-        $dishTypes = $database->getAllTypedish();
-=======
 
     /**
      * Va gérer la recherche via les informations rentrées par l'utilisateur
@@ -475,7 +454,6 @@ class RecipeController extends Controller
             for ($x = 0; $x < count($recipes); $x++) {
 
                 $recipeNote = $database->getRecipeNoteAverage($recipes[$x]['idRecipe']);
->>>>>>> 4fdb30d97e96fc462cb686c2fe420cde4197dcd4
 
                 if (isset($recipeNote[0]['AVG(notStars)'])) {
                     $note = round($recipeNote[0]['AVG(notStars)']);
@@ -497,8 +475,4 @@ class RecipeController extends Controller
 
         return $content;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4fdb30d97e96fc462cb686c2fe420cde4197dcd4

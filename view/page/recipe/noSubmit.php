@@ -6,7 +6,11 @@
                 <div class="col-md-6">
                     <p>Vous devez passer par le formulaire pour modifier ou ajouter une recette</p>
 
-                    <a href="?controller=recipe&action=list">Retour à la page de liste.</a>
+                    <div class="form_container">
+                        <div class="btn-box">
+                            <button><a href="?controller=recipe&action=list" style="color:white">Retour à la page de liste</a></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

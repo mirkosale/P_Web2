@@ -45,11 +45,6 @@ class HomeController extends Controller
     }
 
     /**
-<<<<<<< HEAD
-     * Check contact Form action
-     *
-     * @return string
-=======
      * Affiche la page de contact
      *
      * @return string
@@ -71,7 +66,6 @@ class HomeController extends Controller
      * Va prendre les informations entrées dans la page de contact et les valider
      * 
      * A ajouter : retourner et stocker les informations dans une DB
->>>>>>> 4fdb30d97e96fc462cb686c2fe420cde4197dcd4
      */
     private function checkContactAction()
     {

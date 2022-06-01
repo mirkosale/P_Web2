@@ -21,8 +21,4 @@
             </div>
     </section>
     </div>
-<<<<<<< HEAD
 </body>
-=======
-</body>
->>>>>>> 4fdb30d97e96fc462cb686c2fe420cde4197dcd4

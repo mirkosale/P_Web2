@@ -5,8 +5,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <p>Vous ne pouvez pas accéder à cette page sans avoir rempli le formulaire.</p>
-
-                    <a href="index.php?controller=home&action=contact">Aller au formulaire</a>
+                    <div class="form_container">
+                        <div class="btn-box">
+                            <button><a href="index.php?controller=home&action=contact" style="color:white">Aller au formulaire</a></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
